@@ -4,6 +4,7 @@ import (
 	Auth "shulgin/Auth"
 	Controllers "shulgin/Controllers"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +14,7 @@ func setupRouter() *gin.Engine {
 
 	//Serve frontend React app
 	router.Use(static.Serve("/", static.LocalFile("./dist",true)))
-	
+	router.Use(cors.Default())
 	//Serve public login/signup routes
 	api:= router.Group("/api") 
 	{

@@ -98,7 +98,7 @@ func UserSignup(context *gin.Context) {
 
 	user.UserId = userId
 
-	context.JSON(200,user)
+	context.JSON(200,user.UserId)
 
 }
 
