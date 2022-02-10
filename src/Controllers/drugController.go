@@ -4,9 +4,11 @@ import (
 	"log"
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
+
 	"github.com/gin-gonic/gin"
 )
 
+//Requires ?drugId= , returns drug name and id
 func GetDrug(context *gin.Context) {
 	var drug Models.Drug
 	drugId := context.Query("drugId")
@@ -36,6 +38,8 @@ func GetDrug(context *gin.Context) {
 	context.JSON(200,drug)
 }
 
+
+//requires "name" json object,inserts into database, and returns generated drugId
 func AddDrug(context *gin.Context) {
 	var drug Models.Drug
 	
