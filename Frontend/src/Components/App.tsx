@@ -7,7 +7,7 @@ import { State } from "../Types/ReduxInterface";
 import { ThunkDispatch } from "redux-thunk";
 import { Action } from "redux";
 import { connect, ConnectedProps } from "react-redux";
-import { toggleLoading } from "Redux/store";
+import { toggleLoading } from "../Redux/store";
 
 //Redux config
 const mapStateToProps = (state: State) => {
