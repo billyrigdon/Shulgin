@@ -24,6 +24,7 @@ func setupRouter() *gin.Engine {
 			public.POST("signup", Controllers.UserSignup)
 		}
 
+		//Serve routes that require valid jwt token
 		protected := api.Group("/protected").Use(Auth.Auth())
 		{
 			// Serve CRUD story routes

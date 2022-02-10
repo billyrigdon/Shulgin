@@ -76,7 +76,7 @@ func (j *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaim, err er
 
 }
 
-
+//Gets email address from token, returns email and err
 func GetTokenEmail(token string) (string,error) {
 
 	err := godotenv.Load(".env")
@@ -97,6 +97,7 @@ func GetTokenEmail(token string) (string,error) {
 	return claims.Email, err
 }
 
+//Authorization middleware 
 func Auth() gin.HandlerFunc {
 
 	err := godotenv.Load(".env")
