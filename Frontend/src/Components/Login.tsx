@@ -11,11 +11,11 @@ const Login: React.FC<Props> = (props: Props) => {
 
 	const form = useRef(null);
 
-	const handleEmailChange = (e: any) => {
+	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
 	};
 
-	const handlePasswordChange = (e: any) => {
+	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value);
 	};
 
@@ -23,7 +23,7 @@ const Login: React.FC<Props> = (props: Props) => {
 		props.toggleLoading(props.isLoading);
 	};
 
-	const submitLogin = async (e: any) => {
+	const submitLogin = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 
 		setLoading();

@@ -34,7 +34,12 @@ export type Props = PropsFromRedux;
 const ConnectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 //Redirect to protected route if authenticated
-const RequireAuth = ({ children, redirectTo }) => {
+type ProtectedRoute = {
+	children: JSX.Element;
+	redirectTo: string;
+};
+
+const RequireAuth = ({ children, redirectTo }: ProtectedRoute) => {
 	const isAuthenticated = getAuth();
 	return isAuthenticated ? children : <Navigate to={redirectTo} />;
 };

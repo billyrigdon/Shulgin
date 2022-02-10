@@ -8,11 +8,12 @@
 		"outDir": "./dist",
 		"rootDir": "./",
 		"isolatedModules": true,
-		"strict": false,
+		"strict": true,
 		"moduleResolution": "node",
 		"baseUrl": "./src",
 		"typeRoots": ["node_modules/@types", "src/Types"],
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"lib": ["dom"]
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules"]
