@@ -1,15 +1,19 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
+	"os"
 	Auth "shulgin/Auth"
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
+//Uses token to get email, query the database, and return userId for accessing data
 func GetUserId(token string) int {
 	var userId int
 	email,_ := Auth.GetTokenEmail(token)
@@ -35,6 +39,7 @@ func GetUserId(token string) int {
 	return userId
 }
 
+//Requires JSON object containing username,email, and password
 func UserSignup(context *gin.Context) {
 	
 	var userId int
@@ -61,6 +66,7 @@ func UserSignup(context *gin.Context) {
 		return
 	}
 	
+	//Timestamp in SQL format
 	user.DateCreated = time.Now().Format("2006-01-02")
 
 	db, dbErr := Utilities.ConnectPostgres();
@@ -102,6 +108,7 @@ func UserSignup(context *gin.Context) {
 
 }
 
+//Requires email and password in json, returns login token
 func UserLogin(context *gin.Context) {
 	var payload Models.LoginPayload
 	var user Models.User
@@ -144,7 +151,7 @@ func UserLogin(context *gin.Context) {
 		return
 	}
 
-	//Check password
+	//return failure if password doesn't check out
 	err = user.CheckPassword(payload.Password)
 
 	if err != nil {
@@ -156,10 +163,16 @@ func UserLogin(context *gin.Context) {
 		return
 	}
 
+	//Load environment variables for secret key and issuer
+	err = godotenv.Load(".env")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	//Generate token and respond with it
 	jwtWrapper := Auth.JwtWrapper{
-		SecretKey:       "verysecretkey",
-		Issuer:          "AuthService",
+		SecretKey: os.Getenv("secret_key"),
+		Issuer: os.Getenv("issuer"),
 		ExpirationHours: 24,
 	}
 
@@ -177,6 +190,7 @@ func UserLogin(context *gin.Context) {
 		Token: signedToken,
 	}
 
+	//return login token on success
 	context.JSON(200,tokenResponse)
 
 	return

@@ -2,11 +2,16 @@ package auth
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 // JwtWrapper wraps the signing key and the issuer
@@ -22,7 +27,7 @@ type JwtClaim struct {
 	jwt.StandardClaims
 }
 
-// GenerateToken generates a jwt token
+//Generate JWT 
 func (j *JwtWrapper) GenerateToken(email string) (signedToken string, err error) {
 	claims := &JwtClaim{
 		Email: email,
@@ -71,13 +76,20 @@ func (j *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaim, err er
 
 }
 
+//Gets email address from token, returns email and err
 func GetTokenEmail(token string) (string,error) {
+
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	extractedToken := strings.Split(token, "Bearer ")
 	clientToken := strings.TrimSpace(extractedToken[1])
 
 	jwtWrapper := JwtWrapper{
-			SecretKey: "verysecretkey",
-			Issuer: "AuthService",
+			SecretKey: os.Getenv("secret_key"),
+			Issuer: os.Getenv("issuer"),
 	}
 
 	claims, err := jwtWrapper.ValidateToken(clientToken)
@@ -85,7 +97,14 @@ func GetTokenEmail(token string) (string,error) {
 	return claims.Email, err
 }
 
+//Authorization middleware 
 func Auth() gin.HandlerFunc {
+
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	return func (context *gin.Context){
 		clientToken := context.Request.Header.Get("Authorization")
 		if clientToken == "" {
@@ -105,8 +124,8 @@ func Auth() gin.HandlerFunc {
 		}
 
 		jwtWrapper := JwtWrapper{
-			SecretKey: "verysecretkey",
-			Issuer: "AuthService",
+			SecretKey: os.Getenv("secret_key"),
+			Issuer: os.Getenv("issuer"),
 		}
 
 		claims, err := jwtWrapper.ValidateToken(clientToken)
