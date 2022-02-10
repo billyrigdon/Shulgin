@@ -11,8 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-
-
+//Requires json object containing fields for user struct
 func CreateStory(context *gin.Context) {
 	
 	var story Models.Story
@@ -27,7 +26,8 @@ func CreateStory(context *gin.Context) {
 
 		return
 	} 
-	
+
+	//Timestamp in postgres format
 	story.Date = time.Now().Format("2006-01-02")
 	
 
@@ -39,6 +39,7 @@ func CreateStory(context *gin.Context) {
 		log.Fatal(dbErr)
 	}
 
+	//Insert into database and add storyId to story object
 	sqlStatement := `
 		INSERT INTO stories (
 			userid,
@@ -78,12 +79,14 @@ func CreateStory(context *gin.Context) {
 
 	story.StoryId = storyId
 
+	//Return created story including id and timestamp
 	context.JSON(200,story)
 	
 	return
 	
 }
 
+//Requires ?userId=, returns array of story Json objects
 func GetUserStories(context *gin.Context) {
 	var stories []Models.Story
 	userId := context.Query("userId")
@@ -156,6 +159,7 @@ func GetUserStories(context *gin.Context) {
 
 }
 
+//Requires ?=storyId, returns story Json object
 func GetSingleStory(context *gin.Context) {
 	var story Models.Story
 	storyId := context.Query("storyId")
@@ -209,8 +213,10 @@ func GetSingleStory(context *gin.Context) {
 	context.JSON(200,story)		
 }
 
+//Requires storyId?=, deletes storyId in Postgres, and returns success message
 func DeleteStory(context *gin.Context) {
 	storyId := context.Query("storyId")
+	//Get userId from token to verify that user owns the story
 	token := context.Request.Header.Get("Authorization")
 	userId := GetUserId(token)
 	
@@ -240,11 +246,3 @@ func DeleteStory(context *gin.Context) {
 	context.JSON(200, storyId + " deleted successfully")
 		
 }
-
-
-
-
-
-
-
-
