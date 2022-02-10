@@ -21,7 +21,7 @@ func ConnectPostgres() (*sql.DB, error) {
 	port := os.Getenv("port")
 	user := os.Getenv("user")
 	password := os.Getenv("password")
-	dbname := os.Getenv("dbname")
+	dbname := os.Getenv("db_name")
 
 
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
