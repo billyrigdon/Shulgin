@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"fmt"
-	"log"
 	Auth "shulgin/Auth"
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
 	"strconv"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,7 +22,7 @@ func GetUserDrugs(context *gin.Context) {
 		
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	sqlStatement := `
@@ -41,6 +41,7 @@ func GetUserDrugs(context *gin.Context) {
 	rows,err := db.Query(sqlStatement,userId)
 
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "Error running query",
 		})
@@ -62,6 +63,7 @@ func GetUserDrugs(context *gin.Context) {
 			&userDrug.DateEnded)
 
 		if err = rows.Err(); err != nil {
+			log.Error(err)
 			context.JSON(500, gin.H{
 				"msg": "Error getting drugs",
 			})
@@ -82,6 +84,7 @@ func AddUserDrug(context *gin.Context) {
 	
 	err := context.ShouldBindJSON(&userDrug)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "invalid json",
 		})
@@ -97,10 +100,8 @@ func AddUserDrug(context *gin.Context) {
 
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
-
-	fmt.Println(userDrug)
 
 	sqlStatement := `
 		INSERT INTO user_drugs (userId,drugId,dosage,dateStarted)
@@ -110,6 +111,7 @@ func AddUserDrug(context *gin.Context) {
 	row := db.QueryRow(sqlStatement,userDrug.UserId,userDrug.DrugId,userDrug.Dosage,userDrug.DateStarted)
 	err = row.Scan(&userDrug.UserDrugId)
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "unable to insert",
 		})
@@ -133,7 +135,7 @@ func RemoveUserDrug(context *gin.Context) {
 
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	getUserSql := `
@@ -143,6 +145,7 @@ func RemoveUserDrug(context *gin.Context) {
 	`
 	err := db.QueryRow(getUserSql,email).Scan(&userId)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "User not found",
 		})
@@ -161,6 +164,7 @@ func RemoveUserDrug(context *gin.Context) {
 
 	_, updateErr := db.Exec(sqlStatement,dateEnded,userId,drugId)
 	if updateErr != nil {
+		log.Error(updateErr)
 		context.JSON(500, gin.H{
 			"msg": "Error removing drug",
 		})

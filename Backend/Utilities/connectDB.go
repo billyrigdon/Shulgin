@@ -4,7 +4,7 @@ package utilities
 import (
 	"database/sql"
 	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -14,7 +14,7 @@ import (
 func ConnectPostgres() (*sql.DB, error) {
 	dotEnvErr := godotenv.Load(".env")
 	if dotEnvErr != nil {
-		log.Fatal(dotEnvErr)
+		log.Error(dotEnvErr)
 	}
 
 	host := os.Getenv("host")

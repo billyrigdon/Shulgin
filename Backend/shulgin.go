@@ -1,20 +1,30 @@
 package main
 
 import (
+	"io"
+	"os"
 	Auth "shulgin/Auth"
 	Controllers "shulgin/Controllers"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func setupRouter() *gin.Engine {
+	//Configure logging
+	gin.DisableConsoleColor()
+	logFile := OpenLogFile("shulgin.log")
+	gin.DefaultWriter = io.MultiWriter(logFile)
+
+	//Create router
 	router := gin.Default()
 
 	//Serve frontend React app
 	router.Use(static.Serve("/", static.LocalFile("./dist",true)))
 	router.Use(cors.Default())
+
 	//Serve public login/signup routes
 	api:= router.Group("/api") 
 	{
@@ -49,9 +59,27 @@ func setupRouter() *gin.Engine {
 	return router
 }
 
-func main() {	
-	//Start server
+//Create log file if it doesn't exist, append if it does. 
+//The 666 is file permissions, not some hidden satanic message in my code.
+func OpenLogFile(file string) *os.File {
+	logFile, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+    if err != nil {
+        log.Fatal(err)
+    }
+	return logFile
+}
+
+func main() {
+
+	logFile := OpenLogFile("shulgin.log")	
+
+	//Set logrus to use log file  
+	log.SetOutput(logFile)
+
+	//Create server
 	router := setupRouter()
+
+	//Start server
 	router.Run(":8080")
 }
 
