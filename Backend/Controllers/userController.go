@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"fmt"
-	"log"
 	"os"
 	Auth "shulgin/Auth"
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -23,7 +23,7 @@ func GetUserId(token string) int {
 
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	getUserSql := `
@@ -47,6 +47,7 @@ func UserSignup(context *gin.Context) {
 
 	err:= context.ShouldBindJSON(&user)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "invalid json",
 		})
@@ -58,6 +59,7 @@ func UserSignup(context *gin.Context) {
 	//Use bcrypt to generate password hash to save to database
 	err = user.HashPassword(user.Password)
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "error hashing password",
 		})
@@ -74,7 +76,7 @@ func UserSignup(context *gin.Context) {
 
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	sqlStatement := `
@@ -94,6 +96,7 @@ func UserSignup(context *gin.Context) {
 		user.DateCreated).Scan(&userId)
 
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "error creating user",
 		})
@@ -115,6 +118,7 @@ func UserLogin(context *gin.Context) {
 
 	err := context.ShouldBindJSON(&payload)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "invalid json",
 		})
@@ -128,7 +132,7 @@ func UserLogin(context *gin.Context) {
 
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	//Query db using email in payload	
@@ -143,6 +147,7 @@ func UserLogin(context *gin.Context) {
 	err = row.Scan(&user.Password)
 
 	if err != nil {
+		log.Error(err)
 		context.JSON(401, gin.H{
 			"msg": "invalid credentials",
 		})
@@ -155,6 +160,7 @@ func UserLogin(context *gin.Context) {
 	err = user.CheckPassword(payload.Password)
 
 	if err != nil {
+		log.Error(err)
 		context.JSON(401, gin.H{
 			"msg": "invalid credentials",
 		})
@@ -166,7 +172,7 @@ func UserLogin(context *gin.Context) {
 	//Load environment variables for secret key and issuer
 	err = godotenv.Load(".env")
 	if err != nil {
-		fmt.Println(err)
+		log.Error(err)
 	}
 
 	//Generate token and respond with it
@@ -178,6 +184,7 @@ func UserLogin(context *gin.Context) {
 
 	signedToken, err := jwtWrapper.GenerateToken(payload.Email)
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "error signing token",
 		})

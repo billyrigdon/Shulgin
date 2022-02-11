@@ -15,4 +15,5 @@ dist/
 .env
 databaseSchema.sql
 node_modules/
-
+shulgin
+shulgin.log

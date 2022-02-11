@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"log"
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func GetDrug(context *gin.Context) {
 
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	sqlStatement := `
@@ -28,6 +29,7 @@ func GetDrug(context *gin.Context) {
 	`
 	err := db.QueryRow(sqlStatement,drugId).Scan(&drug.DrugId,&drug.Name)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "drug not found",
 		})
@@ -45,6 +47,7 @@ func AddDrug(context *gin.Context) {
 	
 	err := context.ShouldBindJSON(&drug)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "invalid json",
 		})
@@ -58,7 +61,7 @@ func AddDrug(context *gin.Context) {
 
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	sqlStatement := `
@@ -70,6 +73,7 @@ func AddDrug(context *gin.Context) {
 	`
 	err = db.QueryRow(sqlStatement,drug.Name).Scan(&drug.DrugId)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "drug not found",
 		})

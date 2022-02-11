@@ -1,14 +1,14 @@
 package controllers
 
 import (
-	"log"
-
+	
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 )
 
 //Requires json object containing fields for user struct
@@ -19,6 +19,7 @@ func CreateStory(context *gin.Context) {
 
 	err := context.ShouldBindJSON(&story)
 	if err != nil {
+		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "invalid json",
 		})
@@ -36,7 +37,7 @@ func CreateStory(context *gin.Context) {
 		
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	//Insert into database and add storyId to story object
@@ -69,6 +70,7 @@ func CreateStory(context *gin.Context) {
 		story.Date).Scan(&storyId)
 
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "couldn't create story",
 		})
@@ -96,7 +98,7 @@ func GetUserStories(context *gin.Context) {
 		
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 
 	sqlStatement := `
@@ -118,6 +120,7 @@ func GetUserStories(context *gin.Context) {
 	rows,err := db.Query(sqlStatement,userId)
 
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "Error getting stories",
 		})
@@ -144,6 +147,7 @@ func GetUserStories(context *gin.Context) {
 			&story.Date)
 
 		if err = rows.Err(); err != nil {
+			log.Error(err)
 			context.JSON(500, gin.H{
 				"msg": "Error getting stories",
 			})
@@ -169,7 +173,7 @@ func GetSingleStory(context *gin.Context) {
 		
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 			
 	sqlStatement := `
@@ -203,6 +207,7 @@ func GetSingleStory(context *gin.Context) {
 		&story.Date)
 			
 	if err != nil {
+		log.Error(err)
 		context.JSON(500, gin.H{
 			"msg": "Error getting stories",
 		})
@@ -225,7 +230,7 @@ func DeleteStory(context *gin.Context) {
 		
 	dbErr = db.Ping()
 	if dbErr != nil {
-		log.Fatal(dbErr)
+		log.Error(dbErr)
 	}
 	
 	sqlStatement := `
@@ -235,6 +240,7 @@ func DeleteStory(context *gin.Context) {
 		`
 	_, deleteErr := db.Exec(sqlStatement,storyId,userId)
 	if deleteErr != nil {
+		log.Error(deleteErr)
 		context.JSON(500, gin.H{
 			"msg": "Error deleting story",
 		})
