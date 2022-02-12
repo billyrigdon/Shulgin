@@ -90,6 +90,7 @@ func CreateStory(context *gin.Context) {
 
 //Requires ?userId=, returns array of story Json objects
 func GetUserStories(context *gin.Context) {
+	
 	var stories []Models.Story
 	userId := context.Query("userId")
 	

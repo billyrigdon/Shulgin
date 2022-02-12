@@ -1,9 +1,12 @@
 import React from "react";
+import Stories from "../Stories/Stories";
 
 const Home = () => {
 	return (
-		<p>Hello World</p>
-	)
+		<div>
+			<Stories />
+		</div>
+	);
 }
 
 export default Home;

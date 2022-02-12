@@ -1,9 +1,17 @@
-export const authHeader = () => {
+import { AuthHeader } from "Types/AuthHeader";
+
+export const getHeader = () => {
 	const token = JSON.parse(localStorage.getItem("token") || "");
 
+	const authHeader: AuthHeader = {
+		Authorization: "",
+		"Content-type": "application/json",
+		"Access-Control-Allow-Origin": true,
+	};
+
 	if (token) {
-		return { Authorization: "Bearer " + token };
-	} else {
-		return {};
+		authHeader.Authorization = "Bearer " + token;
 	}
+
+	return authHeader;
 };

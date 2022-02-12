@@ -9,10 +9,10 @@ import (
 
 	Models "shulgin/Models"
 
-	log "github.com/sirupsen/logrus"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	log "github.com/sirupsen/logrus"
 )
 
 // JwtWrapper wraps the signing key and the issuer

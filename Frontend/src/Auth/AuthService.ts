@@ -5,6 +5,8 @@ export const login = async (
 	email: string,
 	password: string
 ): Promise<string> => {
+	console.log(email);
+	console.log(password);
 	try {
 		const config = {
 			headers: { "Content-type": "application/json" },
