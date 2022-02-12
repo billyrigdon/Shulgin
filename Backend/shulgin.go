@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	"net/http"
 	"os"
 
 	Auth "shulgin/Auth"
@@ -23,14 +24,24 @@ func setupRouter() (*gin.Engine) {
 	router := gin.Default()
 
 	//Setup Cors
-	router.Use(cors.Default())
+	// config := cors.DefaultConfig()
+	// config.AllowAllOrigins = true
+	// config.AllowedHeaders = []string{"Authorization"}
+	// router.Use(cors.New(config))
+
+	router.Use(cors.New(cors.Config{
+    	AllowedOrigins: []string{"http://localhost:3333"},
+    	AllowedMethods: []string{http.MethodGet, http.MethodPatch, http.MethodPost, http.MethodHead, http.MethodDelete, http.MethodOptions},
+    	AllowedHeaders: []string{"Content-Type", "X-XSRF-TOKEN", "Accept", "Origin", "X-Requested-With", "Authorization"},
+    	ExposedHeaders:[]string{"Content-Length"},
+    	AllowCredentials: true,
+	}))
 
 	//Serve frontend
 	router.Use(static.Serve("/", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/splash", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/login", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/signup", static.LocalFile("./dist",true)))
-	router.Use(cors.Default())
 
 	//Serve public login/signup routes
 	api:= router.Group("/api") 
@@ -83,6 +94,7 @@ func main() {
 
 	//Create server
 	router := setupRouter()
+	
 
 	//Start server
 	router.Run(":8080")
