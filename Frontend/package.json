@@ -1,7 +1,7 @@
 {
 	"name": "shulgin",
-	"version": "0.0.1",
-	"description": "Track your drug experiences and share them with other psychonauts",
+	"version": "0.0.2",
+	"description": "Drugs are better with friends. Shulgin is an app for tracking your experiences while taking pharmaceutical drugs and sharing your experiences with the world anonymously to identify trends and frequencies of side effects.",
 	"main": "src/index.jsx",
 	"scripts": {
 		"build": "webpack",

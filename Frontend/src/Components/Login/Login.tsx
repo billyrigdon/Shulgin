@@ -1,8 +1,8 @@
 import React from "react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../Auth/AuthService";
-import { Props } from "./App";
+import { login } from "../../Auth/AuthService";
+import { Props } from "../App/App";
 
 const Login: React.FC<Props> = (props: Props) => {
 	const [email, setEmail] = useState("");
@@ -11,12 +11,12 @@ const Login: React.FC<Props> = (props: Props) => {
 
 	const form = useRef(null);
 
-	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	};
-
-	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value);
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.name === "email") {
+			setEmail(e.target.value);
+		} else if (e.target.name === "password") {
+			setPassword(e.target.value);
+		}
 	};
 
 	const setLoading = () => {
@@ -41,13 +41,13 @@ const Login: React.FC<Props> = (props: Props) => {
 				type="email"
 				name="email"
 				value={email}
-				onChange={handleEmailChange}
+				onChange={handleChange}
 			></input>
 			<input
 				type="password"
 				name="password"
 				value={password}
-				onChange={handlePasswordChange}
+				onChange={handleChange}
 			></input>
 			<button type="submit"></button>
 		</form>

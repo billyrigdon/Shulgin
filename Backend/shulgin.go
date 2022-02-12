@@ -3,16 +3,17 @@ package main
 import (
 	"io"
 	"os"
+
 	Auth "shulgin/Auth"
 	Controllers "shulgin/Controllers"
 
-	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
 
-func setupRouter() *gin.Engine {
+func setupRouter() (*gin.Engine) {
 	//Configure logging
 	gin.DisableConsoleColor()
 	logFile := OpenLogFile("shulgin.log")
@@ -21,8 +22,14 @@ func setupRouter() *gin.Engine {
 	//Create router
 	router := gin.Default()
 
-	//Serve frontend React app
+	//Setup Cors
+	router.Use(cors.Default())
+
+	//Serve frontend
 	router.Use(static.Serve("/", static.LocalFile("./dist",true)))
+	router.Use(static.Serve("/splash", static.LocalFile("./dist",true)))
+	router.Use(static.Serve("/login", static.LocalFile("./dist",true)))
+	router.Use(static.Serve("/signup", static.LocalFile("./dist",true)))
 	router.Use(cors.Default())
 
 	//Serve public login/signup routes
@@ -70,10 +77,8 @@ func OpenLogFile(file string) *os.File {
 }
 
 func main() {
-
+	//Set logrus to use log file 
 	logFile := OpenLogFile("shulgin.log")	
-
-	//Set logrus to use log file  
 	log.SetOutput(logFile)
 
 	//Create server
