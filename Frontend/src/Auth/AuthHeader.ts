@@ -1,4 +1,4 @@
-import { AuthHeader } from "Types/AuthHeader";
+import { AuthHeader } from "../Types/AuthHeader";
 
 export const getHeader = () => {
 	const token = JSON.parse(localStorage.getItem("token") || "");

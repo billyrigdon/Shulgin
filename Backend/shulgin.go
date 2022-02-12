@@ -2,7 +2,6 @@ package main
 
 import (
 	"io"
-	"net/http"
 	"os"
 
 	Auth "shulgin/Auth"
@@ -24,18 +23,7 @@ func setupRouter() (*gin.Engine) {
 	router := gin.Default()
 
 	//Setup Cors
-	// config := cors.DefaultConfig()
-	// config.AllowAllOrigins = true
-	// config.AllowedHeaders = []string{"Authorization"}
-	// router.Use(cors.New(config))
-
-	router.Use(cors.New(cors.Config{
-    	AllowedOrigins: []string{"http://localhost:3333"},
-    	AllowedMethods: []string{http.MethodGet, http.MethodPatch, http.MethodPost, http.MethodHead, http.MethodDelete, http.MethodOptions},
-    	AllowedHeaders: []string{"Content-Type", "X-XSRF-TOKEN", "Accept", "Origin", "X-Requested-With", "Authorization"},
-    	ExposedHeaders:[]string{"Content-Length"},
-    	AllowCredentials: true,
-	}))
+	router.Use(cors.Default())
 
 	//Serve frontend
 	router.Use(static.Serve("/", static.LocalFile("./dist",true)))

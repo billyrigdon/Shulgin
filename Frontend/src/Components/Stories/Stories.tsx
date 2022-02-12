@@ -15,20 +15,33 @@ const Stories = () => {
 	const authHeader = getHeader();
 
 	const getUserStories = async () => {
-		const returnedStories = await axios.get(
-			API_URL + "story/user?userId=" + "1",
-			{
-				headers: { ...authHeader },
-			}
-		);
-		console.log(returnedStories);
+		try {
+			const response = await axios.get(
+				API_URL + "story/user?userId=" + "1",
+				{
+					headers: { ...authHeader },
+				}
+			);
+			setStories(response.data);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	useEffect(() => {
 		getUserStories();
 	}, []);
 
-	return <div></div>;
+	const story = stories.map((item, index) => {
+		return (
+			<div key={item.storyId}>
+				<p>{item.journal}</p>
+				<p>{item.date}</p>
+			</div>
+		);
+	});
+
+	return <div>{story}</div>;
 };
 
 export default Stories;
