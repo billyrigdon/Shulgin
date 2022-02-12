@@ -15,21 +15,27 @@ type Story struct {
 }
 
 
+/*
+JSON and SQL inserts for testing
+{
+	"userid": 1,
+	"calmness": 0,
+	"focus": 10,
+	"creativity": 10,
+	"mood": 8,
+	"irritability": 6,
+	"wakefulness": 9,
+	"rating": 10,
+	"journal": "ahh yeah"
+}
 
-// {
-// 		"userid": 1,
-// 		"calmness": 0,
-// 		"focus": 10,
-// 		"creativity": 10,
-// 		"mood": 8,
-// 	"irritability": 6,
-// 	"wakefulness": 9,
-// 	"rating": 10,
-// 	"journal": "ahh yeah"
-// }
+{
+		"userId": 1,
+		"drugId": 3,
+		"dosage": "1mg 2x Daily"
+}
 
-// {
-// 		"userId": 1,
-// 		"drugId": 3,
-// 		"dosage": "1mg 2x Daily"
-// }
+
+INSERT INTO stories (userid,calmness,focus,creativity,irritability,mood,wakefulness,rating,journal,date)
+VALUES (1,2,5,6,10,5,4,6,'test3','2022-02-12');
+*/
