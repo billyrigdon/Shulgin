@@ -40,25 +40,28 @@ const Signup: React.FC<Props> = (props: Props) => {
 
 	return (
 		<form onSubmit={submitSignup} ref={form}>
+			<label htmlFor="username">Username</label>
 			<input
 				type="text"
 				name="username"
 				value={username}
 				onChange={handleChange}
 			></input>
+			<label htmlFor="email">Email</label>
 			<input
 				type="email"
 				name="email"
 				value={email}
 				onChange={handleChange}
 			></input>
+			<label htmlFor="password">Password</label>
 			<input
 				type="password"
 				name="password"
 				value={password}
 				onChange={handleChange}
 			></input>
-			<button type="submit"></button>
+			<button type="submit">Submit</button>
 		</form>
 	);
 };

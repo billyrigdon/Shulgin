@@ -37,19 +37,21 @@ const Login: React.FC<Props> = (props: Props) => {
 
 	return (
 		<form onSubmit={submitLogin} ref={form}>
+			<label htmlFor="email">Email</label>
 			<input
 				type="email"
 				name="email"
 				value={email}
 				onChange={handleChange}
 			></input>
+			<label htmlFor="password">Password</label>
 			<input
 				type="password"
 				name="password"
 				value={password}
 				onChange={handleChange}
 			></input>
-			<button type="submit"></button>
+			<button type="submit">Submit</button>
 		</form>
 	);
 };

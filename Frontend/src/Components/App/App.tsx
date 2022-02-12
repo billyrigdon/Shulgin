@@ -5,7 +5,7 @@ import Signup from "../Signup/Signup";
 import Splash from "../Splash/Splash";
 import React from "react";
 import { getAuth } from "../../Auth/AuthService";
-import { State } from "../../Types/ReduxInterface";
+import { State } from "../../Types/Redux";
 import { ThunkDispatch } from "redux-thunk";
 import { Action } from "redux";
 import { connect, ConnectedProps } from "react-redux";
