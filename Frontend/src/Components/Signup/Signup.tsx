@@ -14,11 +14,11 @@ const Signup: React.FC<Props> = (props: Props) => {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.name === "username") {
-			setUsername(e.target.value)
+			setUsername(e.target.value);
 		} else if (e.target.name === "email") {
 			setEmail(e.target.value);
 		} else if (e.target.name === "password") {
-			setPassword(e.target.value)
+			setPassword(e.target.value);
 		}
 	};
 
@@ -43,7 +43,7 @@ const Signup: React.FC<Props> = (props: Props) => {
 			<input
 				type="text"
 				name="username"
-				value={password}
+				value={username}
 				onChange={handleChange}
 			></input>
 			<input

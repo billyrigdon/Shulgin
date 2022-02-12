@@ -3,14 +3,15 @@ package auth
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
+	Models "shulgin/Models"
+
+	log "github.com/sirupsen/logrus"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-
-	"os"
-
 	"github.com/joho/godotenv"
 )
 
@@ -142,3 +143,34 @@ func Auth() gin.HandlerFunc {
 		
 	}
 }
+
+func GetToken(email string) Models.LoginResponse {
+	tokenResponse := Models.LoginResponse{
+		Token: "",
+	}
+	
+	//load environment variables
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Error(err)
+		return tokenResponse
+	}
+
+	//Generate token and respond with it
+	jwtWrapper := JwtWrapper{
+		SecretKey: os.Getenv("secret_key"),
+		Issuer: os.Getenv("issuer"),
+		ExpirationHours: 24,
+	}
+
+	signedToken, err := jwtWrapper.GenerateToken(email)
+	if err != nil {
+		log.Error(err)
+		return tokenResponse
+	}
+
+	tokenResponse.Token = signedToken
+
+	return tokenResponse
+}
+

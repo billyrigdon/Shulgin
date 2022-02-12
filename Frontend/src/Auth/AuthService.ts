@@ -53,7 +53,10 @@ export const signup = async (
 			config
 		);
 
-		return data;
+		if (data.token) {
+			localStorage.setItem("token", JSON.stringify(data.token));
+		}
+		return data.token;
 	} catch (error) {
 		console.log(error);
 	}
