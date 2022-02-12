@@ -14,7 +14,7 @@ BEGIN
 		ud2.dateEnded drug2DateEnd
 	INTO TEMP temp_user_drugs
 	FROM user_drugs ud1
-	LEFT JOIN user_drugs ud2
+	INNER JOIN user_drugs ud2
 		ON ud1.userId = ud2.userId
 			AND ud1.userDrugId != ud2.userDrugId
 	WHERE ud1.drugId = drugA
@@ -32,7 +32,7 @@ BEGIN
 		AVG(wakefulness) as Wakefulness,
 		AVG(rating) as Rating
 	FROM stories s
-	LEFT JOIN temp_user_drugs tud
+	INNER JOIN temp_user_drugs tud
 		ON tud.userId = s.userId
 	WHERE s.date >= tud.drug1DateStart
 		AND s.date >= tud.drug2DateStart
