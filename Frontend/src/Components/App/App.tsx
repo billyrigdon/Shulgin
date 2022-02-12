@@ -1,13 +1,15 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./Login";
-import Home from "./Home";
+import Login from "../Login/Login";
+import Home from "../Home/Home";
+import Signup from "../Signup/Signup";
+import Splash from "../Splash/Splash";
 import React from "react";
-import { getAuth } from "../Auth/AuthService";
-import { State } from "../Types/ReduxInterface";
+import { getAuth } from "../../Auth/AuthService";
+import { State } from "../../Types/Redux";
 import { ThunkDispatch } from "redux-thunk";
 import { Action } from "redux";
 import { connect, ConnectedProps } from "react-redux";
-import { toggleLoading } from "../Redux/store";
+import { toggleLoading } from "../../Redux/store";
 
 //Redux config
 const mapStateToProps = (state: State) => {
@@ -32,6 +34,8 @@ export type Props = PropsFromRedux;
 
 //Connect redux state and dispatch to components
 const ConnectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
+const ConnectedSignup = connect(mapStateToProps, mapDispatchToProps)(Signup);
+const ConnectedSplash = connect(mapStateToProps, mapDispatchToProps)(Splash);
 
 //Redirect to protected route if authenticated
 type ProtectedRoute = {
@@ -49,10 +53,12 @@ const App = () => {
 		<div>
 			<Routes>
 				<Route path="/login" element={<ConnectedLogin />} />
+				<Route path="/signup" element={<ConnectedSignup />} />
+				<Route path="/splash" element={<ConnectedSplash />} />
 				<Route
 					path="/"
 					element={
-						<RequireAuth redirectTo={"/login"}>
+						<RequireAuth redirectTo={"/splash"}>
 							<Home />
 						</RequireAuth>
 					}

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"os"
 	Auth "shulgin/Auth"
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
@@ -10,7 +9,6 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 //Uses token to get email, query the database, and return userId for accessing data
@@ -42,7 +40,6 @@ func GetUserId(token string) int {
 //Requires JSON object containing username,email, and password
 func UserSignup(context *gin.Context) {
 	
-	var userId int
 	var user Models.User
 
 	err:= context.ShouldBindJSON(&user)
@@ -86,14 +83,14 @@ func UserSignup(context *gin.Context) {
 			email,
 			dateCreated
 		)
-		VALUES ($1,$2,$3,$4) RETURNING userId;
-			`
-		
-	err = db.QueryRow(sqlStatement,
+		VALUES ($1,$2,$3,$4);
+		`
+
+	_, err = db.Exec(sqlStatement,
 		user.Username,
 		user.Password,
 		user.Email,
-		user.DateCreated).Scan(&userId)
+		user.DateCreated)
 
 	if err != nil {
 		log.Error(err)
@@ -105,9 +102,10 @@ func UserSignup(context *gin.Context) {
 		return
 	}
 
-	user.UserId = userId
+	tokenResponse := Auth.GetToken(user.Email)
 
-	context.JSON(200,user.UserId)
+	//return login token on success
+	context.JSON(200,tokenResponse)
 
 }
 
@@ -169,33 +167,7 @@ func UserLogin(context *gin.Context) {
 		return
 	}
 
-	//Load environment variables for secret key and issuer
-	err = godotenv.Load(".env")
-	if err != nil {
-		log.Error(err)
-	}
-
-	//Generate token and respond with it
-	jwtWrapper := Auth.JwtWrapper{
-		SecretKey: os.Getenv("secret_key"),
-		Issuer: os.Getenv("issuer"),
-		ExpirationHours: 24,
-	}
-
-	signedToken, err := jwtWrapper.GenerateToken(payload.Email)
-	if err != nil {
-		log.Error(err)
-		context.JSON(500, gin.H{
-			"msg": "error signing token",
-		})
-		context.Abort()
-
-		return
-	}
-
-	tokenResponse := Models.LoginResponse{
-		Token: signedToken,
-	}
+	tokenResponse := Auth.GetToken(payload.Email)
 
 	//return login token on success
 	context.JSON(200,tokenResponse)

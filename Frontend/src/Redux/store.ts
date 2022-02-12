@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, Store } from "redux";
 import thunk from "redux-thunk";
-import { State, Action, DispatchType } from "../Types/ReduxInterface";
+import { State, Action, DispatchType } from "../Types/Redux";
 
 const initialState: State = {
 	isLoading: false,
