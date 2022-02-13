@@ -19,7 +19,6 @@ type User struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Email string `json:"email"`
-	ProfilePic string `json:"profilePic"`
 	DateCreated string 	`json:"dateCreated"`
 
 }

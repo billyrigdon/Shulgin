@@ -1,5 +1,5 @@
-import { mapStateToProps,mapDispatchToProps } from "Redux/MapProps";
-import { connect,ConnectedProps } from "react-redux";
+import { mapStateToProps, mapDispatchToProps } from "Redux/MapProps";
+import { connect, ConnectedProps } from "react-redux";
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
