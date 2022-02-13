@@ -175,3 +175,15 @@ func UserLogin(context *gin.Context) {
 	return
 }
 
+func GetUser(context *gin.Context) {
+	token := context.Request.Header.Get("Authorization")
+	userId := GetUserId(token)
+	if userId > 0 {
+		context.JSON(200,userId)
+	} else {
+		context.JSON(500,gin.H{
+			"msg": "Failed to get userId",
+		})
+	}
+	
+}

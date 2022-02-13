@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { getHeader } from "Auth/AuthHeader";
 import { Story } from "Types/Story";
+import { Props } from "Types/Redux";
 
 const API_URL = "http://127.0.0.1:8080/api/protected/";
 
@@ -14,8 +15,9 @@ const Stories = () => {
 
 	const getUserStories = async () => {
 		try {
+			const userId = localStorage.getItem("userId");
 			const response = await axios.get(
-				API_URL + "story/user?userId=" + "1",
+				API_URL + "story/user?userId=" + userId,
 				{
 					headers: { ...authHeader },
 				}

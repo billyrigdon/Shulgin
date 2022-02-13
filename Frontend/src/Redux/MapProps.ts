@@ -1,4 +1,4 @@
-import { setUserId, toggleLoading } from "./Store";
+import { setUserId, toggleLoading } from "Redux/Store";
 import { State } from "Types/Redux";
 import { ThunkDispatch } from "redux-thunk";
 import { Action } from "redux";
@@ -10,7 +10,9 @@ export const mapStateToProps = (state: State) => {
 	};
 };
 
-export const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => {
+export const mapDispatchToProps = (
+	dispatch: ThunkDispatch<any, any, Action>
+) => {
 	return {
 		toggleLoading: (isLoading: boolean) => {
 			dispatch(toggleLoading(isLoading));
