@@ -126,23 +126,47 @@ func CreateUserProfile(context *gin.Context) {
 			covidVaccine,
 			smoker,
 			drinker,
-			optOutOfPublicStories
+			optOutOfPublicStories,
+			status,
+			twoFactor,
+			cameraPermission,
+			microphonePermission,
+			notificationPermission,
+			filePermission,
+			nightMode,
+			highContrast,
+			slowInternet,
+			textSize,
+			screenReader
 		)
-		Values
+		VALUES
 		(
 			$1,
 			$2,
 			$3,
 			$4,
 			$5,
+			0,
 			$6,
 			$7,
 			$8,
 			$9,
 			$10,
-			$11
+			'',
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			16,
+			false
 		);
 		`
+
+
 
 	db.Exec(sqlStatement,
 		user.UserId,
@@ -150,7 +174,6 @@ func CreateUserProfile(context *gin.Context) {
 		user.Weight,
 		user.Country,
 		user.Avatar,
-		user.Reputation,
 		user.FunFact,
 		user.CovidVaccine,
 		user.Smoker,

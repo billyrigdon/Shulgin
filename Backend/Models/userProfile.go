@@ -48,3 +48,41 @@ type UserProfile struct {
 // textSize,
 // screenReader
 
+// {
+// 			"userId":2,
+// 			"age": 21,
+// 			"weight":125,
+// 			"country": "United States",
+// 			"avatar": "",
+// 			"funFact": "I like to party",
+// 			"covidVaccine": true,
+// 			"smoker":true,
+// 			"drinker":false,
+// 			"optOutOfPublicStories":false
+// }
+
+// INSERT INTO user_profile 
+// 		( 
+// 			userId,
+// 			age,
+// 			weight,
+// 			country,
+// 			avatar,
+// 			reputation,
+// 			funFact,
+// 			covidVaccine,
+// 			smoker,
+// 			drinker,
+// 			optOutOfPublicStories,
+// 			status,
+// 			twoFactor,
+// 			cameraPermission,
+// 			microphonePermission,
+// 			notificationPermission,
+// 			filePermission,
+// 			nightMode,
+// 			highContrast,
+// 			slowInternet,
+// 			textSize,
+// 			screenReader)
+// 		VALUES	(10,25,125,'us','',0,'',0,0,0,0,'',0,0,0,0,0,0,0,0,16,0);
