@@ -9,22 +9,21 @@ const API_URL = "http://127.0.0.1:8080/api/protected/";
 const Home: React.FC<Props> = (props: Props) => {
 	const authHeader = getHeader();
 
-	const fetchUserId = async () => {
+	const getUser = async () => {
 		try {
 			const response = await axios.get(API_URL + "user", {
 				headers: { ...authHeader },
 			});
-			props.setUserId(response.data);
-			localStorage.setItem("userId", response.data);
+			localStorage.setItem("user", JSON.stringify(response.data));
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
 	useEffect(() => {
-		const userId = localStorage.getItem("userId");
-		if (!userId) {
-			fetchUserId();
+		const user = localStorage.getItem("user");
+		if (!user) {
+			getUser();
 		}
 	}, []);
 

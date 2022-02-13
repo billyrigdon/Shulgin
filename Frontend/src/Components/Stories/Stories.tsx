@@ -15,14 +15,17 @@ const Stories = () => {
 
 	const getUserStories = async () => {
 		try {
-			const userId = localStorage.getItem("userId");
-			const response = await axios.get(
-				API_URL + "story/user?userId=" + userId,
-				{
-					headers: { ...authHeader },
-				}
-			);
-			setStories(response.data);
+			const localUser = localStorage.getItem("user");
+			if (localUser) {
+				const user = JSON.parse(localUser);
+				const response = await axios.get(
+					API_URL + "story/user?userId=" + user.userId,
+					{
+						headers: { ...authHeader },
+					}
+				);
+				setStories(response.data);
+			}
 		} catch (err) {
 			console.log(err);
 		}
