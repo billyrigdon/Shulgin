@@ -35,7 +35,7 @@ const Signup: React.FC<Props> = (props: Props) => {
 
 		setLoading();
 
-		navigate("/", { replace: true });
+		navigate("/createProfile", { replace: true });
 	};
 
 	return (

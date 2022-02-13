@@ -8,7 +8,7 @@ import Home from "Components/Home/Home";
 import Signup from "Components/Signup/Signup";
 import Splash from "Components/Splash/Splash";
 import Stories from "Components/Stories/Stories";
-
+import CreateProfile from "Components/CreateProfile/CreateProfile"
 
 //Connect redux state and dispatch to components
 const ConnectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
@@ -16,6 +16,7 @@ const ConnectedSignup = connect(mapStateToProps, mapDispatchToProps)(Signup);
 const ConnectedSplash = connect(mapStateToProps, mapDispatchToProps)(Splash);
 const ConnectedHome = connect(mapStateToProps, mapDispatchToProps)(Home);
 const ConnectedStories = connect(mapStateToProps, mapDispatchToProps)(Stories);
+const ConnectedCreateProfile = connect(mapStateToProps,mapDispatchToProps)(CreateProfile)
 
 const App = () => {
 	return (
@@ -24,6 +25,11 @@ const App = () => {
 				<Route path="/login" element={<ConnectedLogin />} />
 				<Route path="/signup" element={<ConnectedSignup />} />
 				<Route path="/splash" element={<ConnectedSplash />} />
+				<Route path="/createProfile" element={
+					<RequireAuth redirectTo={"/splash"}>
+						<ConnectedCreateProfile/>
+					</RequireAuth>
+				 }/>
 				<Route
 					path="/"
 					element={
