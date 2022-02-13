@@ -30,6 +30,7 @@ func setupRouter() (*gin.Engine) {
 	router.Use(static.Serve("/splash", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/login", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/signup", static.LocalFile("./dist",true)))
+	router.Use(static.Serve("/stories", static.LocalFile("./dist",true)))
 
 	//Serve public login/signup routes
 	api:= router.Group("/api") 
@@ -43,6 +44,10 @@ func setupRouter() (*gin.Engine) {
 		//Serve routes that require valid jwt token
 		protected := api.Group("/protected").Use(Auth.Auth())
 		{
+			//Serve CRUD user profile routes
+			protected.GET("/user",Controllers.GetUserProfile)
+			protected.POST("/user/create",Controllers.CreateUserProfile)
+			
 			// Serve CRUD story routes
 			protected.GET("/story/user", Controllers.GetUserStories)
 			protected.GET("/story", Controllers.GetSingleStory)

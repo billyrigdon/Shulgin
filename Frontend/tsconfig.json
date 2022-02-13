@@ -7,6 +7,12 @@
 		"jsx": "react",
 		"outDir": "./dist",
 		"rootDir": "./",
+		"paths": {
+			"Types": ["src/Types/*"],
+			"Components": ["src/Components/*"],
+			"Redux": ["src/Redux/*"],
+			"Auth": ["src/Auth/*"]
+		},
 		"isolatedModules": true,
 		"strict": true,
 		"moduleResolution": "node",

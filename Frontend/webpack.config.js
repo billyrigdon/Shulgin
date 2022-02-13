@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { ModuleFilenameHelpers } = require("webpack");
 
 module.exports = {
 	entry: path.resolve(__dirname, "src", "index.tsx"),
@@ -13,6 +14,12 @@ module.exports = {
 	resolve: {
 		preferRelative: true,
 		extensions: [".js", ".ts", ".tsx"],
+		alias: {
+			Auth: path.resolve(process.cwd(), "src/Auth/"),
+			Components: path.resolve(process.cwd(), "src/Components/"),
+			Redux: path.resolve(process.cwd(), "src/Redux/"),
+			Types: path.resolve(process.cwd(), "src/Types/"),
+		},
 	},
 	module: {
 		rules: [

@@ -1,52 +1,22 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../Login/Login";
-import Home from "../Home/Home";
-import Signup from "../Signup/Signup";
-import Splash from "../Splash/Splash";
+import { Routes, Route } from "react-router-dom";
 import React from "react";
-import { getAuth } from "../../Auth/AuthService";
-import { State } from "../../Types/Redux";
-import { ThunkDispatch } from "redux-thunk";
-import { Action } from "redux";
-import { connect, ConnectedProps } from "react-redux";
-import { toggleLoading } from "../../Redux/store";
-
-//Redux config
-const mapStateToProps = (state: State) => {
-	return {
-		isLoading: state.isLoading,
-	};
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, Action>) => {
-	return {
-		toggleLoading: (isLoading: boolean) => {
-			dispatch(toggleLoading(isLoading));
-		},
-	};
-};
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export type Props = PropsFromRedux;
+import { connect } from "react-redux";
+import { mapStateToProps,mapDispatchToProps } from "Redux/MapProps";
+import RequireAuth from "Components/RequireAuth/RequireAuth";
+import Login from "Components/Login/Login";
+import Home from "Components/Home/Home";
+import Signup from "Components/Signup/Signup";
+import Splash from "Components/Splash/Splash";
+import Stories from "Components/Stories/Stories";
+import CreateProfile from "Components/CreateProfile/CreateProfile"
 
 //Connect redux state and dispatch to components
 const ConnectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
 const ConnectedSignup = connect(mapStateToProps, mapDispatchToProps)(Signup);
 const ConnectedSplash = connect(mapStateToProps, mapDispatchToProps)(Splash);
-
-//Redirect to protected route if authenticated
-type ProtectedRoute = {
-	children: JSX.Element;
-	redirectTo: string;
-};
-
-const RequireAuth = ({ children, redirectTo }: ProtectedRoute) => {
-	const isAuthenticated = getAuth();
-	return isAuthenticated ? children : <Navigate to={redirectTo} />;
-};
+const ConnectedHome = connect(mapStateToProps, mapDispatchToProps)(Home);
+const ConnectedStories = connect(mapStateToProps, mapDispatchToProps)(Stories);
+const ConnectedCreateProfile = connect(mapStateToProps,mapDispatchToProps)(CreateProfile)
 
 const App = () => {
 	return (
@@ -55,11 +25,24 @@ const App = () => {
 				<Route path="/login" element={<ConnectedLogin />} />
 				<Route path="/signup" element={<ConnectedSignup />} />
 				<Route path="/splash" element={<ConnectedSplash />} />
+				<Route path="/createProfile" element={
+					<RequireAuth redirectTo={"/splash"}>
+						<ConnectedCreateProfile/>
+					</RequireAuth>
+				 }/>
 				<Route
 					path="/"
 					element={
 						<RequireAuth redirectTo={"/splash"}>
-							<Home />
+							<ConnectedHome />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path="/stories"
+					element={
+						<RequireAuth redirectTo={"/splash"}>
+							<ConnectedStories />
 						</RequireAuth>
 					}
 				/>

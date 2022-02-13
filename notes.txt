@@ -1,0 +1,10 @@
+--pulling in user profile and stories
+signup/login > get token
+use token > access home page
+check local storage for user
+attempt to pull user from database
+if fail > redirect to second user signup page
+if success > load in user profile,stories, and home page
+
+
+--figure out cors and header
