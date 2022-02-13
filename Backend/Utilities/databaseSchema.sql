@@ -4,12 +4,43 @@ CREATE TABLE users (
 	username TEXT,
 	password TEXT,
 	email TEXT,
-	profilePic TEXT,
 	dateCreated DATE
 );
 
 CREATE UNIQUE INDEX user_email
 ON users(email);
+
+CREATE TABLE user_profile (
+	userId INT,
+	username TEXT,
+	age INT,
+	weight INT,
+	country TEXT,
+	avatar TEXT,
+	status TEXT,
+	reputation INT,
+	funFact TEXT,
+	covidVaccine BOOLEAN, 
+	smoker BOOLEAN,
+	drinker BOOLEAN,
+	twoFactor BOOLEAN,
+	optOutOfPublicStories BOOLEAN,
+	cameraPermission BOOLEAN,
+	microphonePermission BOOLEAN,
+	notificationPermission BOOLEAN,
+	filePermission BOOLEAN,
+	nightMode BOOLEAN,
+	highContrast BOOLEAN,
+	slowInternet BOOLEAN,
+	textSize INT,
+	screenReader BOOLEAN,
+	CONSTRAINT fk_userId
+		FOREIGN KEY(userId)
+			REFERENCES users(userId)
+);
+
+CREATE UNIQUE INDEX profile_userId
+ON user_profile(userId);
 
 -- Stories
 CREATE TABLE stories (
@@ -50,34 +81,3 @@ CREATE UNIQUE INDEX drug_dosage
 ON user_drugs(userId,dosage,drugId);
 
 
-CREATE TABLE user_profile (
-	userId INT,
-	username TEXT,
-	age INT,
-	weight INT,
-	country TEXT,
-	avatar TEXT,
-	status TEXT,
-	reputation INT,
-	funFact TEXT,
-	covidVaccine BOOLEAN, 
-	smoker BOOLEAN,
-	drinker BOOLEAN,
-	twoFactor BOOLEAN,
-	optOutOfPublicStories BOOLEAN,
-	cameraPermission BOOLEAN,
-	microphonePermission BOOLEAN,
-	notificationPermission BOOLEAN,
-	filePermission BOOLEAN,
-	nightMode BOOLEAN,
-	highContrast BOOLEAN,
-	slowInternet BOOLEAN,
-	textSize INT,
-	screenReader BOOLEAN,
-	CONSTRAINT fk_userId
-		FOREIGN KEY(userId)
-			REFERENCES users(userId)
-);
-
-CREATE UNIQUE INDEX profile_userId
-ON user_profile(userId);
