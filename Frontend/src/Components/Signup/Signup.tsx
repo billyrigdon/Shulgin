@@ -1,8 +1,8 @@
 import React from "react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signup } from "../../Auth/AuthService";
-import { Props } from "../App/App";
+import { signup } from "Auth/AuthService";
+import { Props } from "Types/Redux";
 
 const Signup: React.FC<Props> = (props: Props) => {
 	const [username, setUsername] = useState("");
