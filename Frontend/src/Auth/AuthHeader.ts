@@ -6,7 +6,6 @@ export const getHeader = () => {
 	const authHeader: AuthHeader = {
 		Authorization: "",
 		"Content-type": "application/json",
-		"Access-Control-Allow-Origin": true,
 	};
 
 	if (token) {

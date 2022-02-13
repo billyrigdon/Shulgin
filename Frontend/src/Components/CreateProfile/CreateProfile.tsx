@@ -5,7 +5,7 @@ import { AuthHeader } from "Types/AuthHeader";
 import { getHeader } from "Auth/AuthHeader";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://127.0.0.1:8080/api/protected/user";
+const API_URL = "http://127.0.0.1:8080/api/protected/user/";
 
 const CreateProfile: React.FC<Props> = (props: Props) => {
 	const [age, setAge] = useState(18);
@@ -17,6 +17,7 @@ const CreateProfile: React.FC<Props> = (props: Props) => {
 	const [smoker, setSmoker] = useState(false);
 	const [drinker, setDrinker] = useState(false);
 	const [optOut, setOptOut] = useState(false);
+	const navigate = useNavigate();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		switch (e.target.name) {
@@ -26,27 +27,35 @@ const CreateProfile: React.FC<Props> = (props: Props) => {
 			}
 			case "weight": {
 				setWeight(parseInt(e.target.value));
+				break;
 			}
 			case "country": {
 				setCountry(e.target.value);
+				break;
 			}
 			case "avatar": {
 				setAvatar(e.target.value);
+				break;
 			}
 			case "funFact": {
 				setFunFact(e.target.value);
+				break;
 			}
 			case "covidVaccine": {
 				setCovidVaccine(!covidVaccine);
+				break;
 			}
 			case "smoker": {
 				setSmoker(!smoker);
+				break;
 			}
 			case "drinker": {
 				setDrinker(!drinker);
+				break;
 			}
 			case "optOut": {
 				setOptOut(!optOut);
+				break;
 			}
 			default: {
 				break;
@@ -54,28 +63,34 @@ const CreateProfile: React.FC<Props> = (props: Props) => {
 		}
 	};
 
-	const addUserProfile = async () => {
+	const addUserProfile = async (e: React.SyntheticEvent) => {
+		e.preventDefault();
+
 		const authHeader = getHeader();
-		const navigate = useNavigate();
+
+		console.log("Running");
+
+		console.log(authHeader);
+
 		const response = await axios.post(
-			API_URL + "/create",
+			API_URL + "create",
 			{
-				age,
-				weight,
-				country,
-				avatar,
-				funFact,
-				covidVaccine,
-				smoker,
-				drinker,
+				age: age,
+				weight: weight,
+				country: country,
+				avatar: avatar,
+				funFact: funFact,
+				covidVaccine: covidVaccine,
+				smoker: smoker,
+				drinker: drinker,
 				optOutOfPublicStories: optOut,
 			},
 			{
-				headers: { ...authHeader },
+				headers: authHeader,
 			}
 		);
 
-		localStorage.setItem("user", response.data);
+		localStorage.setItem("user", JSON.stringify(response.data));
 		navigate("/", { replace: true });
 	};
 

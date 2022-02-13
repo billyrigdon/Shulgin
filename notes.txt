@@ -8,3 +8,5 @@ if success > load in user profile,stories, and home page
 
 
 --figure out cors and header
+
+--Change response from profilecreate to return all fields from database so it sends the right user object
