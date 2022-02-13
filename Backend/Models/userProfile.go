@@ -25,3 +25,26 @@ type UserProfile struct {
 	ScreenReader bool `json:"screenReader"`
 }
 
+// userId,
+// age,
+// weight,
+// country,
+// avatar,
+// status,
+// reputation,
+// funFact,
+// covidVaccine,
+// smoker,
+// drinker,
+// twoFactor,
+// optOutOfPublicStories,
+// cameraPermission,
+// microphonePermission,
+// notificationPermission,
+// filePermission,
+// nightMode,
+// highContrast,
+// slowInternet,
+// textSize,
+// screenReader
+
