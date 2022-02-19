@@ -8,13 +8,15 @@ import {HttpClientModule} from "@angular/common/http";
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component'
 import { AuthInterceptorProviders } from './helpers/auth.interceptor';
+import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    CreateProfileComponent
   ],
   imports: [
     BrowserModule,

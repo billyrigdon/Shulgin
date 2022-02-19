@@ -33,7 +33,7 @@ export class RegisterComponent {
         .signup(val.username, val.email, val.password)
         .subscribe((res) => {
           this.tokenStorageService.saveToken(res.token)          
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/createProfile');
         });
     }
   }
