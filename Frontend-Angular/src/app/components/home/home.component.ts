@@ -46,12 +46,18 @@ export class HomeComponent implements OnInit {
 					.subscribe((res) => {
 						this.stories = JSON.parse(res);
 					});
-				//Get Profile if it does not exist in local storage, save it and reload page
+				//Get Profile if it does not exist in local storage
 			} else {
 				this.profileService.getProfile().subscribe((res) => {
 					this.profileService.setProfile(res);
-					window.location.reload();
 				});
+				//If user profile successfully saved, reload page
+				if (localStorage.getItem('user')) {
+					window.location.reload()
+					//If couldn't get user profile, navigate to createProfile page
+				} else {
+					this.router.navigateByUrl("/createProfile")
+				}
 			}
 		} else {
 			this.router.navigateByUrl('/splash');

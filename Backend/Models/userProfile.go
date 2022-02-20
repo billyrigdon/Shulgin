@@ -1,5 +1,6 @@
 package models
 
+//TODO: Add username
 type UserProfile struct {
 	UserId int `json:"userId"`
 	Age int `json:"age"`

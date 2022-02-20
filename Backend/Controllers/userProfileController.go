@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//TODO: Add username to sql queries
 func GetUserProfile(context *gin.Context) {
 	token := context.Request.Header.Get("Authorization")
 	userId := GetUserId(token)

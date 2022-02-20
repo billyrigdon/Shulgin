@@ -28,6 +28,7 @@ export class SignupComponent {
   signup() {
     const val = this.form.value;
 
+    //Send post request, save token response to local storage, navigate to createProfile page
     if (val.username && val.email && val.password) {
       this.authService
         .signup(val.username, val.email, val.password)

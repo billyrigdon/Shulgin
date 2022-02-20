@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
 		});
 	}
 
+	//Make login post request, save token response to session storage, navigate to home
 	login() {
 		const val = this.form.value;
 
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
+	//If already logged in and user profile found, navigate to home 
 	ngOnInit(): void {
 		if (this.tokenStorage.getToken()) {
 			if (this.profileService.getProfile()) {

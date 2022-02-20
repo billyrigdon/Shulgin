@@ -1,3 +1,4 @@
+//TODO: Add username 
 export type UserProfile = {
 	userId: number;
 	age: number;

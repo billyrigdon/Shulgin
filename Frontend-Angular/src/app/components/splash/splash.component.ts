@@ -13,6 +13,7 @@ export class SplashComponent implements OnInit {
 		private tokenStorageService: TokenStorageService
 	) {}
 
+	//If already logged in, navigate to homepage
 	ngOnInit(): void {
 		if (this.tokenStorageService.getToken()) {
 			this.router.navigateByUrl('/home');

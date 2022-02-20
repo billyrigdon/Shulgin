@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
+//Intercept all http requests and add authentication header using token from session storage
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private token: TokenStorageService) {}

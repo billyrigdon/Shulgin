@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
 import { UserProfile } from '../types/user';
 
 const API_URL = 'http://127.0.0.1:8080/api/protected/user';
@@ -24,5 +23,9 @@ export class ProfileService {
 
 	getProfile() {
 		return this.http.get(API_URL, headers);
+	}
+
+	removeProfile() {
+		localStorage.removeItem('user');
 	}
 }

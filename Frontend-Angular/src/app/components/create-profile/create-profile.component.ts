@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserProfile } from 'src/app/types/user';
@@ -59,12 +57,14 @@ export class CreateProfileComponent implements OnInit {
 		};
 	}
 
+	//Redirect to splash screen if not logged in
 	ngOnInit(): void {
 		if (!this.tokenStorageService.getToken()) {
 			this.router.navigateByUrl("splash");
 		}
 	}
 
+	//Create new user_profile entry in database using fields from form and redirect to home page
 	submitProfile() {
 		let val = this.form.value;
 
