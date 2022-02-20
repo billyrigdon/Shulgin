@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ../Frontend-Angular
+cd ../Frontend
 npm install
 ng build
 rm -r ../Backend/dist
