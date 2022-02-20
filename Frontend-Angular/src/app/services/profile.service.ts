@@ -15,10 +15,14 @@ export class ProfileService {
 	constructor(private http: HttpClient) {}
 
 	createProfile(userProfile: UserProfile) {
-		return this.http.post(API_URL + '/create', userProfile,headers);
+		return this.http.post(API_URL + '/create', userProfile, headers);
 	}
 
 	setProfile(userProfile: Object) {
 		localStorage.setItem('user', JSON.stringify(userProfile));
+	}
+
+	getProfile() {
+		return this.http.get(API_URL, headers);
 	}
 }

@@ -5,18 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import {HttpClientModule} from "@angular/common/http";
-import { RegisterComponent } from './components/register/register.component';
+import { SignupComponent } from './components/register/signup.component';
 import { HomeComponent } from './components/home/home.component'
-import { AuthInterceptorProviders } from './helpers/auth.interceptor';
+import { AuthInterceptorProviders } from './guards/auth.interceptor';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
+import { SplashComponent } from './components/splash/splash.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
+    SignupComponent,
     HomeComponent,
-    CreateProfileComponent
+    CreateProfileComponent,
+    SplashComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

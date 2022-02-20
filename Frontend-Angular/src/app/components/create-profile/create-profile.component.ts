@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserProfile } from 'src/app/types/user';
 
 @Component({
@@ -12,9 +15,12 @@ import { UserProfile } from 'src/app/types/user';
 export class CreateProfileComponent implements OnInit {
 	form: FormGroup;
 	user: UserProfile;
+
 	constructor(
 		private formBuilder: FormBuilder,
-		private profileService: ProfileService
+		private profileService: ProfileService,
+		private router: Router,
+		private tokenStorageService: TokenStorageService
 	) {
 		this.form = this.formBuilder.group({
 			age: ['', Validators.required],
@@ -53,7 +59,11 @@ export class CreateProfileComponent implements OnInit {
 		};
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		if (!this.tokenStorageService.getToken()) {
+			this.router.navigateByUrl("splash");
+		}
+	}
 
 	submitProfile() {
 		let val = this.form.value;
@@ -70,8 +80,8 @@ export class CreateProfileComponent implements OnInit {
 		this.user.optOutOfPublicStories = val.optOut;
 
 		this.profileService.createProfile(this.user).subscribe((res) => {
-			console.log(res);
 			this.profileService.setProfile(res);
+			this.router.navigateByUrl("/home");
 		});
 	}
 }
