@@ -1,0 +1,21 @@
+#navbar {
+	width: 100vw;
+	height: 8vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+
+	ul {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
+		text-decoration: none;
+
+		li {
+			text-decoration: none;
+			cursor: pointer;
+		}
+	}
+}

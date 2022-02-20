@@ -1,9 +1,9 @@
 #!/bin/bash
-cd ../Frontend
+cd ../Frontend-Angular
 npm install
-npm run build
+ng build
 rm -r ../Backend/dist
-mv ./dist ../Backend/dist
+mv ./dist/shulgin ../Backend/dist
 cd ../Backend
 go get
 go build .

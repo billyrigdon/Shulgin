@@ -1,0 +1,10 @@
+<app-navbar></app-navbar>
+
+<div id="profile-short">
+	<h2>{{ username }}</h2>
+	<p>{{ funFact }}</p>
+</div>
+
+<div id="user-stories" *ngFor="let story of stories">
+	<p>{{ story.journal }}</p>
+</div>
