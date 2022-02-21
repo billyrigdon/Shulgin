@@ -33,6 +33,7 @@ func setupRouter() (*gin.Engine) {
 	router.Use(static.Serve("/stories", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/createProfile", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/home", static.LocalFile("./dist",true)))
+	router.Use(static.Serve("/addDrug", static.LocalFile("./dist",true)))
 
 	//Serve public login/signup routes
 	api:= router.Group("/api") 
@@ -59,6 +60,7 @@ func setupRouter() (*gin.Engine) {
 			//Serve CRUD drug routes
 			protected.GET("/drug",Controllers.GetAllDrugs)
 			protected.POST("/drug/create",Controllers.AddDrug)
+			protected.GET("/drug/get",Controllers.GetDrug)	
 
 			//Serve CRUD user_drug routes
 			protected.GET("/user/drugs/get",Controllers.GetUserDrugs)

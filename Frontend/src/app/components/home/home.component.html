@@ -4,6 +4,9 @@
 	<div id="profile-short">
 		<h2>{{ username }}</h2>
 		<p>{{ funFact }}</p>
+		<ul id="user-drugs" *ngFor="let drug of userDrugs">
+			<li>{{ drug.drugName }} - {{ drug.dosage }}</li>
+		</ul>
 	</div>
 
 	<div id="user-stories" *ngFor="let story of stories">
