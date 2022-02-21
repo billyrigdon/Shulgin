@@ -57,7 +57,7 @@ func setupRouter() (*gin.Engine) {
 			protected.DELETE("/story/delete",Controllers.DeleteStory)
 
 			//Serve CRUD drug routes
-			protected.GET("/drug",Controllers.GetDrug)
+			protected.GET("/drug",Controllers.GetAllDrugs)
 			protected.POST("/drug/create",Controllers.AddDrug)
 
 			//Serve CRUD user_drug routes
