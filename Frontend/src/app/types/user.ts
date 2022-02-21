@@ -1,6 +1,7 @@
 //TODO: Add username 
 export type UserProfile = {
 	userId: number;
+	username: string;
 	age: number;
 	weight: number;
 	country: string;

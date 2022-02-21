@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { UserProfile } from 'src/app/types/user';
 
 @Component({
@@ -18,7 +18,7 @@ export class CreateProfileComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private profileService: ProfileService,
 		private router: Router,
-		private tokenStorageService: TokenStorageService
+		private storageService: StorageService
 	) {
 		this.form = this.formBuilder.group({
 			age: ['', Validators.required],
@@ -33,6 +33,7 @@ export class CreateProfileComponent implements OnInit {
 		});
 		this.user = {
 			userId: 0,
+			username: "",
 			age: 0,
 			weight: 0,
 			country: '',
@@ -59,7 +60,7 @@ export class CreateProfileComponent implements OnInit {
 
 	//Redirect to splash screen if not logged in
 	ngOnInit(): void {
-		if (!this.tokenStorageService.getToken()) {
+		if (!this.storageService.getToken()) {
 			this.router.navigateByUrl("splash");
 		}
 	}
@@ -67,21 +68,25 @@ export class CreateProfileComponent implements OnInit {
 	//Create new user_profile entry in database using fields from form and redirect to home page
 	submitProfile() {
 		let val = this.form.value;
+		let username = this.storageService.getUser();
 
-		this.user.age = parseInt(val.age);
-		this.user.weight = parseInt(val.weight);
-		this.user.country = val.country;
-		this.user.avatar = val.avatar;
-		this.user.status = val.status;
-		this.user.funFact = val.funFact;
-		this.user.covidVaccine = val.covidVaccine;
-		this.user.smoker = val.smoker;
-		this.user.drinker = val.drinker;
-		this.user.optOutOfPublicStories = val.optOut;
+		if (username !== null) {
+			this.user.username = username		
+			this.user.age = parseInt(val.age);
+			this.user.weight = parseInt(val.weight);
+			this.user.country = val.country;
+			this.user.avatar = val.avatar;
+			this.user.status = val.status;
+			this.user.funFact = val.funFact;
+			this.user.covidVaccine = val.covidVaccine;
+			this.user.smoker = val.smoker;
+			this.user.drinker = val.drinker;
+			this.user.optOutOfPublicStories = val.optOut;
 
-		this.profileService.createProfile(this.user).subscribe((res) => {
-			this.profileService.setProfile(res);
-			this.router.navigateByUrl("/home");
-		});
+			this.profileService.createProfile(this.user).subscribe((res) => {
+				this.profileService.setProfile(res);
+				this.router.navigateByUrl("/home");
+			});
+		}
 	}
 }

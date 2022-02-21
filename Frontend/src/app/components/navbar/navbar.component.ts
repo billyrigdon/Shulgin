@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
 	selector: 'app-navbar',
@@ -9,7 +9,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class NavbarComponent implements OnInit {
 	constructor(
-		private tokenStorageService: TokenStorageService,
+		private storageService: StorageService,
 		private profileService: ProfileService
 	) {}
 
@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
 
 	//Remove token and user profile from session/local storage. Reload page
 	signout() {
-		this.tokenStorageService.signout();
+		this.storageService.signout();
 		this.profileService.removeProfile();
 		window.location.reload();
 	}
