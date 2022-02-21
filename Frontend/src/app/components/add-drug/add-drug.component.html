@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<form id="add-drug-form" [formGroup]="form">
+	<fieldset>
+		<legend>Add Drug</legend>
+		<div class="form-field">
+			<select name="drugId" formControlName="drugId">
+				<option *ngFor="let drug of drugs" value="{{ drug.drugId }}">
+					{{ drug.name }}
+				</option>
+			</select>
+		</div>
+		<div class="form-field">
+			<label>Dosage</label>
+			<input name="dosage" formControlName="dosage" type="text" />
+		</div>
+		<div class="form-buttons">
+			<button class="button button-primary" (click)="addDrug()">Add Drug</button>
+		</div>
+	</fieldset>
+</form>

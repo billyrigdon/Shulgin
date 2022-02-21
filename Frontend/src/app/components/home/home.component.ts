@@ -5,6 +5,8 @@ import { StoryService } from 'src/app/services/story.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserProfile } from 'src/app/types/user';
 import { Story } from '../../types/story';
+import { UserDrug } from 'src/app/types/userDrug';
+import { DrugService } from 'src/app/services/drug.service';
 
 @Component({
 	selector: 'app-home',
@@ -13,6 +15,7 @@ import { Story } from '../../types/story';
 })
 export class HomeComponent implements OnInit {
 	stories: Array<Story>;
+	userDrugs: Array<UserDrug>;
 	userId: number;
 	funFact: string;
 	username: string;
@@ -21,9 +24,11 @@ export class HomeComponent implements OnInit {
 		private storyService: StoryService,
 		private router: Router,
 		private storageService: StorageService,
-		private profileService: ProfileService
+		private profileService: ProfileService,
+		private drugService: DrugService
 	) {
 		this.stories = [];
+		this.userDrugs = [];
 		this.userId = 0;
 		this.username = '';
 		this.funFact = '';
@@ -45,6 +50,10 @@ export class HomeComponent implements OnInit {
 					.subscribe((res) => {
 						this.stories = JSON.parse(res);
 					});
+				//Get list of drugs that user is taking
+				this.drugService.getUserDrugs().subscribe((res) => {
+					this.userDrugs = JSON.parse(res);
+				});
 				//Get Profile if it does not exist in local storage
 			} else {
 				this.profileService.getProfile().subscribe((res) => {

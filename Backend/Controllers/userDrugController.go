@@ -27,13 +27,15 @@ func GetUserDrugs(context *gin.Context) {
 
 	sqlStatement := `
 		SELECT 
-			userDrugId,
-			userId,
-			dosage,
-			drugId,
-			dateStarted,
-			dateEnded
-		FROM user_drugs
+			ud.userDrugId,
+			ud.userId,
+			d.name,
+			ud.dosage,
+			ud.drugId,
+			ud.dateStarted,
+			ud.dateEnded
+		FROM user_drugs ud
+		INNER JOIN drugs d on d.drugId = ud.drugId
 		WHERE userId = $1
 		AND dateEnded IS NULL;
 		`
@@ -56,7 +58,8 @@ func GetUserDrugs(context *gin.Context) {
 		var userDrug Models.UserDrug
 
 		err = rows.Scan(&userDrug.UserDrugId, 
-			&userDrug.UserId, 
+			&userDrug.UserId,
+			&userDrug.DrugName,
 			&userDrug.Dosage,
 			&userDrug.DrugId, 
 			&userDrug.DateStarted, 

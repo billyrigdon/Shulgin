@@ -9,6 +9,58 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetAllDrugs(context *gin.Context) {
+
+	var drugs []Models.Drug
+
+	db, dbErr := Utilities.ConnectPostgres();
+	defer db.Close()
+
+	dbErr = db.Ping()
+	if dbErr != nil {
+		log.Error(dbErr)
+	}
+
+	sqlStatement := `
+		SELECT drugid,name
+		FROM drugs;
+	`
+
+	rows,err := db.Query(sqlStatement)
+
+	if err != nil {
+		log.Error(err)
+		context.JSON(500, gin.H{
+			"msg": "Error getting drugs",
+		})
+		context.Abort()
+
+		return
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var drug Models.Drug
+
+		err = rows.Scan(&drug.DrugId,&drug.Name)
+
+		if err = rows.Err(); err != nil {
+			log.Error(err)
+			context.JSON(500, gin.H{
+				"msg": "Error getting drugs",
+			})
+			context.Abort()
+
+			return
+		}
+
+		drugs = append(drugs,drug)
+	}
+
+		context.JSON(200,drugs)
+}
+
 //Requires ?drugId= , returns drug name and id
 func GetDrug(context *gin.Context) {
 	var drug Models.Drug

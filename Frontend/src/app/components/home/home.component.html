@@ -1,10 +1,21 @@
 <app-navbar></app-navbar>
 
-<div id="profile-short">
-	<h2>{{ username }}</h2>
-	<p>{{ funFact }}</p>
-</div>
+<div id="home-container">
+	<div id="profile-short">
+		<h2>{{ username }}</h2>
+		<p>{{ funFact }}</p>
+		<ul id="user-drugs">
+			<li *ngFor="let drug of userDrugs">
+				{{ drug.drugName }} - {{ drug.dosage }}
+			</li>
+		</ul>
+	</div>
 
-<div id="user-stories" *ngFor="let story of stories">
-	<p>{{ story.journal }}</p>
+	<div id="user-stories">
+		<h3>Your stories</h3>
+		<div class="user-story" *ngFor="let story of stories">
+			<h4>{{ story.date }} - {{ story.journal }}</h4>
+			<p>Overall rating: {{ story.rating }}</p>
+		</div>
+	</div>
 </div>

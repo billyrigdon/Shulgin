@@ -1,0 +1,21 @@
+#home-container {
+	display: flex;
+	width: 100vw;
+	height: 92vh;
+	position: absolute;
+	top: 8vh;
+	left: 0;
+	flex-direction: row;
+
+	#profile-short {
+		display: flex;
+		flex-direction: column;
+		width: 50%;
+	}
+
+	#user-stories {
+		display: flex;
+		flex-direction: column;
+		width: 50%;
+	}
+}

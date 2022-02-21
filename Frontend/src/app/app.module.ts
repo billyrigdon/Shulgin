@@ -11,6 +11,8 @@ import { AuthInterceptorProviders } from './guards/auth.interceptor';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 import { SplashComponent } from './components/splash/splash.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AddDrugComponent } from './components/add-drug/add-drug.component';
+import { AddStoryComponent } from './components/add-story/add-story.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     HomeComponent,
     CreateProfileComponent,
     SplashComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddDrugComponent,
+    AddStoryComponent
   ],
   imports: [
     BrowserModule,
