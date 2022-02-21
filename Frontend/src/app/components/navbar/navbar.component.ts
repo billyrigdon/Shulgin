@@ -24,6 +24,10 @@ export class NavbarComponent implements OnInit {
 	goToDrugs() {
 		this.router.navigateByUrl("addDrug")
 	}
+
+	goToAddStory() {
+		this.router.navigateByUrl("addStory")
+	}
 	//Remove token and user profile from session/local storage. Reload page
 	signout() {
 		this.storageService.signout();

@@ -12,6 +12,7 @@ import { CreateProfileComponent } from './components/create-profile/create-profi
 import { SplashComponent } from './components/splash/splash.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddDrugComponent } from './components/add-drug/add-drug.component';
+import { AddStoryComponent } from './components/add-story/add-story.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AddDrugComponent } from './components/add-drug/add-drug.component';
     CreateProfileComponent,
     SplashComponent,
     NavbarComponent,
-    AddDrugComponent
+    AddDrugComponent,
+    AddStoryComponent
   ],
   imports: [
     BrowserModule,
