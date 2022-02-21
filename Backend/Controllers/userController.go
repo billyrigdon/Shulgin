@@ -41,7 +41,7 @@ func GetUserId(token string) int {
 func UserSignup(context *gin.Context) {
 	
 	var user Models.User
-
+	
 	err:= context.ShouldBindJSON(&user)
 	if err != nil {
 		log.Error(err)
@@ -103,6 +103,7 @@ func UserSignup(context *gin.Context) {
 	}
 
 	tokenResponse := Auth.GetToken(user.Email)
+	tokenResponse.Username = user.Username
 
 	//return login token on success
 	context.JSON(200,tokenResponse)
@@ -135,14 +136,14 @@ func UserLogin(context *gin.Context) {
 
 	//Query db using email in payload	
 	sqlStatement := `
-		SELECT password
+		SELECT username,password
 		FROM users
 		WHERE email = $1;
 	`
 	row := db.QueryRow(sqlStatement,payload.Email)
 
 	//Check username
-	err = row.Scan(&user.Password)
+	err = row.Scan(&user.Username,&user.Password)
 
 	if err != nil {
 		log.Error(err)
@@ -168,7 +169,7 @@ func UserLogin(context *gin.Context) {
 	}
 
 	tokenResponse := Auth.GetToken(payload.Email)
-
+	tokenResponse.Username = user.Username
 	//return login token on success
 	context.JSON(200,tokenResponse)
 

@@ -146,6 +146,7 @@ func Auth() gin.HandlerFunc {
 
 func GetToken(email string) Models.LoginResponse {
 	tokenResponse := Models.LoginResponse{
+		Username: "",
 		Token: "",
 	}
 	

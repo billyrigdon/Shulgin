@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
 	selector: 'app-splash',
@@ -10,12 +10,12 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 export class SplashComponent implements OnInit {
 	constructor(
 		private router: Router,
-		private tokenStorageService: TokenStorageService
+		private storageService: StorageService
 	) {}
 
 	//If already logged in, navigate to homepage
 	ngOnInit(): void {
-		if (this.tokenStorageService.getToken()) {
+		if (this.storageService.getToken() && this.storageService.getUser()) {
 			this.router.navigateByUrl('/home');
 		}
 	}

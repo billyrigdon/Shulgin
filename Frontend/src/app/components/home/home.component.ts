@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { StoryService } from 'src/app/services/story.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { UserProfile } from 'src/app/types/user';
 import { Story } from '../../types/story';
 
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
 	constructor(
 		private storyService: StoryService,
 		private router: Router,
-		private tokenStorageService: TokenStorageService,
+		private storageService: StorageService,
 		private profileService: ProfileService
 	) {
 		this.stories = [];
@@ -29,10 +29,9 @@ export class HomeComponent implements OnInit {
 		this.funFact = '';
 	}
 
-
 	ngOnInit(): void {
 		//Check if logged in and navigate to splash if not
-		if (this.tokenStorageService.getToken()) {
+		if (this.storageService.getToken() && this.storageService.getUser()) {
 			if (localStorage.getItem('user')) {
 				//Get user fields from user stored in local storage
 				let user = JSON.parse(localStorage.getItem('user') || '');
@@ -50,14 +49,14 @@ export class HomeComponent implements OnInit {
 			} else {
 				this.profileService.getProfile().subscribe((res) => {
 					this.profileService.setProfile(res);
+					//If user profile successfully saved, reload page
+					if (localStorage.getItem('user')) {
+						window.location.reload();
+						//If couldn't get user profile, navigate to createProfile page
+					} else {
+						this.router.navigateByUrl('/createProfile');
+					}
 				});
-				//If user profile successfully saved, reload page
-				if (localStorage.getItem('user')) {
-					window.location.reload()
-					//If couldn't get user profile, navigate to createProfile page
-				} else {
-					this.router.navigateByUrl("/createProfile")
-				}
 			}
 		} else {
 			this.router.navigateByUrl('/splash');

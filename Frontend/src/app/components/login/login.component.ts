@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
 	selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private authService: AuthService,
-		private tokenStorage: TokenStorageService,
+		private storageService: StorageService,
 		private router: Router,
 		private profileService: ProfileService
 	) {
@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
 
 		if (val.email && val.password) {
 			this.authService.login(val.email, val.password).subscribe((res) => {
-				this.tokenStorage.saveToken(res.token);
+				this.storageService.saveUser(res.username);
+				this.storageService.saveToken(res.token);
 				this.router.navigateByUrl('/home');
 			});
 		}
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
 
 	//If already logged in and user profile found, navigate to home 
 	ngOnInit(): void {
-		if (this.tokenStorage.getToken()) {
+		if (this.storageService.getToken()) {
 			if (this.profileService.getProfile()) {
 				this.router.navigateByUrl('/home');
 			}

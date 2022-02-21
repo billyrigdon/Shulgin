@@ -26,6 +26,7 @@ func GetUserProfile(context *gin.Context) {
 	sqlStatement := `
 		SELECT 
 			userId,
+			username,
 			age,
 			weight,
 			country,
@@ -54,6 +55,7 @@ func GetUserProfile(context *gin.Context) {
 	row := db.QueryRow(sqlStatement,userId)
 			
 	err := row.Scan(&user.UserId,
+		&user.Username,
 		&user.Age,
 		&user.Weight,
 		&user.Country,
@@ -118,6 +120,7 @@ func CreateUserProfile(context *gin.Context) {
 		INSERT INTO user_profile 
 		( 
 			userId,
+			username,
 			age,
 			weight,
 			country,
@@ -147,12 +150,13 @@ func CreateUserProfile(context *gin.Context) {
 			$3,
 			$4,
 			$5,
-			0,
 			$6,
+			0,
 			$7,
 			$8,
 			$9,
 			$10,
+			$11,
 			'',
 			false,
 			false,
@@ -171,6 +175,7 @@ func CreateUserProfile(context *gin.Context) {
 
 	db.Exec(sqlStatement,
 		user.UserId,
+		user.Username,
 		user.Age,
 		user.Weight,
 		user.Country,
