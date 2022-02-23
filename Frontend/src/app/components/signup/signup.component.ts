@@ -3,6 +3,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
+import { toggleLoading } from 'src/app/store/shared/actions/shared.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
 
 @Component({
 	selector: 'app-signup',
@@ -16,7 +19,8 @@ export class SignupComponent {
 		private formBuilder: FormBuilder,
 		private authService: AuthService,
 		private router: Router,
-		private storageService: StorageService
+		private storageService: StorageService,
+		private store: Store<AppState>
 	) {
 		this.form = this.formBuilder.group({
 			username: ['', Validators.required],
@@ -26,6 +30,7 @@ export class SignupComponent {
 	}
 
 	signup() {
+		this.store.dispatch(toggleLoading({ status: true }));
 		const val = this.form.value;
 
 		//Send post request, save token response to local storage, navigate to createProfile page
@@ -35,6 +40,7 @@ export class SignupComponent {
 				.subscribe((res) => {
 					this.storageService.saveToken(res.token);
 					this.storageService.saveUser(res.username);
+					this.store.dispatch(toggleLoading({ status: false }));
 					this.router.navigateByUrl('/createProfile');
 				});
 		}
