@@ -13,6 +13,11 @@ import { SplashComponent } from './components/splash/splash.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddDrugComponent } from './components/add-drug/add-drug.component';
 import { AddStoryComponent } from './components/add-story/add-story.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { LoadingComponent } from './components/loading/loading.component';
+import { appReducer } from './store/app.state';
 
 @NgModule({
   declarations: [
@@ -24,14 +29,17 @@ import { AddStoryComponent } from './components/add-story/add-story.component';
     SplashComponent,
     NavbarComponent,
     AddDrugComponent,
-    AddStoryComponent
+    AddStoryComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(appReducer),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [AuthInterceptorProviders],
   bootstrap: [AppComponent]
