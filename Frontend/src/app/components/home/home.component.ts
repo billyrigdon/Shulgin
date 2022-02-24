@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit {
 	userId: number;
 	funFact: string;
 	username: string;
+	reputation: number;
+	status: string;
 
 	constructor(
 		private storyService: StoryService,
@@ -32,6 +34,22 @@ export class HomeComponent implements OnInit {
 		this.userId = 0;
 		this.username = '';
 		this.funFact = '';
+		this.reputation = 0;
+		this.status = '';
+	}
+
+	removeUserDrug(drugId: number) {
+		this.drugService.removeUserDrug(drugId).subscribe((res) => {
+			window.location.reload();
+		});
+	}
+
+	goToAddStory() {
+		this.router.navigateByUrl('addStory');
+	}
+
+	goToDrugs() {
+		this.router.navigateByUrl('addDrug');
 	}
 
 	ngOnInit(): void {
@@ -43,6 +61,8 @@ export class HomeComponent implements OnInit {
 				this.userId = user.userId;
 				this.funFact = user.funFact;
 				this.username = user.username;
+				this.status = user.status;
+				this.reputation = user.reputation;
 
 				//Get stories using userId from local storage
 				this.storyService

@@ -1,20 +1,46 @@
-
 <div id="home-container">
-	<div id="profile-short">
-		<h2>{{ username }}</h2>
-		<p>{{ funFact }}</p>
-		<ul id="user-drugs">
-			<li *ngFor="let drug of userDrugs">
-				{{ drug.drugName }} - {{ drug.dosage }}
-			</li>
-		</ul>
-	</div>
-
-	<div id="user-stories">
-		<h3>Your stories</h3>
-		<div class="user-story" *ngFor="let story of stories">
-			<h4>{{ story.date }} - {{ story.journal }}</h4>
-			<p>Overall rating: {{ story.rating }}</p>
+	<mat-card id="profile-short">
+		<div id="bio">
+			<h1>{{ username }}</h1>
+			<ul>
+				<li>{{ funFact }}</li>
+				<li>Reputation:{{ reputation }}</li>
+				<li>Status:{{ status || "Beta Testing" }}</li>
+			</ul>
 		</div>
-	</div>
+		<div id="user-drugs">
+			<ul>
+				<h3>Drugs I'm taking:</h3>
+				<li *ngFor="let drug of userDrugs">
+					{{ drug.drugName }} - {{ drug.dosage }}
+					<span
+						(click)="removeUserDrug(drug.drugId)"
+						class="material-icons"
+					>
+						delete
+					</span>
+				</li>
+			</ul>
+			<div id="addDrugs">
+				<span class="material-icons" (click)="goToDrugs()">
+					control_point
+				</span>
+			</div>
+		</div>
+	</mat-card>
+
+	<section id="user-stories">
+		<h2>Your stories</h2>
+
+		<div id="story-container">
+			<mat-card class="user-story" *ngFor="let story of stories">
+				<h3>{{ story.journal }}</h3>
+				<p>Date: {{ story.date }}</p>
+				<p>Overall rating: {{ story.rating }}</p>
+			</mat-card>
+		</div>
+		<span class="material-icons" (click)="goToAddStory()"
+			>control_point</span
+		>
+	</section>
 </div>

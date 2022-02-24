@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	
 	Models "shulgin/Models"
 	Utilities "shulgin/Utilities"
 	"time"
@@ -252,4 +251,80 @@ func DeleteStory(context *gin.Context) {
 
 	context.JSON(200, storyId + " deleted successfully")
 		
+}
+
+func GetAllStories(context *gin.Context) {
+	var storyDrugs []Models.StoryDrugs
+
+	db, dbErr := Utilities.ConnectPostgres();
+	defer db.Close()
+		
+	dbErr = db.Ping()
+	if dbErr != nil {
+		log.Error(dbErr)
+	}
+
+	sqlStatement := `
+		SELECT storyId, 
+		userId, 
+		calmness,
+		focus,
+		creativity,
+		mood,
+		irritability,
+		wakefulness,
+		rating,
+		journal,
+		date
+		FROM stories
+		ORDER BY date DESC;
+		`
+
+	rows,err := db.Query(sqlStatement)
+
+	if err != nil {
+		log.Error(err)
+		context.JSON(500, gin.H{
+			"msg": "Error getting stories",
+		})
+		context.Abort()
+
+		return
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		
+		var storyDrug Models.StoryDrugs
+
+		err = rows.Scan(&storyDrug.StoryId, 
+			&storyDrug.UserId, 
+			&storyDrug.Calmness, 
+			&storyDrug.Focus, 
+			&storyDrug.Creativity, 
+			&storyDrug.Mood,
+			&storyDrug.Irritability, 
+			&storyDrug.Wakefulness,
+			&storyDrug.Rating, 
+			&storyDrug.Journal, 
+			&storyDrug.Date)
+
+		if err = rows.Err(); err != nil {
+			log.Error(err)
+			context.JSON(500, gin.H{
+				"msg": "Error getting stories",
+			})
+			context.Abort()
+
+			return
+		}
+
+		storyDrug.Drugs = GetStoryDrugs(storyDrug.StoryId)
+
+		storyDrugs = append(storyDrugs,storyDrug)
+	}
+
+		context.JSON(200,storyDrugs)
+
 }
