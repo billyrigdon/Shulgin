@@ -16,7 +16,7 @@ type Story struct {
 
 type StoryDrugs struct {
 	Story
-	Drugs []UserDrug
+	Drugs []UserDrug `json:"drugs"`
 }
 
 /*

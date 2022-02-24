@@ -3,5 +3,6 @@
 	<div class="story" *ngFor="let story of stories">
 		<h4>{{ story.date }} - {{ story.journal }}</h4>
 		<p>Overall rating: {{ story.rating }}</p>
+		<p *ngFor="let drug of story.drugs">{{ drug.drugName }}</p>
 	</div>
 </div>
