@@ -1,8 +1,22 @@
-<div id="user-stories">
-	<h3>Your stories</h3>
-	<div class="story" *ngFor="let story of stories">
-		<h4>{{ story.date }} - {{ story.journal }}</h4>
-		<p>Overall rating: {{ story.rating }}</p>
-		<p *ngFor="let drug of story.drugs">{{ drug.drugName }}</p>
-	</div>
+<div id="story-container">
+	<mat-card class="story" *ngFor="let story of stories">
+		<h2>{{ story.journal }}</h2>
+		<h5>{{ story.date }}</h5>
+		<h4></h4>
+		<ul id="story-drugs">
+			<li *ngFor="let drug of story.drugs">
+				{{ drug.drugName }} - {{ drug.dosage }}
+			</li>
+		</ul>
+		<h4></h4>
+		<ul>
+			<li>Calmness:{{ story.calmness }}</li>
+			<li>Focus:{{ story.focus }}</li>
+			<li>Creativity:{{ story.creativity }}</li>
+			<li>Mood:{{ story.mood }}</li>
+			<li>Irritability:{{ story.irritability }}</li>
+			<li>Wakefulness:{{ story.wakefulness }}</li>
+			<li>Overall Rating:{{ story.rating }}</li>
+		</ul>
+	</mat-card>
 </div>

@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.mat-typography p,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.mat-typography h3,
+.mat-typography h1 {
+	margin: 0px;
+	padding: 0px;
+}
+
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}

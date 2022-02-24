@@ -21,14 +21,7 @@ export class NavbarComponent implements OnInit {
 		this.router.navigateByUrl('home');
 	}
 
-	goToDrugs() {
-		this.router.navigateByUrl('addDrug');
-	}
-
-	goToAddStory() {
-		this.router.navigateByUrl('addStory');
-	}
-
+	
 	goToExplore() {
 		this.router.navigateByUrl('explore');
 	}
