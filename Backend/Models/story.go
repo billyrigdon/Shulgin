@@ -14,6 +14,10 @@ type Story struct {
 	Date string `json:"date"`
 }
 
+type StoryDrugs struct {
+	Story
+	Drugs []UserDrug
+}
 
 /*
 JSON and SQL inserts for testing

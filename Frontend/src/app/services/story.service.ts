@@ -25,4 +25,8 @@ export class StoryService {
 	addUserStory(story: Story) {
 		return this.http.post(API_URL + 'story/create', story, headers);
 	}
+
+	getAllStories() {
+		return this.http.get(API_URL + 'story/get', { responseType: 'text' });
+	}
 }

@@ -1,0 +1,7 @@
+<div id="user-stories">
+	<h3>Your stories</h3>
+	<div class="story" *ngFor="let story of stories">
+		<h4>{{ story.date }} - {{ story.journal }}</h4>
+		<p>Overall rating: {{ story.rating }}</p>
+	</div>
+</div>

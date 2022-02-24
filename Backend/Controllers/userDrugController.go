@@ -178,3 +178,54 @@ func RemoveUserDrug(context *gin.Context) {
 
 	context.JSON(200,"DrugId: " + drugId + " removed for userId: " + strconv.Itoa(userId))
 }
+
+func GetStoryDrugs(storyId int) ([]Models.UserDrug){
+	var drugs []Models.UserDrug
+
+	db, dbErr := Utilities.ConnectPostgres();
+	defer db.Close()
+
+	dbErr = db.Ping()
+	if dbErr != nil {
+		log.Error(dbErr)
+	}
+
+	sqlStatement := `
+		SELECT 
+			ud.drugId,
+			ud.dosage,
+			d.name
+		FROM user_drugs ud
+		LEFT JOIN drugs d
+			ON d.drugId = ud.drugId
+		LEFT JOIN stories s
+			ON ud.userId = s.userId
+		WHERE s.storyId = $1
+		AND (ud.dateEnded >= s.date OR ud.dateEnded IS NULL)
+		and ud.dateStarted <= s.date;
+	`
+
+	rows,err := db.Query(sqlStatement, storyId)
+
+	if err != nil {
+		log.Error(err)
+		return drugs
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var drug Models.UserDrug
+
+		err = rows.Scan(&drug.DrugId,&drug.Dosage,&drug.DrugName)
+
+		if err = rows.Err(); err != nil {
+			log.Error(err)
+			return drugs
+		}
+
+		drugs = append(drugs,drug)
+	}
+
+		return drugs
+}

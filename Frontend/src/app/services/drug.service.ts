@@ -40,4 +40,11 @@ export class DrugService {
 			headers
 		);
 	}
+
+	removeUserDrug(drugId: number) {
+		return this.http.delete(
+			API_URL + 'user/drugs/remove' + '?drugId=' + drugId,
+			{ responseType: 'text' }
+		);
+	}
 }

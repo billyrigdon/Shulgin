@@ -34,6 +34,12 @@ export class HomeComponent implements OnInit {
 		this.funFact = '';
 	}
 
+	removeUserDrug(drugId: number) {
+		this.drugService.removeUserDrug(drugId).subscribe((res) => {
+			window.location.reload();
+		});
+	}
+
 	ngOnInit(): void {
 		//Check if logged in and navigate to splash if not
 		if (this.storageService.getToken() && this.storageService.getUser()) {

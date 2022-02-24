@@ -18,6 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { LoadingComponent } from './components/loading/loading.component';
 import { appReducer } from './store/app.state';
+import { ExploreComponent } from './components/explore/explore.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { appReducer } from './store/app.state';
     NavbarComponent,
     AddDrugComponent,
     AddStoryComponent,
-    LoadingComponent
+    LoadingComponent,
+    ExploreComponent
   ],
   imports: [
     BrowserModule,

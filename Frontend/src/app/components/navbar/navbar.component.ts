@@ -18,16 +18,21 @@ export class NavbarComponent implements OnInit {
 	ngOnInit(): void {}
 
 	goToHome() {
-		this.router.navigateByUrl("home")
+		this.router.navigateByUrl('home');
 	}
 
 	goToDrugs() {
-		this.router.navigateByUrl("addDrug")
+		this.router.navigateByUrl('addDrug');
 	}
 
 	goToAddStory() {
-		this.router.navigateByUrl("addStory")
+		this.router.navigateByUrl('addStory');
 	}
+
+	goToExplore() {
+		this.router.navigateByUrl('explore');
+	}
+
 	//Remove token and user profile from session/local storage. Reload page
 	signout() {
 		this.storageService.signout();
