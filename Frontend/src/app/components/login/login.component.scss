@@ -1,0 +1,13 @@
+#login-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 25%;
+	left: 37.5%;
+	margin: 0;
+	height: 30%;
+	#login-form {
+		display: flex;
+		flex-direction: column;
+	}
+}
