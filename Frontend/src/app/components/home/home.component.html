@@ -36,7 +36,7 @@
 			<mat-card class="story" *ngFor="let story of stories">
 				<h2>{{ story.journal }}</h2>
 				<h5>{{ story.date }}</h5>
-				<h4></h4>
+				<br />
 				<ul>
 					<li>Calmness:{{ story.calmness }}</li>
 					<li>Focus:{{ story.focus }}</li>
@@ -48,7 +48,7 @@
 				</ul>
 			</mat-card>
 		</div>
-		<span class="material-icons" (click)="goToAddStory()"
+		<span id="add-story-button" class="material-icons" (click)="goToAddStory()"
 			>control_point</span
 		>
 	</section>

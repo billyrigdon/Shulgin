@@ -1,11 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
+$primary-color: #fbeaff;
+$light-accent-color: #fbeaff;
+$dark-accent-color: #b39cd0;
+$contrast-color: #00c9a7;
+$light-grey: #fcf7ff;
+$dark-grey: #4b4453;
+
 * {
 	margin: 0;
 	padding: 0;
 	border: 0;
 }
 
+p,
 .mat-typography p,
 ul,
 h1,
@@ -14,10 +22,15 @@ h3,
 h4,
 h5,
 h6,
+.mat-typography h1,
+.mat-typography h2,
 .mat-typography h3,
-.mat-typography h1 {
+.mat-typography h4,
+.mat-typography h5,
+.mat-typography h6 {
 	margin: 0px;
 	padding: 0px;
+	color: $dark-grey;
 }
 
 html,
@@ -25,6 +38,11 @@ body {
 	height: 100%;
 }
 body {
+	background-color: $light-accent-color;
 	margin: 0;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-card {
+	background-color: $light-grey;
 }

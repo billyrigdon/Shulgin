@@ -1,7 +1,9 @@
 <mat-toolbar id="navbar">
 	<ul>
-		<li (click)="goToHome()">Home</li>
-		<li (click)="goToExplore()">Explore</li>
-		<li (click)="signout()">Logout</li>
+		<li *ngIf="!(isLoggedIn | async)" (click)="goToLogin()">LOGIN</li>
+		<li *ngIf="!(isLoggedIn | async)" (click)="goToSignup()">SIGNUP</li>
+		<li *ngIf="isLoggedIn | async" (click)="goToHome()">Home</li>
+		<li *ngIf="isLoggedIn | async" (click)="goToExplore()">Explore</li>
+		<li *ngIf="isLoggedIn | async" (click)="signout()">Logout</li>
 	</ul>
 </mat-toolbar>

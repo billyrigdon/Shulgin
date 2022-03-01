@@ -1,5 +1,25 @@
-#add-drug-form {
-	position:relative;
-	top: 0;
-	left: 0;
+@import "../../../styles.scss";
+
+#add-drug-container {
+	display: flex;
+	flex-direction: column;
+	width: 90%;
+	margin-left: 5%;
+	margin-top: 5rem;
+	height: 30%;
+
+	#add-drug-form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	mat-card-actions {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		button {
+			background-color: $contrast-color;
+		}
+	}
 }
