@@ -1,45 +1,50 @@
-<form [formGroup]="form">
-    <fieldset>
-        <legend>Login</legend>
-        <div class="form-field">
-            <label>Age</label>
-            <input name="age" formControlName="age">
-        </div>
-        <div class="form-field">
-            <label>Weight</label>
-            <input name="weight" formControlName="weight">
-        </div>
-		<div class="form-field">
-            <label>Country</label>
-            <input name="country" formControlName="country">
-        </div>
-		<div class="form-field">
-            <label>Avatar</label>
-            <input name="avatar" formControlName="avatar">
-        </div>
-		<div class="form-field">
-            <label>FunFact</label>
-            <input name="funFact" formControlName="funFact">
-        </div>
-		<div class="form-field">
-            <label>Vaccinated</label>
-            <input name="covidVaccine" formControlName="covidVaccine" type="checkbox">
-        </div>
-		<div class="form-field">
-            <label>Smoker</label>
-            <input name="smoker" formControlName="smoker" type="checkbox">
-        </div>
-		<div class="form-field">
-            <label>Drinker</label>
-            <input name="drinker" formControlName="drinker" type="checkbox">
-        </div>
-		<div class="form-field">
-            <label>Opt Out</label>
-            <input name="optOut" formControlName="optOut" type="checkbox">
-        </div>
-    </fieldset>
-    <div class="form-buttons">
-        <button class="button button-primary" 
-                (click)="submitProfile()">Login</button>
-    </div>
-</form>
+<mat-card id="create-profile-card">
+	<mat-card-content>
+		<form id="create-profile-form" [formGroup]="form">
+			<mat-form-field class="full-width">
+				<mat-label>Age</mat-label>
+				<input matInput name="age" formControlName="age" />
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Weight</mat-label>
+				<input matInput name="weight" formControlName="weight" />
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Country</mat-label>
+				<input matInput name="country" formControlName="country" />
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Avatar</mat-label>
+				<input matInput name="avatar" formControlName="avatar" />
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>FunFact</mat-label>
+				<input matInput name="funFact" formControlName="funFact" />
+			</mat-form-field>
+
+			<div class="create-profile-checkbox">
+				<mat-checkbox name="covidVaccine" formControlName="covidVaccine"
+					>Vaccinated</mat-checkbox
+				>
+
+				<mat-checkbox name="smoker" formControlName="smoker"
+					>Smoker</mat-checkbox
+				>
+			</div>
+			<div class="create-profile-checkbox">
+				<mat-checkbox name="drinker" formControlName="drinker"
+					>Drinker</mat-checkbox
+				>
+
+				<mat-checkbox name="optOut" formControlName="optOut"
+					>Opt Out of Public Stories</mat-checkbox
+				>
+			</div>
+		</form>
+	</mat-card-content>
+	<mat-card-actions>
+		<button mat-raised-button color="primary" (click)="submitProfile()">
+			Login
+		</button>
+	</mat-card-actions>
+</mat-card>

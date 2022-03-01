@@ -1,0 +1,16 @@
+#create-profile-card {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	#create-profile-form {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		.create-profile-checkbox {
+			display: flex;
+			flex-direction: row;
+		}
+	}
+}

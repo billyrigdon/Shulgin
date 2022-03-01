@@ -33,10 +33,19 @@
 		<h2>Your stories</h2>
 
 		<div id="story-container">
-			<mat-card class="user-story" *ngFor="let story of stories">
-				<h3>{{ story.journal }}</h3>
-				<p>Date: {{ story.date }}</p>
-				<p>Overall rating: {{ story.rating }}</p>
+			<mat-card class="story" *ngFor="let story of stories">
+				<h2>{{ story.journal }}</h2>
+				<h5>{{ story.date }}</h5>
+				<h4></h4>
+				<ul>
+					<li>Calmness:{{ story.calmness }}</li>
+					<li>Focus:{{ story.focus }}</li>
+					<li>Creativity:{{ story.creativity }}</li>
+					<li>Mood:{{ story.mood }}</li>
+					<li>Irritability:{{ story.irritability }}</li>
+					<li>Wakefulness:{{ story.wakefulness }}</li>
+					<li>Overall Rating:{{ story.rating }}</li>
+				</ul>
 			</mat-card>
 		</div>
 		<span class="material-icons" (click)="goToAddStory()"
