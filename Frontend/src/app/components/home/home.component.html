@@ -1,11 +1,11 @@
 <div id="home-container">
 	<mat-card id="profile-short">
 		<div id="bio">
-			<h1>{{ username }}</h1>
+			<h1>{{ userProfile.username }}</h1>
 			<ul>
-				<li>{{ funFact }}</li>
-				<li>Reputation:{{ reputation }}</li>
-				<li>Status:{{ status || "Beta Testing" }}</li>
+				<li>{{ userProfile.funFact }}</li>
+				<li>Reputation:{{ userProfile.reputation }}</li>
+				<li>Status:{{ userProfile.status || "Beta Testing" }}</li>
 			</ul>
 		</div>
 		<div id="user-drugs">

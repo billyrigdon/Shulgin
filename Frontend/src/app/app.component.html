@@ -1,4 +1,4 @@
-<app-navbar *ngIf="isLoggedIn"></app-navbar>
+<app-navbar *ngIf="isLoggedIn | async"></app-navbar>
 <app-loading *ngIf="isLoading | async"></app-loading>
 <div id="app-container">
 	<router-outlet></router-outlet>

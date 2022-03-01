@@ -4,3 +4,8 @@ export const toggleLoading = createAction(
 	'TOGGLE_LOADING',
 	props<{ status: boolean }>()
 );
+
+export const toggleAuth = createAction(
+	'TOGGLE_AUTH',
+	props<{ status: boolean }>()
+);
