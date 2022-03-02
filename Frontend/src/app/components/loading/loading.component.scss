@@ -1,10 +1,14 @@
 .loading-spinner {
 	position: fixed;
-	width: 20vw;
-	left: 40vh;
-	top: 30%;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
 	z-index: 99;
 	text-align: center;
+	justify-content: center;
+	align-items: center;
 }
 
 .lds-dual-ring {

@@ -13,7 +13,7 @@ import { getAuthState } from 'src/app/store/shared/selectors/shared.selector';
 	styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-	isLoggedIn: Observable<boolean>
+	isLoggedIn: Observable<boolean>;
 	constructor(
 		private storageService: StorageService,
 		private profileService: ProfileService,
@@ -46,6 +46,6 @@ export class NavbarComponent implements OnInit {
 		this.storageService.signout();
 		this.profileService.removeProfile();
 		this.store.dispatch(toggleAuth({ status: false }));
-		window.location.reload();
+		this.router.navigateByUrl('/splash');
 	}
 }

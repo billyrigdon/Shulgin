@@ -6,7 +6,8 @@
 	width: 90%;
 	margin-left: 5%;
 	margin-top: 5rem;
-	height: 30%;
+	height: auto;
+	min-height: 30%;
 
 	#add-drug-form {
 		display: flex;

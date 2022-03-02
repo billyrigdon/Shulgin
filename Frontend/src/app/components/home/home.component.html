@@ -30,7 +30,15 @@
 	</mat-card>
 
 	<section id="user-stories">
-		<h2>Your stories</h2>
+		<div id="user-stories-title">
+			<h2>Your stories</h2>
+			<span
+				id="add-story-button"
+				class="material-icons"
+				(click)="goToAddStory()"
+				>control_point</span
+			>
+		</div>
 
 		<div id="story-container">
 			<mat-card class="story" *ngFor="let story of stories">
@@ -48,8 +56,5 @@
 				</ul>
 			</mat-card>
 		</div>
-		<span id="add-story-button" class="material-icons" (click)="goToAddStory()"
-			>control_point</span
-		>
 	</section>
 </div>
