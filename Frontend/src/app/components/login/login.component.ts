@@ -40,17 +40,19 @@ export class LoginComponent implements OnInit {
 		if (val.email && val.password) {
 			this.store.dispatch(toggleLoading({ status: true }));
 
-			this.authService.login(val.email, val.password).subscribe((res) => {
-				this.storageService.saveUser(res.username);
-				this.storageService.saveToken(res.token);
+			this.authService
+				.login(val.email.toLowerCase(), val.password)
+				.subscribe((res) => {
+					this.storageService.saveUser(res.username);
+					this.storageService.saveToken(res.token);
 
-				this.profileService.getProfile().subscribe((res) => {
-					this.profileService.setProfile(res);
-					this.store.dispatch(toggleAuth({ status: true }));
-					this.store.dispatch(toggleLoading({ status: false }));
-					this.router.navigateByUrl('/home');
+					this.profileService.getProfile().subscribe((res) => {
+						this.profileService.setProfile(res);
+						this.store.dispatch(toggleAuth({ status: true }));
+						this.store.dispatch(toggleLoading({ status: false }));
+						this.router.navigateByUrl('/home');
+					});
 				});
-			});
 		}
 	}
 

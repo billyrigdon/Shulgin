@@ -12,12 +12,13 @@
 		display: flex;
 		flex-direction: row;
 		width: 100%;
-		height: 15vh;
+		min-height: 15vh;
+		height: auto;
 
 		#bio {
 			display: flex;
 			flex-direction: column;
-			width: 50%;
+			width: 40%;
 
 			ul li {
 				list-style: none;
@@ -27,7 +28,7 @@
 		#user-drugs {
 			display: flex;
 			flex-direction: column;
-			width: 50%;
+			width: 60%;
 			align-items: center;
 			justify-content: center;
 			text-align: center;
@@ -67,6 +68,7 @@
 		}
 
 		h2 {
+			font-size: 1rem;
 			font-weight: 500;
 		}
 
