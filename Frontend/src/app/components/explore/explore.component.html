@@ -2,13 +2,13 @@
 	<mat-card class="story" *ngFor="let story of stories">
 		<h2>{{ story.journal }}</h2>
 		<h5>{{ story.date }}</h5>
-		<h4></h4>
+		<br />
 		<ul id="story-drugs">
 			<li *ngFor="let drug of story.drugs">
 				{{ drug.drugName }} - {{ drug.dosage }}
 			</li>
 		</ul>
-		<h4></h4>
+		<br />
 		<ul>
 			<li>Calmness:{{ story.calmness }}</li>
 			<li>Focus:{{ story.focus }}</li>

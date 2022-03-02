@@ -16,11 +16,7 @@ import { DrugService } from 'src/app/services/drug.service';
 export class HomeComponent implements OnInit {
 	stories: Array<Story>;
 	userDrugs: Array<UserDrug>;
-	userId: number;
-	funFact: string;
-	username: string;
-	reputation: number;
-	status: string;
+	userProfile: UserProfile;
 
 	constructor(
 		private storyService: StoryService,
@@ -31,11 +27,7 @@ export class HomeComponent implements OnInit {
 	) {
 		this.stories = [];
 		this.userDrugs = [];
-		this.userId = 0;
-		this.username = '';
-		this.funFact = '';
-		this.reputation = 0;
-		this.status = '';
+		this.userProfile = <UserProfile>{};
 	}
 
 	removeUserDrug(drugId: number) {
@@ -57,30 +49,31 @@ export class HomeComponent implements OnInit {
 		if (this.storageService.getToken() && this.storageService.getUser()) {
 			if (localStorage.getItem('user')) {
 				//Get user fields from user stored in local storage
-				let user = JSON.parse(localStorage.getItem('user') || '');
-				this.userId = user.userId;
-				this.funFact = user.funFact;
-				this.username = user.username;
-				this.status = user.status;
-				this.reputation = user.reputation;
+				this.userProfile = JSON.parse(
+					localStorage.getItem('user') || ''
+				);
 
 				//Get stories using userId from local storage
 				this.storyService
-					.getUserStories(this.userId)
+					.getUserStories(this.userProfile.userId)
 					.subscribe((res) => {
 						this.stories = JSON.parse(res);
 					});
+
 				//Get list of drugs that user is taking
 				this.drugService.getUserDrugs().subscribe((res) => {
 					this.userDrugs = JSON.parse(res);
 				});
+
 				//Get Profile if it does not exist in local storage
 			} else {
 				this.profileService.getProfile().subscribe((res) => {
 					this.profileService.setProfile(res);
+
 					//If user profile successfully saved, reload page
 					if (localStorage.getItem('user')) {
 						window.location.reload();
+
 						//If couldn't get user profile, navigate to createProfile page
 					} else {
 						this.router.navigateByUrl('/createProfile');

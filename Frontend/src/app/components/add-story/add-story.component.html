@@ -1,105 +1,124 @@
-<form id="story-form" [formGroup]="form">
-	<fieldset>
-		<legend>Add Story</legend>
-		<div class="form-field" id="story-fields">
-			<label>Calmness:</label>
-			<select name="calmness" formControlName="calmness">
-				<option value="1" selected>1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-			<label>Focus:</label>
-			<select name="focus" formControlName="focus">
-				<option value="1" selected>1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-			<label>Creativity:</label>
-			<select name="creativity" formControlName="creativity">
-				<option value="1" selected>1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-			<label>Mood:</label>
-			<select name="mood" formControlName="mood">
-				<option value="1" selected>1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-			<label>Irritability:</label>
-			<select name="irritability" formControlName="irritability">
-				<option value="1" selected>1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-			<label>Wakefulness:</label>
-			<select name="wakefulness" formControlName="wakefulness">
-				<option value="1" selected>1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-			<label>Rating:</label>
-			<select name="rating" formControlName="rating">
-				<option value="1" selected>1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-			<label>Journal</label>
-			<input name="journal" formControlName="journal" />
-		</div>
-	</fieldset>
-	<div class="form-buttons">
-		<button class="button button-primary" (click)="addStory()">
+<mat-card id="add-story-container">
+	<mat-card-content>
+		<form id="story-form" [formGroup]="form">
+			<mat-form-field class="full-width">
+				<mat-label>Calmness:</mat-label>
+				<mat-select name="calmness" formControlName="calmness">
+					<mat-option value="1">1</mat-option>
+					<mat-option value="2">2</mat-option>
+					<mat-option value="3">3</mat-option>
+					<mat-option value="4">4</mat-option>
+					<mat-option value="5">5</mat-option>
+					<mat-option value="6">6</mat-option>
+					<mat-option value="7">7</mat-option>
+					<mat-option value="8">8</mat-option>
+					<mat-option value="9">9</mat-option>
+					<mat-option value="10">10</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Focus:</mat-label>
+				<mat-select name="focus" formControlName="focus">
+					<mat-option value="1">1</mat-option>
+					<mat-option value="2">2</mat-option>
+					<mat-option value="3">3</mat-option>
+					<mat-option value="4">4</mat-option>
+					<mat-option value="5">5</mat-option>
+					<mat-option value="6">6</mat-option>
+					<mat-option value="7">7</mat-option>
+					<mat-option value="8">8</mat-option>
+					<mat-option value="9">9</mat-option>
+					<mat-option value="10">10</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Creativity:</mat-label>
+				<mat-select name="creativity" formControlName="creativity">
+					<mat-option value="1">1</mat-option>
+					<mat-option value="2">2</mat-option>
+					<mat-option value="3">3</mat-option>
+					<mat-option value="4">4</mat-option>
+					<mat-option value="5">5</mat-option>
+					<mat-option value="6">6</mat-option>
+					<mat-option value="7">7</mat-option>
+					<mat-option value="8">8</mat-option>
+					<mat-option value="9">9</mat-option>
+					<mat-option value="10">10</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Mood:</mat-label>
+				<mat-select name="mood" formControlName="mood">
+					<mat-option value="1">1</mat-option>
+					<mat-option value="2">2</mat-option>
+					<mat-option value="3">3</mat-option>
+					<mat-option value="4">4</mat-option>
+					<mat-option value="5">5</mat-option>
+					<mat-option value="6">6</mat-option>
+					<mat-option value="7">7</mat-option>
+					<mat-option value="8">8</mat-option>
+					<mat-option value="9">9</mat-option>
+					<mat-option value="10">10</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Irritability:</mat-label>
+				<mat-select name="irritability" formControlName="irritability">
+					<mat-option value="1">1</mat-option>
+					<mat-option value="2">2</mat-option>
+					<mat-option value="3">3</mat-option>
+					<mat-option value="4">4</mat-option>
+					<mat-option value="5">5</mat-option>
+					<mat-option value="6">6</mat-option>
+					<mat-option value="7">7</mat-option>
+					<mat-option value="8">8</mat-option>
+					<mat-option value="9">9</mat-option>
+					<mat-option value="10">10</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Wakefulness:</mat-label>
+				<mat-select name="wakefulness" formControlName="wakefulness">
+					<mat-option value="1">1</mat-option>
+					<mat-option value="2">2</mat-option>
+					<mat-option value="3">3</mat-option>
+					<mat-option value="4">4</mat-option>
+					<mat-option value="5">5</mat-option>
+					<mat-option value="6">6</mat-option>
+					<mat-option value="7">7</mat-option>
+					<mat-option value="8">8</mat-option>
+					<mat-option value="9">9</mat-option>
+					<mat-option value="10">10</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Rating:</mat-label>
+				<mat-select name="rating" formControlName="rating">
+					<mat-option value="1">1</mat-option>
+					<mat-option value="2">2</mat-option>
+					<mat-option value="3">3</mat-option>
+					<mat-option value="4">4</mat-option>
+					<mat-option value="5">5</mat-option>
+					<mat-option value="6">6</mat-option>
+					<mat-option value="7">7</mat-option>
+					<mat-option value="8">8</mat-option>
+					<mat-option value="9">9</mat-option>
+					<mat-option value="10">10</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<mat-label>Journal</mat-label>
+				<textarea
+					matInput
+					name="journal"
+					formControlName="journal"
+				></textarea>
+			</mat-form-field>
+		</form>
+	</mat-card-content>
+	<mat-card-actions>
+		<button mat-flat-button (click)="addStory()">
 			Add Story
 		</button>
-	</div>
-</form>
+	</mat-card-actions>
+</mat-card>

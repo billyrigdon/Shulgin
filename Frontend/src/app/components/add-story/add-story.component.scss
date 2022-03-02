@@ -1,12 +1,23 @@
-#story-form {
-	display: flex;
-	flex-direction: column;
-	position: relative;
-	top: 0;
-	left: 0;
-}
+@import "../../../styles.scss";
 
-#story-fields {
+#add-story-container {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	width: 90%;
+	height: 90%;
+	top: 1rem;
+	left: 5%;
+
+	#story-form {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	mat-card-actions {
+		button {
+			background-color: $contrast-color;
+		}
+	}
 }

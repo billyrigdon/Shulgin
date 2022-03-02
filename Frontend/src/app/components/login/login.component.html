@@ -1,18 +1,26 @@
-<form [formGroup]="form">
-    <fieldset>
-        <legend>Login</legend>
-        <div class="form-field">
-            <label>Email:</label>
-            <input name="email" formControlName="email">
-        </div>
-        <div class="form-field">
-            <label>Password:</label>
-            <input name="password" formControlName="password" 
-                   type="password">
-        </div>
-    </fieldset>
-    <div class="form-buttons">
-        <button class="button button-primary" 
-                (click)="login()">Login</button>
-    </div>
-</form>
+<mat-card id="login-container">
+	<mat-card-content>
+		<form [formGroup]="form">
+			<fieldset id="login-form">
+				<mat-form-field class="full-width">
+					<mat-label>Email:</mat-label>
+					<input matInput name="email" formControlName="email" />
+				</mat-form-field>
+				<mat-form-field class="full-width">
+					<mat-label>Password:</mat-label>
+					<input
+						matInput
+						name="password"
+						formControlName="password"
+						type="password"
+					/>
+				</mat-form-field>
+			</fieldset>
+		</form>
+	</mat-card-content>
+	<mat-card-actions>
+		<button mat-raised-button (click)="login()">
+			Login
+		</button>
+	</mat-card-actions>
+</mat-card>

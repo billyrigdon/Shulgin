@@ -6,7 +6,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { AppState } from 'src/app/store/app.state';
-import { toggleLoading } from 'src/app/store/shared/actions/shared.actions';
+import {
+	toggleAuth,
+	toggleLoading,
+} from 'src/app/store/shared/actions/shared.actions';
 
 @Component({
 	selector: 'app-login',
@@ -36,11 +39,17 @@ export class LoginComponent implements OnInit {
 
 		if (val.email && val.password) {
 			this.store.dispatch(toggleLoading({ status: true }));
+
 			this.authService.login(val.email, val.password).subscribe((res) => {
 				this.storageService.saveUser(res.username);
 				this.storageService.saveToken(res.token);
-				this.store.dispatch(toggleLoading({ status: false }));
-				this.router.navigateByUrl('/home');
+
+				this.profileService.getProfile().subscribe((res) => {
+					this.profileService.setProfile(res);
+					this.store.dispatch(toggleAuth({ status: true }));
+					this.store.dispatch(toggleLoading({ status: false }));
+					this.router.navigateByUrl('/home');
+				});
 			});
 		}
 	}
@@ -48,9 +57,7 @@ export class LoginComponent implements OnInit {
 	//If already logged in and user profile found, navigate to home
 	ngOnInit(): void {
 		if (this.storageService.getToken()) {
-			if (this.profileService.getProfile()) {
-				this.router.navigateByUrl('/home');
-			}
+			this.router.navigateByUrl('/home');
 		}
 	}
 }
