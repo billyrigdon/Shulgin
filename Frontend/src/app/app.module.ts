@@ -28,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { DatePipe } from '@angular/common';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -58,9 +59,9 @@ import { MatSelectModule } from '@angular/material/select';
 		MatInputModule,
 		MatButtonModule,
 		MatCheckboxModule,
-		MatSelectModule
+		MatSelectModule,
 	],
-	providers: [AuthInterceptorProviders],
+	providers: [AuthInterceptorProviders, DatePipe],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

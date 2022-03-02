@@ -7,6 +7,7 @@ import { UserProfile } from 'src/app/types/user';
 import { Story } from '../../types/story';
 import { UserDrug } from 'src/app/types/userDrug';
 import { DrugService } from 'src/app/services/drug.service';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Component({
 	selector: 'app-home',
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit {
 		private router: Router,
 		private storageService: StorageService,
 		private profileService: ProfileService,
-		private drugService: DrugService
+		private drugService: DrugService,
+		private datepipe: DatePipe
 	) {
 		this.stories = [];
 		this.userDrugs = [];
@@ -58,6 +60,13 @@ export class HomeComponent implements OnInit {
 					.getUserStories(this.userProfile.userId)
 					.subscribe((res) => {
 						this.stories = JSON.parse(res);
+						for (let i = 0; i < this.stories.length; i++) {
+							this.stories[i].date = formatDate(
+								Date.parse(this.stories[i].date),
+								'MM/dd/yyyy',
+								'en-US'
+							);
+						}
 					});
 
 				//Get list of drugs that user is taking
