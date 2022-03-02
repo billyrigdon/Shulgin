@@ -4,6 +4,11 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	width: 90%;
+	margin-left: 5%;
+	min-height: 50%;
+	height: auto;
+	top: 3rem;
 
 	#create-profile-form {
 		display: flex;
