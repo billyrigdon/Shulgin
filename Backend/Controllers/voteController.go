@@ -7,11 +7,14 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
+	
 )
 
 func AddStoryVote(context *gin.Context) {
 	var vote Models.StoryVote
+	
 	err := context.ShouldBindJSON(&vote)
+	
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
@@ -34,13 +37,15 @@ func AddStoryVote(context *gin.Context) {
 		INSERT INTO story_votes
 			(storyId,userId) 
 		VALUES
-			($1,$2);
+			($1,$2)
+		RETURNING storyId;
 	`
-	_,err = db.Exec(sqlStatement,vote.StoryId,vote.UserId)
+	err = db.QueryRow(sqlStatement,vote.StoryId,vote.UserId).Scan(&vote.StoryId)
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "Unable to upvote",
+			"vote": vote,
 		})
 		context.Abort()
 		

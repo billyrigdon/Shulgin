@@ -12,7 +12,7 @@ type Story struct {
 	Wakefulness int `json:"wakefulness"`
 	Rating int `json:"rating"`
 	Journal string `json:"journal"`
-	Date string `json:"date"`,
+	Date string `json:"date"`
 	Votes int `json:"votes"`
 }
 

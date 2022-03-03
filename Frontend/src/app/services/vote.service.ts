@@ -15,7 +15,7 @@ export class VoteService {
 	constructor(private http: HttpClient) {}
 
 	addStoryVote(vote: StoryVote) {
-		return this.http.post(API_URL + 'stories/vote/add', vote, headers);
+		return this.http.post(API_URL + 'story/vote/add', vote, headers);
 	}
 
 	removeStoryVote(vote: StoryVote) {

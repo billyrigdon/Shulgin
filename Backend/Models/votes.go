@@ -1,11 +1,11 @@
 package models
 
 type CommentVote struct {
-	CommentId `json:"commentId"`
-	UserId `json:"userId"`
+	CommentId int `json:"commentId"`
+	UserId int `json:"userId"`
 }
 
 type StoryVote struct {
-	StoryId `json:"storyId"`
-	UserId `json:"storyId"`
+	StoryId int `json:"storyId"`
+	UserId int `json:"userId"`
 }

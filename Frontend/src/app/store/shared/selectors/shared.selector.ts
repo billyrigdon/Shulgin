@@ -12,3 +12,7 @@ export const getLoading = createSelector(getSharedState, (state) => {
 export const getAuthState = createSelector(getSharedState, (state) => {
 	return state.isAuth;
 });
+
+export const getUserId = createSelector(getSharedState, (state) => {
+	return state.userId;
+});

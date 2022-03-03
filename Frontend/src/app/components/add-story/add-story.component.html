@@ -107,6 +107,10 @@
 				</mat-select>
 			</mat-form-field>
 			<mat-form-field class="full-width">
+				<mat-label>Title</mat-label>
+				<input matInput name="title" formControlName="title" />
+			</mat-form-field>
+			<mat-form-field class="full-width">
 				<mat-label>Journal</mat-label>
 				<textarea
 					matInput
@@ -117,8 +121,6 @@
 		</form>
 	</mat-card-content>
 	<mat-card-actions>
-		<button mat-flat-button (click)="addStory()">
-			Add Story
-		</button>
+		<button mat-flat-button (click)="addStory()">Add Story</button>
 	</mat-card-actions>
 </mat-card>

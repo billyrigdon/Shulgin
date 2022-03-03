@@ -105,8 +105,8 @@ func GetUserStories(context *gin.Context) {
 
 	sqlStatement := `
 		SELECT s.storyId,
-		s.title, 
-		s.userId, 
+		s.userId,
+		s.title,  
 		s.calmness,
 		s.focus,
 		s.creativity,
@@ -116,7 +116,7 @@ func GetUserStories(context *gin.Context) {
 		s.rating,
 		s.journal,
 		s.date,
-		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) votes
+		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
 		FROM stories s
 		WHERE userid = $1;
 		`
@@ -195,7 +195,7 @@ func GetSingleStory(context *gin.Context) {
 		s.rating,
 		s.journal,
 		s.date,
-		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) votes
+		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
 		FROM stories
 		WHERE storyId = $1;
 		`
@@ -287,8 +287,8 @@ func GetAllStories(context *gin.Context) {
 		s.rating,
 		s.journal,
 		s.date,
-		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) votes
-		FROM stories
+		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
+		FROM stories s
 		ORDER BY date DESC;
 		`
 
