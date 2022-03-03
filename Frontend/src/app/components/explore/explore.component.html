@@ -1,7 +1,8 @@
 <div id="story-container">
 	<mat-card class="story" *ngFor="let story of stories">
-		<h2>{{ story.journal }}</h2>
+		<h2>{{ story.title }}</h2>
 		<h5>{{ story.date }}</h5>
+		<h5>Upvotes:{{ story.votes }}</h5>
 		<br />
 		<ul id="story-drugs">
 			<li *ngFor="let drug of story.drugs">
@@ -18,5 +19,17 @@
 			<li>Wakefulness:{{ story.wakefulness }}</li>
 			<li>Overall Rating:{{ story.rating }}</li>
 		</ul>
+		<mat-card-actions>
+			<button
+				(click)="
+					upvoteStory({
+						storyId: story.storyId,
+						userId: story.userId
+					})
+				"
+			>
+				Upvote
+			</button>
+		</mat-card-actions>
 	</mat-card>
 </div>

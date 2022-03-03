@@ -43,6 +43,7 @@ func CreateStory(context *gin.Context) {
 	sqlStatement := `
 		INSERT INTO stories (
 			userid,
+			title,
 			calmness,
 			focus,
 			creativity,
@@ -53,11 +54,12 @@ func CreateStory(context *gin.Context) {
 			journal,
 			date
 		)
-		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING storyId;
+		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING storyId;
 		`
 
 	err = db.QueryRow(sqlStatement,
 		story.UserId,
+		story.Title,
 		story.Calmness,
 		story.Focus,
 		story.Creativity,
@@ -102,18 +104,20 @@ func GetUserStories(context *gin.Context) {
 	}
 
 	sqlStatement := `
-		SELECT storyId, 
-		userId, 
-		calmness,
-		focus,
-		creativity,
-		mood,
-		irritability,
-		wakefulness,
-		rating,
-		journal,
-		date
-		FROM stories
+		SELECT s.storyId,
+		s.title, 
+		s.userId, 
+		s.calmness,
+		s.focus,
+		s.creativity,
+		s.mood,
+		s.irritability,
+		s.wakefulness,
+		s.rating,
+		s.journal,
+		s.date,
+		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) votes
+		FROM stories s
 		WHERE userid = $1;
 		`
 
@@ -135,7 +139,8 @@ func GetUserStories(context *gin.Context) {
 		var story Models.Story
 
 		err = rows.Scan(&story.StoryId, 
-			&story.UserId, 
+			&story.UserId,
+			&story.Title, 
 			&story.Calmness, 
 			&story.Focus, 
 			&story.Creativity, 
@@ -144,7 +149,8 @@ func GetUserStories(context *gin.Context) {
 			&story.Wakefulness,
 			&story.Rating, 
 			&story.Journal, 
-			&story.Date)
+			&story.Date,
+			&story.Votes)
 
 		if err = rows.Err(); err != nil {
 			log.Error(err)
@@ -177,17 +183,19 @@ func GetSingleStory(context *gin.Context) {
 	}
 			
 	sqlStatement := `
-		SELECT storyId, 
-		userid, 
-		calmness,
-		focus,
-		creativity,
-		mood,
-		irritability,
-		wakefulness,
-		rating,
-		journal,
-		date
+		SELECT s.storyId, 
+		s.userid, 
+		s.title,
+		s.calmness,
+		s.focus,
+		s.creativity,
+		s.mood,
+		s.irritability,
+		s.wakefulness,
+		s.rating,
+		s.journal,
+		s.date,
+		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) votes
 		FROM stories
 		WHERE storyId = $1;
 		`
@@ -195,7 +203,8 @@ func GetSingleStory(context *gin.Context) {
 	row := db.QueryRow(sqlStatement,storyId)
 			
 	err := row.Scan( &story.StoryId, 
-		&story.UserId, 
+		&story.UserId,
+		&story.Title, 
 		&story.Calmness, 
 		&story.Focus, 
 		&story.Creativity, 
@@ -204,7 +213,8 @@ func GetSingleStory(context *gin.Context) {
 		&story.Wakefulness,
 		&story.Rating, 
 		&story.Journal, 
-		&story.Date)
+		&story.Date,
+		&story.Votes)
 			
 	if err != nil {
 		log.Error(err)
@@ -265,17 +275,19 @@ func GetAllStories(context *gin.Context) {
 	}
 
 	sqlStatement := `
-		SELECT storyId, 
-		userId, 
-		calmness,
-		focus,
-		creativity,
-		mood,
-		irritability,
-		wakefulness,
-		rating,
-		journal,
-		date
+		SELECT s.storyId, 
+		s.userId,
+		s.title, 
+		s.calmness,
+		s.focus,
+		s.creativity,
+		s.mood,
+		s.irritability,
+		s.wakefulness,
+		s.rating,
+		s.journal,
+		s.date,
+		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) votes
 		FROM stories
 		ORDER BY date DESC;
 		`
@@ -299,7 +311,8 @@ func GetAllStories(context *gin.Context) {
 		var storyDrug Models.StoryDrugs
 
 		err = rows.Scan(&storyDrug.StoryId, 
-			&storyDrug.UserId, 
+			&storyDrug.UserId,
+			&storyDrug.Title, 
 			&storyDrug.Calmness, 
 			&storyDrug.Focus, 
 			&storyDrug.Creativity, 
@@ -308,7 +321,8 @@ func GetAllStories(context *gin.Context) {
 			&storyDrug.Wakefulness,
 			&storyDrug.Rating, 
 			&storyDrug.Journal, 
-			&storyDrug.Date)
+			&storyDrug.Date,
+			&storyDrug.Votes)
 
 		if err = rows.Err(); err != nil {
 			log.Error(err)

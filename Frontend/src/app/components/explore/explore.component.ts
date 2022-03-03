@@ -1,7 +1,9 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { StoryService } from 'src/app/services/story.service';
+import { VoteService } from 'src/app/services/vote.service';
 import { Story, StoryDrug } from 'src/app/types/story';
+import { StoryVote } from 'src/app/types/vote';
 
 @Component({
 	selector: 'app-explore',
@@ -10,7 +12,10 @@ import { Story, StoryDrug } from 'src/app/types/story';
 })
 export class ExploreComponent implements OnInit {
 	stories: Array<StoryDrug>;
-	constructor(private storyService: StoryService) {
+	constructor(
+		private storyService: StoryService,
+		private voteService: VoteService
+	) {
 		this.stories = [];
 	}
 
@@ -24,6 +29,15 @@ export class ExploreComponent implements OnInit {
 					'en-US'
 				);
 			}
+		});
+	}
+
+	upvoteStory(vote: StoryVote) {
+		this.voteService.addStoryVote(vote).subscribe((res) => {
+			const index = this.stories.findIndex(obj => {
+				return obj.storyId === vote.storyId
+			});
+			this.stories[index].votes = this.stories[index].votes + 1;
 		});
 	}
 
