@@ -171,7 +171,7 @@ func GetUserStories(context *gin.Context) {
 
 //Requires ?=storyId, returns story Json object
 func GetSingleStory(context *gin.Context) {
-	var story Models.Story
+	var story Models.StoryDrugs
 	storyId := context.Query("storyId")
 	
 	db, dbErr := Utilities.ConnectPostgres();
@@ -196,7 +196,7 @@ func GetSingleStory(context *gin.Context) {
 		s.journal,
 		s.date,
 		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
-		FROM stories
+		FROM stories s
 		WHERE storyId = $1;
 		`
 
@@ -225,6 +225,9 @@ func GetSingleStory(context *gin.Context) {
 
 		return
 	}
+
+	story.Drugs = GetStoryDrugs(story.StoryId)
+
 	context.JSON(200,story)		
 }
 

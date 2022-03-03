@@ -9,26 +9,9 @@
 				{{ drug.drugName }} - {{ drug.dosage }}
 			</li>
 		</ul>
-		<br />
-		<ul>
-			<li>Calmness:{{ story.calmness }}</li>
-			<li>Focus:{{ story.focus }}</li>
-			<li>Creativity:{{ story.creativity }}</li>
-			<li>Mood:{{ story.mood }}</li>
-			<li>Irritability:{{ story.irritability }}</li>
-			<li>Wakefulness:{{ story.wakefulness }}</li>
-			<li>Overall Rating:{{ story.rating }}</li>
-		</ul>
 		<mat-card-actions>
-			<button
-				(click)="
-					upvoteStory({
-						storyId: story.storyId,
-						userId: this.userId
-					})
-				"
-			>
-				Upvote
+			<button mat-raised-button (click)="openStory(story.storyId)">
+				Read more...
 			</button>
 		</mat-card-actions>
 	</mat-card>

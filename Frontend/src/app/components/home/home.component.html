@@ -12,7 +12,7 @@
 			<ul>
 				<h3>Drugs I'm taking:</h3>
 				<li *ngFor="let drug of userDrugs">
-					{{ drug.drugName }} - {{ drug.dosage }}
+					{{ drug.drugName }}
 					<span
 						(click)="removeUserDrug(drug.drugId)"
 						class="material-icons"

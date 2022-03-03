@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { SplashComponent } from './components/splash/splash.component';
+import { StoryComponent } from './components/story/story.component';
 
 const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
 	{ path: 'addDrug', component: AddDrugComponent },
 	{ path: 'addStory', component: AddStoryComponent },
 	{ path: 'explore', component: ExploreComponent },
+	{ path: 'story', component: StoryComponent },
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 

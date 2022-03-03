@@ -42,5 +42,15 @@
 				margin: 0;
 			}
 		}
+
+		mat-card-actions {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			button {
+				background-color: $contrast-color;
+			}
+		}
 	}
 }

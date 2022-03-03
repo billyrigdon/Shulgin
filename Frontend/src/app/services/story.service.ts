@@ -29,4 +29,10 @@ export class StoryService {
 	getAllStories() {
 		return this.http.get(API_URL + 'story/get', { responseType: 'text' });
 	}
+
+	getStory(storyId: number) {
+		return this.http.get(API_URL + 'story?storyId=' + storyId, {
+			responseType: 'text',
+		});
+	}
 }
