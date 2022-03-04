@@ -36,6 +36,9 @@ h6,
 html,
 body {
 	height: 100%;
+	position: relative;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 body {
 	background-color: $light-accent-color;

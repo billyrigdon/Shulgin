@@ -3,11 +3,12 @@
 #navbar {
 	width: 100vw;
 	height: 8vh;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	display: flex;
 	background-color: mediumpurple;
+	z-index: 99;
 
 	ul {
 		display: flex;
