@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 						);
 						this.store.dispatch(toggleLoading({ status: false }));
 
-						this.router.navigateByUrl('/home');
+						this.router.navigateByUrl('/explore');
 					});
 				});
 		}
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
 	//If already logged in and user profile found, navigate to home
 	ngOnInit(): void {
 		if (this.storageService.getToken()) {
-			this.router.navigateByUrl('/home');
+			this.router.navigateByUrl('/explore');
 		}
 	}
 }

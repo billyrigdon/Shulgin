@@ -20,7 +20,7 @@ const routes: Routes = [
 	{ path: 'addStory', component: AddStoryComponent },
 	{ path: 'explore', component: ExploreComponent },
 	{ path: 'story', component: StoryComponent },
-	{ path: '', redirectTo: 'home', pathMatch: 'full' },
+	{ path: '', redirectTo: 'explore', pathMatch: 'full' },
 ];
 
 @NgModule({

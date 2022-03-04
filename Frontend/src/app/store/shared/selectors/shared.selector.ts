@@ -16,7 +16,3 @@ export const getAuthState = createSelector(getSharedState, (state) => {
 export const getUserId = createSelector(getSharedState, (state) => {
 	return state.userId;
 });
-
-export const getStoryId = createSelector(getSharedState, (state) => {
-	return state.storyId;
-})

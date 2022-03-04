@@ -37,6 +37,7 @@ func setupRouter() (*gin.Engine) {
 	router.Use(static.Serve("/addDrug", static.LocalFile("./dist",true)))
 	router.Use(static.Serve("/addStory", static.LocalFile("./dist", true)))
 	router.Use(static.Serve("/explore", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/story", static.LocalFile("./dist", true)))
 
 	//Serve public login/signup routes
 	api:= router.Group("/api") 

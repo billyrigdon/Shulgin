@@ -5,11 +5,11 @@ import { StoryService } from 'src/app/services/story.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { AppState } from 'src/app/store/app.state';
 import {
-	getStoryId,
 	getUserId,
 } from 'src/app/store/shared/selectors/shared.selector';
 import { Story, StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
 	selector: 'app-story',
@@ -24,7 +24,8 @@ export class StoryComponent implements OnInit {
 	constructor(
 		private storyService: StoryService,
 		private voteService: VoteService,
-		private store: Store<AppState>
+		private store: Store<AppState>,
+		private route: ActivatedRoute
 	) {
 		this.story = <StoryDrug>{};
 		this.storyId = 0;
@@ -49,12 +50,10 @@ export class StoryComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.store.select(getUserId).subscribe((userId) => {
-			this.userId = userId;
-			this.store.select(getStoryId).subscribe((storyId) => {
-				this.storyId = storyId;
-				this.getStory();
-			});
+		this.route.queryParams.subscribe((params) => {
+			this.storyId = params['storyId'];
+			this.getStory();
 		});
+
 	}
 }
