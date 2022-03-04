@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	//"github.com/gin-gonic/autotls"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -23,7 +24,7 @@ func setupRouter() (*gin.Engine) {
 	router := gin.Default()
 
 	//Setup Cors
-	router.Use(cors.Default())
+	//router.Use(cors.Default())
 
 	//Serve frontend
 	router.Use(static.Serve("/", static.LocalFile("./dist",true)))
@@ -103,7 +104,10 @@ func main() {
 	router := setupRouter()
 	
 
-	//Start server
+	//Start dev server
 	router.Run(":8080")
+
+	//Start production server
+	// log.Fatal(autotls.Run(router,"shulgin.io"))
 }
 
