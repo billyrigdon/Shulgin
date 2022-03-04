@@ -4,11 +4,9 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 90%;
-	height: auto;
-	min-height: 70%;
-	top: 1rem;
-	left: 5%;
+	width: 100%;
+	min-height: 100%;
+	background-color: $light-accent-color;
 
 	#story-form {
 		display: flex;
