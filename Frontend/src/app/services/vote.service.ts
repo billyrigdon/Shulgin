@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StoryVote, CommentVote } from '../types/vote';
+import { API_IP } from './url';
 
-const API_URL = 'http://127.0.0.1:8080/api/protected/';
+const API_URL = API_IP + 'api/protected/';
 const headers = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };

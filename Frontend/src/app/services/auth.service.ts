@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { API_IP } from "./url";
 
-const API_URL = "http://127.0.0.1:8080/api/public/";
+const API_URL = API_IP + "api/public/";
 
 const headers = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
