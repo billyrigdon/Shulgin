@@ -57,6 +57,8 @@ export class AddStoryComponent implements OnInit {
 		this.story.wakefulness = parseInt(val.wakefulness);
 		this.story.rating = parseInt(val.rating);
 		this.story.journal = val.journal;
+		this.story.title = val.title;
+		
 		this.storyService.addUserStory(this.story).subscribe((res) => {
 			this.router.navigateByUrl('home');
 		});
