@@ -1,5 +1,5 @@
 <div id="story-container">
-	<h1>{{storyId}}</h1>
+	<app-add-comment [storyId]="storyId" [parentCommentId]="parentCommentId" ></app-add-comment>
 	<mat-card class="story" *ngFor="let comment of comments">
 		<h2>{{ comment.username }}</h2>
 		<h5>{{ comment.content }}</h5>

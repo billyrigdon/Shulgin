@@ -50,7 +50,7 @@ func setupRouter() (*gin.Engine) {
 
 		//Serve routes that require valid jwt token
 		protected := api.Group("/protected").Use(Auth.Auth())
-		{
+		{ 
 			//Serve CRUD user profile routes
 			protected.GET("/user",Controllers.GetUserProfile)
 			protected.POST("/user/create",Controllers.CreateUserProfile)

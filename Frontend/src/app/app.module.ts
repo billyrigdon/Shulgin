@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { DatePipe } from '@angular/common';
 import { StoryComponent } from './components/story/story.component';
 import { CommentsComponent } from './components/comments/comments.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -46,6 +47,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 		ExploreComponent,
   StoryComponent,
   CommentsComponent,
+  AddCommentComponent,
 	],
 	imports: [
 		BrowserModule,
