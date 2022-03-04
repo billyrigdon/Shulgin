@@ -1,4 +1,4 @@
-package Controllers
+package controllers
 
 import (
 	Models "shulgin/Models"
@@ -12,7 +12,7 @@ import (
 
 func GetComments(context *gin.Context) {
 	
-	var comments Models.StoryComment[]
+	var comments []Models.StoryComment
 	storyId := context.Query("storyId")
 
 	db, dbErr := Utilities.ConnectPostgres();
@@ -66,7 +66,7 @@ func GetComments(context *gin.Context) {
 		if err = rows.Err(); err != nil {
 			log.Error(err)
 			context.JSON(500, gin.H{
-				"msg": "Error getting comments"
+				"msg": "Error getting comments",
 			})
 			context.Abort()
 
@@ -85,8 +85,8 @@ func AddComment(context *gin.Context) {
 	err := context.ShouldBindJSON(&comment)
 	if err != nil {
 		log.Error(err)
-		context.JSON(400m gin.H{
-			"msg": "invalid json"
+		context.JSON(400, gin.H{
+			"msg": "invalid json",
 		})
 		context.Abort()
 
@@ -113,19 +113,18 @@ func AddComment(context *gin.Context) {
 		comment.StoryId,
 		comment.UserId,
 		comment.ParentCommentId,
-		comment.Content)
+		comment.Content).Scan(&comment.CommentId)
 
 	if err != nil {
 		log.Error(err)
 		context.JSON(500,gin.H{
-			"msg": "Couldn't create comment"
+			"msg": "Couldn't create comment",
 		})
 		context.Abort()
 
 		return 
 	}
 
-	comment.commentId = commentId
 
 	context.JSON(200,comment)
 }
@@ -133,11 +132,15 @@ func AddComment(context *gin.Context) {
 func UpdateComment(context *gin.Context) {
 	var comment Models.StoryComment
 	
+	//Get userId from token to verify that user owns the comment
+	token := context.Request.Header.Get("Authorization")
+	userId := GetUserId(token)
+
 	err := context.ShouldBindJSON(&comment)
 	if err != nil {
 		log.Error(err)
-		context.JSON(400m gin.H{
-			"msg": "invalid json"
+		context.JSON(400, gin.H{
+			"msg": "invalid json",
 		})
 		context.Abort()
 
@@ -156,23 +159,19 @@ func UpdateComment(context *gin.Context) {
 		UPDATE story_comments
 		SET content = $1, updatedAt = NOW()
 		WHERE commentId = $2
-		RETURNING 
-			commentId,
-			storyId,
-			userId,
-			content,
-			dateCreated,
-			updatedAt;
+		AND userId = $3
+		RETURNING updatedAt;
 	`
 
 	err = db.QueryRow(sqlStatement,
 		comment.Content,
-		comment.CommentId)
+		comment.CommentId,
+		userId).Scan(&comment.UpdatedAt)
 
 	if err != nil {
 		log.Error(err)
 		context.JSON(500,gin.H{
-			"msg": "Couldn't update comment"
+			"msg": "Couldn't update comment",
 		})
 		context.Abort()
 
@@ -212,7 +211,7 @@ func DeleteComment(context *gin.Context) {
 	if deleteErr != nil {
 		log.Error(deleteErr)
 		context.JSON(500, gin.H{
-			"msg": "Error deleting comment"
+			"msg": "Error deleting comment",
 		})
 		context.Abort()
 

@@ -7,7 +7,7 @@ import (
 	Auth "shulgin/Auth"
 	Controllers "shulgin/Controllers"
 
-	"github.com/gin-gonic/contrib/cors"
+	//"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	//"github.com/gin-gonic/autotls"
@@ -61,12 +61,16 @@ func setupRouter() (*gin.Engine) {
 			protected.POST("/story/create", Controllers.CreateStory)
 			protected.DELETE("/story/delete",Controllers.DeleteStory)
 			protected.POST("/story/vote/add", Controllers.AddStoryVote)
-			protected.POST("/story/vote/remove", Controllers.RemoveCommentVote)
+			protected.POST("/story/vote/remove", Controllers.RemoveStoryVote)
+			
+						
+			//Serve CRUD comment routes
+			protected.GET("/story/comment", Controllers.GetComments)
+			protected.POST("/story/comment/create", Controllers.AddComment)
+			protected.DELETE("/story/comment/delete", Controllers.DeleteComment)
+			protected.POST("/story/comment/update", Controllers.UpdateComment)
 			protected.POST("/story/comment/vote/add", Controllers.AddCommentVote)
 			protected.POST("/story/comment/vote/remove", Controllers.RemoveCommentVote)
-			
-			
-			
 
 			//Serve CRUD drug routes
 			protected.GET("/drug",Controllers.GetAllDrugs)
