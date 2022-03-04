@@ -130,3 +130,94 @@ func AddComment(context *gin.Context) {
 	context.JSON(200,comment)
 }
 
+func UpdateComment(context *gin.Context) {
+	var comment Models.StoryComment
+	
+	err := context.ShouldBindJSON(&comment)
+	if err != nil {
+		log.Error(err)
+		context.JSON(400m gin.H{
+			"msg": "invalid json"
+		})
+		context.Abort()
+
+		return
+	}
+
+	db, dbErr := Utilities.ConnectPostgres();
+	defer db.Close()
+
+	dbErr = db.Ping()
+	if dbErr != nil {
+		log.Error(dbErr)
+	}
+
+	sqlStatement := `
+		UPDATE story_comments
+		SET content = $1, updatedAt = NOW()
+		WHERE commentId = $2
+		RETURNING 
+			commentId,
+			storyId,
+			userId,
+			content,
+			dateCreated,
+			updatedAt;
+	`
+
+	err = db.QueryRow(sqlStatement,
+		comment.Content,
+		comment.CommentId)
+
+	if err != nil {
+		log.Error(err)
+		context.JSON(500,gin.H{
+			"msg": "Couldn't update comment"
+		})
+		context.Abort()
+
+		return 
+	}
+
+
+	context.JSON(200,comment)
+}
+
+
+func DeleteComment(context *gin.Context) {
+	
+	commentId := context.Query("commentId")
+	
+	//Get userId from token to verify that user owns the story
+	token := context.Request.Header.Get("Authorization")
+	userId := GetUserId(token)
+	
+	
+
+	db, dbErr := Utilities.ConnectPostgres();
+	defer db.Close()
+
+	dbErr = db.Ping()
+	if dbErr != nil {
+		log.Error(dbErr)
+	}
+
+	sqlStatement := `
+		DELETE FROM story_comments
+		WHERE commentId = $1
+		AND userId = $2;
+	`
+
+	_, deleteErr := db.Exec(sqlStatement,commentId,userId)
+	if deleteErr != nil {
+		log.Error(deleteErr)
+		context.JSON(500, gin.H{
+			"msg": "Error deleting comment"
+		})
+		context.Abort()
+
+		return
+	}
+
+	context.JSON(200, commentId + " deleted successfully")
+}
