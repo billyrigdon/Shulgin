@@ -75,10 +75,13 @@ CREATE TABLE story_comments (
 	commentId SERIAL PRIMARY KEY,
 	storyId INT,
 	userId INT,
-	date DATE,
 	content TEXT,
+	parentCommentId INT,
+	dateCreated TIMESTAMPTZ DEFAULT NOW(),
+	updatedAt TIMESTAMPTZ DEFAULT NOW(),
 	CONSTRAINT fk_storyId FOREIGN KEY(storyId) REFERENCES stories(storyId),
-	CONSTRAINT fk_userId FOREIGN KEY(userId) REFERENCES users(userId)
+	CONSTRAINT fk_userId FOREIGN KEY(userId) REFERENCES users(userId),
+	CONSTRAINT fk_parentCommentId FOREIGN KEY(parentCommentId) REFERENCES story_comments(commentId)
 );
 
 CREATE TABLE comment_votes (
