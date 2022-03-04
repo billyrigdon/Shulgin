@@ -4,12 +4,9 @@ import { Store } from '@ngrx/store';
 import { StoryService } from 'src/app/services/story.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { AppState } from 'src/app/store/app.state';
-import {
-	getUserId,
-} from 'src/app/store/shared/selectors/shared.selector';
-import { Story, StoryDrug } from 'src/app/types/story';
+import {  StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-story',
