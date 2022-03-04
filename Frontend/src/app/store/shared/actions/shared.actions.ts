@@ -9,3 +9,7 @@ export const toggleAuth = createAction(
 	'TOGGLE_AUTH',
 	props<{ status: boolean }>()
 );
+
+export const setUserId = createAction('SET_USER', props<{ userId: number }>());
+
+export const setStoryId = createAction('SET_STORY', props<{ storyId: number }>());

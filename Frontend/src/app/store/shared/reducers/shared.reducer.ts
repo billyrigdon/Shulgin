@@ -9,7 +9,12 @@ import {
 	on,
 } from '@ngrx/store';
 import { environment } from '../../../../environments/environment';
-import { toggleAuth, toggleLoading } from '../actions/shared.actions';
+import {
+	toggleAuth,
+	toggleLoading,
+	setUserId,
+	setStoryId,
+} from '../actions/shared.actions';
 import { initialState, SharedState } from '../shared.state';
 
 export const _sharedReducer = createReducer(
@@ -23,7 +28,19 @@ export const _sharedReducer = createReducer(
 	on(toggleAuth, (state, action) => {
 		return {
 			...state,
-			isAuth: action.status
+			isAuth: action.status,
+		};
+	}),
+	on(setUserId, (state, action) => {
+		return {
+			...state,
+			userId: action.userId,
+		};
+	}),
+	on(setStoryId, (state, action) => {
+		return {
+			...state,
+			storyId: action.storyId
 		}
 	})
 );

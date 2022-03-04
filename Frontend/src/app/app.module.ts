@@ -29,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { DatePipe } from '@angular/common';
+import { StoryComponent } from './components/story/story.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -42,6 +43,7 @@ import { DatePipe } from '@angular/common';
 		AddStoryComponent,
 		LoadingComponent,
 		ExploreComponent,
+  StoryComponent,
 	],
 	imports: [
 		BrowserModule,

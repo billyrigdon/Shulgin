@@ -46,6 +46,7 @@ ON user_profile(userId);
 CREATE TABLE stories (
 	storyId SERIAL PRIMARY KEY,
 	userId INT,
+	title TEXT,
 	calmness INT,
 	focus INT,
 	creativity INT,
@@ -59,6 +60,37 @@ CREATE TABLE stories (
 		FOREIGN KEY(userId)
 			REFERENCES users(userId)
 );
+
+CREATE TABLE story_votes (
+	storyId INT,
+	userId INT,
+	CONSTRAINT fk_storyId FOREIGN KEY(storyId) REFERENCES stories(storyId),
+	CONSTRAINT fk_userId FOREIGN KEY(userId) REFERENCES users(userId)
+);
+
+CREATE UNIQUE INDEX story_vote
+ON story_votes(userId,storyId);
+
+CREATE TABLE story_comments (
+	commentId SERIAL PRIMARY KEY,
+	storyId INT,
+	userId INT,
+	date DATE,
+	content TEXT,
+	CONSTRAINT fk_storyId FOREIGN KEY(storyId) REFERENCES stories(storyId),
+	CONSTRAINT fk_userId FOREIGN KEY(userId) REFERENCES users(userId)
+);
+
+CREATE TABLE comment_votes (
+	commentId INT,
+	userId INT,
+	CONSTRAINT fk_commentId FOREIGN KEY(commentId) REFERENCES story_comments(commentId),
+	CONSTRAINT fk_userId FOREIGN KEY(userId) REFERENCES users(userId)
+);
+
+CREATE UNIQUE INDEX comment_vote
+ON comment_votes(userId,commentId);
+
 
 --Drug tables
 CREATE TABLE drugs (

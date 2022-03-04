@@ -8,6 +8,9 @@ import { Story } from '../../types/story';
 import { UserDrug } from 'src/app/types/userDrug';
 import { DrugService } from 'src/app/services/drug.service';
 import { DatePipe, formatDate } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import { setUserId } from 'src/app/store/shared/actions/shared.actions';
 
 @Component({
 	selector: 'app-home',
@@ -25,7 +28,8 @@ export class HomeComponent implements OnInit {
 		private storageService: StorageService,
 		private profileService: ProfileService,
 		private drugService: DrugService,
-		private datepipe: DatePipe
+		private datepipe: DatePipe,
+		private store: Store<AppState>
 	) {
 		this.stories = [];
 		this.userDrugs = [];
@@ -49,6 +53,7 @@ export class HomeComponent implements OnInit {
 	ngOnInit(): void {
 		//Check if logged in and navigate to splash if not
 		if (this.storageService.getToken() && this.storageService.getUser()) {
+			//TODO: Move userprofile to shared state instead of handling it this way
 			if (localStorage.getItem('user')) {
 				//Get user fields from user stored in local storage
 				this.userProfile = JSON.parse(

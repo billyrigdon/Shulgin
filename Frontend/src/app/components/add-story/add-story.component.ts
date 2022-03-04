@@ -19,16 +19,18 @@ export class AddStoryComponent implements OnInit {
 		private router: Router
 	) {
 		this.form = this.formBuilder.group({
-			calmness: [1],
-			focus: [1],
-			creativity: [1],
-			mood: [1],
-			irritability: [1],
-			wakefulness: [1],
-			rating: [1],
+			calmness: [1, Validators.required],
+			focus: [1, Validators.required],
+			creativity: [1, Validators.required],
+			mood: [1, Validators.required],
+			irritability: [1, Validators.required],
+			wakefulness: [1, Validators.required],
+			rating: [1, Validators.required],
+			title: ['', Validators.required],
 			journal: ['', Validators.required],
 		});
 		this.story = {
+			title: '',
 			calmness: 0,
 			creativity: 0,
 			focus: 0,
@@ -40,6 +42,7 @@ export class AddStoryComponent implements OnInit {
 			userId: 0,
 			date: '',
 			storyId: 0,
+			votes: 0,
 		};
 		//Iterable numbers for mood values
 	}
@@ -54,6 +57,8 @@ export class AddStoryComponent implements OnInit {
 		this.story.wakefulness = parseInt(val.wakefulness);
 		this.story.rating = parseInt(val.rating);
 		this.story.journal = val.journal;
+		this.story.title = val.title;
+		
 		this.storyService.addUserStory(this.story).subscribe((res) => {
 			this.router.navigateByUrl('home');
 		});

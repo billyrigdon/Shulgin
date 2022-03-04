@@ -7,6 +7,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { AppState } from 'src/app/store/app.state';
 import {
+	setUserId,
 	toggleAuth,
 	toggleLoading,
 } from 'src/app/store/shared/actions/shared.actions';
@@ -49,7 +50,15 @@ export class LoginComponent implements OnInit {
 					this.profileService.getProfile().subscribe((res) => {
 						this.profileService.setProfile(res);
 						this.store.dispatch(toggleAuth({ status: true }));
+						this.store.dispatch(
+							setUserId({
+								userId: JSON.parse(
+									localStorage.getItem('user') || ''
+								).userId,
+							})
+						);
 						this.store.dispatch(toggleLoading({ status: false }));
+
 						this.router.navigateByUrl('/home');
 					});
 				});

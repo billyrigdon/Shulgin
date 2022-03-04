@@ -59,6 +59,13 @@ func setupRouter() (*gin.Engine) {
 			protected.GET("/story/get",Controllers.GetAllStories)
 			protected.POST("/story/create", Controllers.CreateStory)
 			protected.DELETE("/story/delete",Controllers.DeleteStory)
+			protected.POST("/story/vote/add", Controllers.AddStoryVote)
+			protected.POST("/story/vote/remove", Controllers.RemoveCommentVote)
+			protected.POST("/story/comment/vote/add", Controllers.AddCommentVote)
+			protected.POST("/story/comment/vote/remove", Controllers.RemoveCommentVote)
+			
+			
+			
 
 			//Serve CRUD drug routes
 			protected.GET("/drug",Controllers.GetAllDrugs)
