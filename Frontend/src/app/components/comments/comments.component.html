@@ -1,13 +1,21 @@
 <div id="story-container">
-	<app-add-comment [storyId]="storyId" [parentCommentId]="parentCommentId" ></app-add-comment>
+	<app-add-comment
+		*ngIf="addCommentOpen | async"
+		[storyId]="storyId"
+		[parentCommentId]="parentCommentId"
+	></app-add-comment>
+	<button (click)="openAddComment(0)">Reply to Story</button>
 	<mat-card class="story" *ngFor="let comment of comments">
 		<h2>{{ comment.username }}</h2>
 		<h5>{{ comment.content }}</h5>
 		<h5>Upvotes:{{ comment.votes }}</h5>
 		<br />
 		<mat-card-actions>
-			<button mat-raised-button>
-				Read more...
+			<button
+				mat-raised-button
+				(click)="openAddComment(comment.parentCommentId)"
+			>
+				Reply to Comment
 			</button>
 		</mat-card-actions>
 	</mat-card>

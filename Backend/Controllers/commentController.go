@@ -7,7 +7,6 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
-	
 )
 
 func GetComments(context *gin.Context) {
@@ -28,11 +27,12 @@ func GetComments(context *gin.Context) {
 			sc.commentId,
 			sc.storyId,
 			sc.userId,
-			sc.parentCommentId,
 			sc.dateCreated,
 			sc.updatedAt,
 			u.username,
-			(select cast(count(*) as int) from comment_votes cv where cv.commentId = sc.commentId ) as votes
+			sc.content,
+			(select cast(count(*) as int) from comment_votes cv where cv.commentId = sc.commentId ) as votes,
+			sc.parentCommentId
 		FROM story_comments sc
 		LEFT JOIN users u on u.userId = sc.userId
 		WHERE sc.storyId = $1;
@@ -57,12 +57,14 @@ func GetComments(context *gin.Context) {
 		err = rows.Scan(&comment.CommentId,
 			&comment.StoryId,
 			&comment.UserId,
-			&comment.ParentCommentId,
 			&comment.DateCreated,
 			&comment.UpdatedAt,
 			&comment.Username,
-			&comment.Votes)
+			&comment.Content,
+			&comment.Votes,
+			&comment.ParentCommentId)
 
+		
 		if err = rows.Err(); err != nil {
 			log.Error(err)
 			context.JSON(500, gin.H{
@@ -101,7 +103,15 @@ func AddComment(context *gin.Context) {
 		log.Error(dbErr)
 	}
 
-	sqlStatement := `
+	sqlStatementNoParent := `
+		INSERT INTO story_comments
+			(storyId,userId,content)
+		VALUES
+			($1,$2,$3)
+		RETURNING commentId;
+	`
+
+	sqlStatementParent := `
 		INSERT INTO story_comments
 			(storyId,userId,parentCommentId,content)
 		VALUES
@@ -109,24 +119,44 @@ func AddComment(context *gin.Context) {
 		RETURNING commentId;
 	`
 
-	err = db.QueryRow(sqlStatement,
+	if comment.ParentCommentId > 0	{
+		err := db.QueryRow(sqlStatementParent,
 		comment.StoryId,
 		comment.UserId,
 		comment.ParentCommentId,
 		comment.Content).Scan(&comment.CommentId)
 
-	if err != nil {
-		log.Error(err)
-		context.JSON(500,gin.H{
-			"msg": "Couldn't create comment",
-		})
-		context.Abort()
+		if err != nil {
+			log.Error(err)
+			context.JSON(500,gin.H{
+				"msg": "Couldn't create comment",
+			})
+			context.Abort()
+			return
+		}
+		
+		context.JSON(200,comment)
 
-		return 
+	} else {
+		err := db.QueryRow(sqlStatementNoParent,
+		comment.StoryId,
+		comment.UserId,
+		comment.Content).Scan(&comment.CommentId)
+
+		if err != nil {
+			log.Error(err)
+			context.JSON(500,gin.H{
+				"msg": "Couldn't create comment",
+			})
+			context.Abort()
+			return
+		}
+
+		comment.ParentCommentId = 0
+
+		context.JSON(200,comment)
 	}
-
-
-	context.JSON(200,comment)
+	
 }
 
 func UpdateComment(context *gin.Context) {

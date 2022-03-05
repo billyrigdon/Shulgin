@@ -1,7 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { CommentService } from 'src/app/services/comment.service';
 import { VoteService } from 'src/app/services/vote.service';
+import { AppState } from 'src/app/store/app.state';
+import { toggleAddComment } from 'src/app/store/comments/comments.actions';
+import { getAddCommentsOpen } from 'src/app/store/comments/comments.selector';
 import { StoryComment, NewStoryComment } from 'src/app/types/comment';
 import { CommentVote } from 'src/app/types/vote';
 
@@ -12,19 +17,20 @@ import { CommentVote } from 'src/app/types/vote';
 })
 export class CommentsComponent implements OnInit {
 	@Input() storyId!: number;
-  parentCommentId: (number | null)
+	parentCommentId: number;
 	comments: Array<StoryComment>;
+	addCommentOpen: Observable<boolean>;
 
 	constructor(
 		private commentService: CommentService,
-    private voteService: VoteService,
-    private router: Router
+		private voteService: VoteService,
+		private router: Router,
+		private store: Store<AppState>
 	) {
-    this.comments = [];
-    this.parentCommentId = null;
-  }
-  
-  
+		this.comments = [];
+		this.parentCommentId = 0;
+		this.addCommentOpen = this.store.select(getAddCommentsOpen);
+	}
 
 	upvote(vote: CommentVote) {
 		this.voteService.addCommentVote(vote).subscribe((res) => {
@@ -42,6 +48,11 @@ export class CommentsComponent implements OnInit {
 			});
 			this.comments[index].votes = this.comments[index].votes - 1;
 		});
+	}
+
+	openAddComment(parentCommentId: number) {
+		this.parentCommentId = parentCommentId;
+		this.store.dispatch(toggleAddComment({ open: true }));
 	}
 
 	ngOnInit(): void {

@@ -1,0 +1,23 @@
+@import "../../../styles.scss";
+
+#add-comment-container {
+	z-index: 98;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	top:0;
+	left:0;
+	#add-comment-card {
+		width: 80%;
+		height:auto;
+		min-height: 40%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		
+	}
+}

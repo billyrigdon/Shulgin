@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { StoryService } from 'src/app/services/story.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { AppState } from 'src/app/store/app.state';
-import {  StoryDrug } from 'src/app/types/story';
+import { StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
 import { ActivatedRoute } from '@angular/router';
 
@@ -48,9 +48,8 @@ export class StoryComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.queryParams.subscribe((params) => {
-			this.storyId = params['storyId'];
+			this.storyId = parseInt(params['storyId']);
 			this.getStory();
 		});
-
 	}
 }

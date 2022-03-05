@@ -31,5 +31,6 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/ugorji/go/codec v1.1.7 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
+	golang.org/x/text v0.3.7
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
