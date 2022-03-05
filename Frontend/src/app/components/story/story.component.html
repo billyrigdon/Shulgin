@@ -32,8 +32,10 @@
 					})
 				"
 			>
-				Upvote
+				Upvote - {{story.votes}}
 			</button>
+			<button mat-raised-button (click)="openAddComment()">Reply to Story</button>
 		</mat-card-actions>
 	</mat-card>
+	<app-comments [storyId]="storyId"></app-comments>
 </div>

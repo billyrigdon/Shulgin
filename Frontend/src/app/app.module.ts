@@ -6,10 +6,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './components/signup/signup.component';
-import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { AuthInterceptorProviders } from './guards/auth.interceptor';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
-import { SplashComponent } from './components/splash/splash.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddDrugComponent } from './components/add-drug/add-drug.component';
 import { AddStoryComponent } from './components/add-story/add-story.component';
@@ -30,20 +29,27 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { DatePipe } from '@angular/common';
 import { StoryComponent } from './components/story/story.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { CommentThreadComponent } from './components/comment-thread/comment-thread.component';
 @NgModule({
 	declarations: [
 		AppComponent,
 		LoginComponent,
 		SignupComponent,
-		HomeComponent,
+		ProfileComponent,
 		CreateProfileComponent,
-		SplashComponent,
 		NavbarComponent,
 		AddDrugComponent,
 		AddStoryComponent,
 		LoadingComponent,
 		ExploreComponent,
-  StoryComponent,
+		StoryComponent,
+		CommentsComponent,
+		AddCommentComponent,
+  CommentComponent,
+  CommentThreadComponent,
 	],
 	imports: [
 		BrowserModule,

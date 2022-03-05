@@ -4,12 +4,13 @@ import { Store } from '@ngrx/store';
 import { StoryService } from 'src/app/services/story.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { AppState } from 'src/app/store/app.state';
-import {
-	getStoryId,
-	getUserId,
-} from 'src/app/store/shared/selectors/shared.selector';
-import { Story, StoryDrug } from 'src/app/types/story';
+import { StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
+import { ActivatedRoute } from '@angular/router';
+import {
+	setParentId,
+	toggleAddComment,
+} from 'src/app/store/comments/comments.actions';
 
 @Component({
 	selector: 'app-story',
@@ -24,7 +25,8 @@ export class StoryComponent implements OnInit {
 	constructor(
 		private storyService: StoryService,
 		private voteService: VoteService,
-		private store: Store<AppState>
+		private store: Store<AppState>,
+		private route: ActivatedRoute
 	) {
 		this.story = <StoryDrug>{};
 		this.storyId = 0;
@@ -48,13 +50,16 @@ export class StoryComponent implements OnInit {
 		});
 	}
 
+	openAddComment() {
+		this.store.dispatch(setParentId({ parentId: 0 }));
+		this.store.dispatch(toggleAddComment({ open: true }));
+	}
+
 	ngOnInit(): void {
-		this.store.select(getUserId).subscribe((userId) => {
-			this.userId = userId;
-			this.store.select(getStoryId).subscribe((storyId) => {
-				this.storyId = storyId;
-				this.getStory();
-			});
+		this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
+		this.route.queryParams.subscribe((params) => {
+			this.storyId = parseInt(params['storyId']);
+			this.getStory();
 		});
 	}
 }

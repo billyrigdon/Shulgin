@@ -107,6 +107,17 @@ func Auth() gin.HandlerFunc {
 	}
 
 	return func (context *gin.Context){
+
+		context.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		context.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		context.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		context.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+
+		if context.Request.Method == "OPTIONS" {
+			context.AbortWithStatus(204)
+			return
+		}
+		
 		clientToken := context.Request.Header.Get("Authorization")
 		if clientToken == "" {
 			context.JSON(403, "No Authorization header provided")

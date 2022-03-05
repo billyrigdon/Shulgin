@@ -13,7 +13,6 @@ import {
 	toggleAuth,
 	toggleLoading,
 	setUserId,
-	setStoryId,
 } from '../actions/shared.actions';
 import { initialState, SharedState } from '../shared.state';
 
@@ -37,10 +36,4 @@ export const _sharedReducer = createReducer(
 			userId: action.userId,
 		};
 	}),
-	on(setStoryId, (state, action) => {
-		return {
-			...state,
-			storyId: action.storyId
-		}
-	})
 );
