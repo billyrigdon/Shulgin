@@ -20,6 +20,7 @@ export class CommentsComponent implements OnInit {
 	parentCommentId: number;
 	comments: Array<StoryComment>;
 	addCommentOpen: Observable<boolean>;
+	userId: number;
 
 	constructor(
 		private commentService: CommentService,
@@ -29,6 +30,7 @@ export class CommentsComponent implements OnInit {
 	) {
 		this.comments = [];
 		this.parentCommentId = 0;
+		this.userId = 0;
 		this.addCommentOpen = this.store.select(getAddCommentsOpen);
 	}
 
@@ -59,5 +61,6 @@ export class CommentsComponent implements OnInit {
 		this.commentService.getComments(this.storyId).subscribe((res) => {
 			this.comments = res;
 		});
+		this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
 	}
 }

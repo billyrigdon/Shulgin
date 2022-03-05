@@ -15,8 +15,8 @@ import { getAddCommentsOpen } from 'src/app/store/comments/comments.selector';
 export class AddCommentComponent implements OnInit {
 	@Input() storyId!: number;
 	@Input() parentCommentId!: number;
+	@Input() userId!: number;
 	addCommentOpen: Observable<boolean>;
-	userId: number;
 	form: FormGroup;
 
 	constructor(
@@ -25,7 +25,6 @@ export class AddCommentComponent implements OnInit {
 		private formBuilder: FormBuilder
 	) {
 		this.addCommentOpen = this.store.select(getAddCommentsOpen);
-		this.userId = 0;
 		this.form = this.formBuilder.group({
 			content: ['', Validators.required],
 		});
@@ -48,7 +47,5 @@ export class AddCommentComponent implements OnInit {
 			});
 	}
 
-	ngOnInit(): void {
-		this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
-	}
+	ngOnInit(): void {}
 }
