@@ -33,6 +33,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentThreadComponent } from './components/comment-thread/comment-thread.component';
+import { AutofocusDirective } from './directives/autofocus.directive';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -50,6 +51,7 @@ import { CommentThreadComponent } from './components/comment-thread/comment-thre
 		AddCommentComponent,
   CommentComponent,
   CommentThreadComponent,
+  AutofocusDirective,
 	],
 	imports: [
 		BrowserModule,

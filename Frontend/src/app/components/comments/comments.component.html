@@ -3,7 +3,7 @@
 		*ngIf="addCommentOpen | async"
 		[storyId]="storyId"
 		[parentCommentId]="parentCommentId"
-		[userId]="userId"
+		[userId]="this.userId"
 	></app-add-comment>
 	<div>
 		<app-comment-thread
