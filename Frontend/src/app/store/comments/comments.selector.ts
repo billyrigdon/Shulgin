@@ -8,3 +8,7 @@ const getCommentsState = createFeatureSelector<CommentsState>(COMMENTS_STATE_NAM
 export const getAddCommentsOpen = createSelector(getCommentsState, (state) => {
 	return state.addCommentOpen;
 });
+
+export const getParentCommentId = createSelector(getCommentsState, (state) => {
+	return state.parentCommentId;
+});

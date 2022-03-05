@@ -5,4 +5,7 @@ export const toggleAddComment = createAction(
 	props<{ open: boolean }>()
 );
 
-
+export const setParentId = createAction(
+	'SET_PARENT',
+	props<{parentId: number}>()
+)

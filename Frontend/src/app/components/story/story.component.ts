@@ -7,6 +7,10 @@ import { AppState } from 'src/app/store/app.state';
 import { StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
 import { ActivatedRoute } from '@angular/router';
+import {
+	setParentId,
+	toggleAddComment,
+} from 'src/app/store/comments/comments.actions';
 
 @Component({
 	selector: 'app-story',
@@ -44,6 +48,11 @@ export class StoryComponent implements OnInit {
 		this.voteService.addStoryVote(vote).subscribe((res) => {
 			this.story.votes = this.story.votes + 1;
 		});
+	}
+
+	openAddComment() {
+		this.store.dispatch(setParentId({ parentId: 0 }));
+		this.store.dispatch(toggleAddComment({ open: true }));
 	}
 
 	ngOnInit(): void {

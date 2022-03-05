@@ -5,7 +5,7 @@
 		[parentCommentId]="parentCommentId"
 		[userId]="userId"
 	></app-add-comment>
-	<button (click)="openAddComment(0)">Reply to Story</button>
+	
 	<mat-card class="comment" *ngFor="let comment of comments">
 		<mat-card-content id="comment-content">
 			<p>{{ comment.content }}</p>
@@ -14,7 +14,10 @@
 		</mat-card-content>
 		<mat-card-footer id="comment-footer">
 			<mat-card-actions>
-				<button mat-raised-button>Upvote - {{ comment.votes }}</button>
+				<button mat-raised-button (click)="upvote({
+					commentId: comment.commentId,
+					userId: this.userId
+				})">Upvote - {{ comment.votes }}</button>
 				<button
 					mat-raised-button
 					(click)="openAddComment(comment.commentId)"

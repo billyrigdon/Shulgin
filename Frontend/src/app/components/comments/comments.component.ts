@@ -6,7 +6,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { AppState } from 'src/app/store/app.state';
 import { toggleAddComment } from 'src/app/store/comments/comments.actions';
-import { getAddCommentsOpen } from 'src/app/store/comments/comments.selector';
+import { getAddCommentsOpen, getParentCommentId } from 'src/app/store/comments/comments.selector';
 import { StoryComment, NewStoryComment } from 'src/app/types/comment';
 import { CommentVote } from 'src/app/types/vote';
 
@@ -29,7 +29,7 @@ export class CommentsComponent implements OnInit {
 		private store: Store<AppState>
 	) {
 		this.comments = [];
-		this.parentCommentId = 0;
+		this.parentCommentId = 0
 		this.userId = 0;
 		this.addCommentOpen = this.store.select(getAddCommentsOpen);
 	}
@@ -62,5 +62,8 @@ export class CommentsComponent implements OnInit {
 			this.comments = res;
 		});
 		this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
+		this.store.select(getParentCommentId).subscribe((val) => {
+			this.parentCommentId = val;
+		})
 	}
 }
