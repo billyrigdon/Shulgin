@@ -3,14 +3,11 @@ package main
 import (
 	"io"
 	"os"
-
 	Auth "shulgin/Auth"
 	Controllers "shulgin/Controllers"
 
-	//"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
-	//"github.com/gin-gonic/autotls"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -22,9 +19,6 @@ func setupRouter() (*gin.Engine) {
 
 	//Create router
 	router := gin.Default()
-
-	//Setup Cors
-	//router.Use(cors.Default())
 
 	//Serve frontend
 	router.Use(static.Serve("/", static.LocalFile("./dist",true)))
@@ -39,26 +33,37 @@ func setupRouter() (*gin.Engine) {
 	router.Use(static.Serve("/explore", static.LocalFile("./dist", true)))
 	router.Use(static.Serve("/story", static.LocalFile("./dist", true)))
 
-	//Serve public login/signup routes
-	api:= router.Group("/api") 
+	
+	api:= router.Group("/api")
+	
+	
 	{
 		public := api.Group("/public")
+		//TODO:remove for prod
+		public.Use(corsInterceptor())
+		
 		{
+			//Serve public login/signup routes
 			public.POST("login", Controllers.UserLogin)
 			public.POST("signup", Controllers.UserSignup)
+
+			//Serve public explore page
+			public.GET("/story/get",Controllers.GetAllStories)
+			public.GET("/story/comment", Controllers.GetComments)
+			public.GET("/story", Controllers.GetSingleStory)
 		}
 
 		//Serve routes that require valid jwt token
 		protected := api.Group("/protected").Use(Auth.Auth())
+		//TODO:remove for prod
+		protected.Use(corsInterceptor())
 		{ 
 			//Serve CRUD user profile routes
 			protected.GET("/user",Controllers.GetUserProfile)
 			protected.POST("/user/create",Controllers.CreateUserProfile)
 			
 			// Serve CRUD story routes
-			protected.GET("/story/user", Controllers.GetUserStories)
-			protected.GET("/story", Controllers.GetSingleStory)
-			protected.GET("/story/get",Controllers.GetAllStories)
+			protected.GET("/story/user", Controllers.GetUserStories)	
 			protected.POST("/story/create", Controllers.CreateStory)
 			protected.DELETE("/story/delete",Controllers.DeleteStory)
 			protected.POST("/story/vote/add", Controllers.AddStoryVote)
@@ -66,7 +71,6 @@ func setupRouter() (*gin.Engine) {
 			
 						
 			//Serve CRUD comment routes
-			protected.GET("/story/comment", Controllers.GetComments)
 			protected.POST("/story/comment/create", Controllers.AddComment)
 			protected.DELETE("/story/comment/delete", Controllers.DeleteComment)
 			protected.POST("/story/comment/update", Controllers.UpdateComment)
@@ -90,6 +94,25 @@ func setupRouter() (*gin.Engine) {
 	return router
 }
 
+
+//TODO:Remove for prod
+//Cors header and handler of preflight options
+func corsInterceptor() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		context.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		context.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		context.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		context.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+
+		if context.Request.Method == "OPTIONS" {
+			context.AbortWithStatus(204)
+			return
+		}
+
+		context.Next()
+	}
+}
+
 //Create log file if it doesn't exist, append if it does. 
 //The 666 is file permissions, not some hidden satanic message in my code.
 func OpenLogFile(file string) *os.File {
@@ -107,12 +130,11 @@ func main() {
 
 	//Create server
 	router := setupRouter()
+	//TODO: remove for prod
+	router.Use(corsInterceptor())
 	
-
-	//Start dev server
+	//Start server
 	router.Run(":8080")
 
-	//Start production server
-	// log.Fatal(autotls.Run(router,"shulgin.io"))
 }
 
