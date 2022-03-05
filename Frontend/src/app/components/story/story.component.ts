@@ -56,6 +56,7 @@ export class StoryComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
 		this.route.queryParams.subscribe((params) => {
 			this.storyId = parseInt(params['storyId']);
 			this.getStory();

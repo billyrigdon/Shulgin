@@ -5,27 +5,12 @@
 		[parentCommentId]="parentCommentId"
 		[userId]="userId"
 	></app-add-comment>
-	
-	<mat-card class="comment" *ngFor="let comment of comments">
-		<mat-card-content id="comment-content">
-			<p>{{ comment.content }}</p>
-			<br />
-			<p>{{ comment.username }}</p>
-		</mat-card-content>
-		<mat-card-footer id="comment-footer">
-			<mat-card-actions>
-				<button mat-raised-button (click)="upvote({
-					commentId: comment.commentId,
-					userId: this.userId
-				})">Upvote - {{ comment.votes }}</button>
-				<button
-					mat-raised-button
-					(click)="openAddComment(comment.commentId)"
-				>
-					Reply to Comment
-				</button>
-				<button *ngIf="comment.userId == this.userId" mat-raised-button color="danger">Delete</button>
-			</mat-card-actions>
-		</mat-card-footer>
-	</mat-card>
+	<div>
+		<app-comment-thread
+			[comments]="comments"
+			[userId]="userId"
+			[parentCommentId]="0"
+		>
+		</app-comment-thread>
+	</div>
 </div>

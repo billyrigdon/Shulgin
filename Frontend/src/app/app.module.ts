@@ -31,6 +31,8 @@ import { DatePipe } from '@angular/common';
 import { StoryComponent } from './components/story/story.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { AddCommentComponent } from './components/add-comment/add-comment.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { CommentThreadComponent } from './components/comment-thread/comment-thread.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -46,6 +48,8 @@ import { AddCommentComponent } from './components/add-comment/add-comment.compon
 		StoryComponent,
 		CommentsComponent,
 		AddCommentComponent,
+  CommentComponent,
+  CommentThreadComponent,
 	],
 	imports: [
 		BrowserModule,
