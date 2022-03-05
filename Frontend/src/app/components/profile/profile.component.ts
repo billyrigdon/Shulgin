@@ -13,11 +13,11 @@ import { AppState } from 'src/app/store/app.state';
 import { setUserId } from 'src/app/store/shared/actions/shared.actions';
 
 @Component({
-	selector: 'app-home',
-	templateUrl: './home.component.html',
-	styleUrls: ['./home.component.scss'],
+	selector: 'app-profile',
+	templateUrl: './profile.component.html',
+	styleUrls: ['./profile.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 	stories: Array<Story>;
 	userDrugs: Array<UserDrug>;
 	userProfile: UserProfile;

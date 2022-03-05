@@ -1,8 +1,8 @@
 <mat-toolbar id="navbar">
 	<ul>
-		<li *ngIf="!(isLoggedIn | async)" (click)="goToLogin()">LOGIN</li>
-		<li *ngIf="!(isLoggedIn | async)" (click)="goToSignup()">SIGNUP</li>
-		<li *ngIf="isLoggedIn | async" (click)="goToHome()">Home</li>
+		<li *ngIf="!(isLoggedIn | async)" (click)="goToLogin()">Login</li>
+		<li *ngIf="!(isLoggedIn | async)" (click)="goToSignup()">Signup</li>
+		<li *ngIf="isLoggedIn | async" (click)="goToProfile()">Profile</li>
 		<li *ngIf="isLoggedIn | async" (click)="goToExplore()">Explore</li>
 		<li *ngIf="isLoggedIn | async" (click)="signout()">Logout</li>
 	</ul>

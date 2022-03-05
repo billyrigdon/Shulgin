@@ -4,17 +4,15 @@ import { AddDrugComponent } from './components/add-drug/add-drug.component';
 import { AddStoryComponent } from './components/add-story/add-story.component';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 import { ExploreComponent } from './components/explore/explore.component';
-import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { SplashComponent } from './components/splash/splash.component';
 import { StoryComponent } from './components/story/story.component';
 
 const routes: Routes = [
 	{ path: 'login', component: LoginComponent },
 	{ path: 'signup', component: SignupComponent },
-	{ path: 'splash', component: SplashComponent },
-	{ path: 'home', component: HomeComponent },
+	{ path: 'profile', component: ProfileComponent },
 	{ path: 'createProfile', component: CreateProfileComponent },
 	{ path: 'addDrug', component: AddDrugComponent },
 	{ path: 'addStory', component: AddStoryComponent },

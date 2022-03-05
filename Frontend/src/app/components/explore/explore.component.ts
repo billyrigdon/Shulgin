@@ -57,14 +57,6 @@ export class ExploreComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		//Check if logged in and navigate to splash if not
-		if (this.storageService.getToken() && this.storageService.getUser()) {
-			this.store.select(getUserId).subscribe((val) => {
-				this.userId = val;
-			});
-			this.getAllStories();
-		} else {
-			this.router.navigateByUrl('/splash');
-		}
+		this.getAllStories();
 	}
 }

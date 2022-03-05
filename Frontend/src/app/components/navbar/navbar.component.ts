@@ -33,12 +33,12 @@ export class NavbarComponent implements OnInit {
 		this.router.navigateByUrl('/signup');
 	}
 
-	goToHome() {
-		this.router.navigateByUrl('home');
+	goToProfile() {
+		this.router.navigateByUrl('/profile');
 	}
 
 	goToExplore() {
-		this.router.navigateByUrl('explore');
+		this.router.navigateByUrl('/explore');
 	}
 
 	//Remove token and user profile from session/local storage. Reload page
@@ -46,6 +46,6 @@ export class NavbarComponent implements OnInit {
 		this.storageService.signout();
 		this.profileService.removeProfile();
 		this.store.dispatch(toggleAuth({ status: false }));
-		this.router.navigateByUrl('/splash');
+		this.router.navigateByUrl('/explore');
 	}
 }
