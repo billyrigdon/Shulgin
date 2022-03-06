@@ -8,7 +8,5 @@ cd ../Backend
 go get
 go build .
 cd ..
-docker build -t billyrigdoniii/shulgin:latest .
-docker kill shulgin
-docker rm shulgin
-docker run -dit -p 8080:8080 --name shulgin billyrigdoniii/shulgin:latest
+docker build -t billyrigdoniii/shulgin:1.1.1
+docker push billyrigdoniii/shulgin:1.1.1

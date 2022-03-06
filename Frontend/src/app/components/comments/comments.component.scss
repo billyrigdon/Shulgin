@@ -5,8 +5,9 @@
 	height: 100%;
 	position: relative;
 	justify-content: flex-start;
-	align-items: center;	
+	align-items: center;
 
-	
-
+	app-comment-thread {
+		width: 100%;
+	}
 }

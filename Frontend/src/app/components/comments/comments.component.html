@@ -5,12 +5,10 @@
 		[parentCommentId]="parentCommentId"
 		[userId]="this.userId"
 	></app-add-comment>
-	<div>
-		<app-comment-thread
-			[comments]="comments"
-			[userId]="userId"
-			[parentCommentId]="0"
-		>
-		</app-comment-thread>
-	</div>
+	<app-comment-thread
+		[comments]="comments"
+		[userId]="userId"
+		[parentCommentId]="0"
+	>
+	</app-comment-thread>
 </div>
