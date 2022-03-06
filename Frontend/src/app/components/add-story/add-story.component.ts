@@ -58,9 +58,9 @@ export class AddStoryComponent implements OnInit {
 		this.story.rating = parseInt(val.rating);
 		this.story.journal = val.journal;
 		this.story.title = val.title;
-		
+
 		this.storyService.addUserStory(this.story).subscribe((res) => {
-			this.router.navigateByUrl('home');
+			this.router.navigateByUrl('profile');
 		});
 	}
 
@@ -70,7 +70,7 @@ export class AddStoryComponent implements OnInit {
 			let user = JSON.parse(localStorage.getItem('user') || '');
 			this.story.userId = user.userId;
 		} else {
-			this.router.navigateByUrl('splash');
+			this.router.navigateByUrl('explore');
 		}
 	}
 }

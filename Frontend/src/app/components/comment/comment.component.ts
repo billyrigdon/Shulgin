@@ -16,13 +16,14 @@ import { CommentVote } from 'src/app/types/vote';
 })
 export class CommentComponent implements OnInit {
 	@Input() comment!: StoryComment;
-  @Input() userId!: number;
   @Input() comments!: Array<StoryComment>
-
+	userId: number;
 	constructor(
 		private voteService: VoteService,
 		private store: Store<AppState>
-	) {}
+	) {
+		this.userId = JSON.parse((localStorage.getItem("user") || "")).userId
+	}
 
 	upvote(vote: CommentVote) {
 		this.voteService.addCommentVote(vote).subscribe((res) => {

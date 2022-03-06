@@ -44,10 +44,10 @@ export class AddCommentComponent implements OnInit {
 			.subscribe((res) => {
 				console.log(res);
 				this.store.dispatch(toggleAddComment({ open: false }));
+				window.location.reload();
 			});
 	}
 
-	
 	closeAddComment() {
 		this.store.dispatch(toggleAddComment({ open: false }));
 	}
