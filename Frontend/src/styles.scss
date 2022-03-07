@@ -33,6 +33,13 @@ h6,
 	color: $dark-grey;
 }
 
+input[type="text"],
+input[type="password"],
+textarea,
+select:focus {
+	font-size: 16px;
+}
+
 html,
 body {
 	height: 100%;
