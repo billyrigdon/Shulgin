@@ -36,10 +36,9 @@
 				</mat-card-actions>
 			</mat-card-footer>
 		</mat-card>
-		<div *ngFor="let child of comments">
+		<div>
 			<app-comment-thread
 				class="subthread"
-				*ngIf="child.parentCommentId == comment.commentId"
 				[comments]="comments"
 				[parentCommentId]="comment.commentId"
 			></app-comment-thread>
