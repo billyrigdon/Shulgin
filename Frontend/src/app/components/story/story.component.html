@@ -35,6 +35,7 @@
 				Upvote - {{story.votes}}
 			</button>
 			<button mat-raised-button (click)="openAddComment()">Reply to Story</button>
+			<button *ngIf="story.userId == this.userId" mat-raised-button (click)="deleteStory(story.storyId)">Delete</button>
 		</mat-card-actions>
 	</mat-card>
 	<app-comments [storyId]="storyId"></app-comments>

@@ -32,12 +32,21 @@ export class StoryService {
 	}
 
 	getAllStories() {
-		return this.http.get(API_URL + '/public/story/get', { responseType: 'text' });
+		return this.http.get(API_URL + '/public/story/get', {
+			responseType: 'text',
+		});
 	}
 
 	getStory(storyId: number) {
 		return this.http.get(API_URL + '/public/story?storyId=' + storyId, {
 			responseType: 'text',
 		});
+	}
+
+	deleteStory(storyId: number) {
+		return this.http.delete(
+			API_URL + '/protected/story/delete?storyId=' + storyId,
+			{ responseType: 'text' }
+		);
 	}
 }

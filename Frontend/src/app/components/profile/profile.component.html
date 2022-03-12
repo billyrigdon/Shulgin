@@ -29,32 +29,5 @@
 		</div>
 	</mat-card>
 
-	<section id="user-stories">
-		<div id="user-stories-title">
-			<h2>Your stories</h2>
-			<span
-				id="add-story-button"
-				class="material-icons"
-				(click)="goToAddStory()"
-				>control_point</span
-			>
-		</div>
-
-		<div id="story-container">
-			<mat-card class="story" *ngFor="let story of stories">
-				<h2>{{ story.journal }}</h2>
-				<h5>{{ story.date }}</h5>
-				<br />
-				<ul>
-					<li>Calmness:{{ story.calmness }}</li>
-					<li>Focus:{{ story.focus }}</li>
-					<li>Creativity:{{ story.creativity }}</li>
-					<li>Mood:{{ story.mood }}</li>
-					<li>Irritability:{{ story.irritability }}</li>
-					<li>Wakefulness:{{ story.wakefulness }}</li>
-					<li>Overall Rating:{{ story.rating }}</li>
-				</ul>
-			</mat-card>
-		</div>
-	</section>
+	<app-stories [stories]="this.stories"></app-stories>
 </div>

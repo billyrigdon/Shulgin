@@ -53,52 +53,7 @@
 		}
 	}
 
-	#user-stories {
-		margin-top: 1rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: flex-start;
+	app-stories {
 		width: 100%;
-		height: 100%;
-
-		#user-stories-title {
-			display: flex;
-			align-items: center;
-		}
-
-		h2 {
-			font-size: 1rem;
-			font-weight: 500;
-		}
-
-		#story-container {
-			height: 90%;
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: flex-start;
-
-			.story {
-				display: flex;
-				align-items: center;
-				flex-direction: column;
-				justify-content: center;
-				width: 90%;
-				margin-top: 1rem;
-				ul {
-					display: flex;
-					flex-direction: row;
-					width: 100%;
-					flex-wrap: wrap;
-					justify-content: center;
-					li {
-						list-style: none;
-						margin-left: 1rem;
-					}
-				}
-			}
-		}
 	}
 }

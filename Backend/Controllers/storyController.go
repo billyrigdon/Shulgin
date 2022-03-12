@@ -105,20 +105,12 @@ func GetUserStories(context *gin.Context) {
 
 	sqlStatement := `
 		SELECT s.storyId,
-		s.userId,
-		s.title,  
-		s.calmness,
-		s.focus,
-		s.creativity,
-		s.mood,
-		s.irritability,
-		s.wakefulness,
-		s.rating,
-		s.journal,
+		s.title, 
 		s.date,
 		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
 		FROM stories s
-		WHERE userid = $1;
+		WHERE userid = $1
+		ORDER BY date DESC;
 		`
 
 	rows,err := db.Query(sqlStatement,userId)
@@ -138,17 +130,8 @@ func GetUserStories(context *gin.Context) {
 	for rows.Next() {
 		var story Models.Story
 
-		err = rows.Scan(&story.StoryId, 
-			&story.UserId,
-			&story.Title, 
-			&story.Calmness, 
-			&story.Focus, 
-			&story.Creativity, 
-			&story.Mood,
-			&story.Irritability, 
-			&story.Wakefulness,
-			&story.Rating, 
-			&story.Journal, 
+		err = rows.Scan(&story.StoryId, 	
+			&story.Title,  
 			&story.Date,
 			&story.Votes)
 
@@ -247,9 +230,10 @@ func DeleteStory(context *gin.Context) {
 	}
 	
 	sqlStatement := `
-		DELETE FROM stories
+		UPDATE stories
+		SET userId = 1, journal = '[redacted]'
 		WHERE storyId = $1
-		AND userid = $2;
+		AND userId = $2;
 		`
 	_, deleteErr := db.Exec(sqlStatement,storyId,userId)
 	if deleteErr != nil {

@@ -4,7 +4,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { StoryService } from 'src/app/services/story.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserProfile } from 'src/app/types/user';
-import { Story } from '../../types/story';
+import { Story, StoryDrug } from '../../types/story';
 import { UserDrug } from 'src/app/types/userDrug';
 import { DrugService } from 'src/app/services/drug.service';
 import { DatePipe, formatDate } from '@angular/common';
@@ -18,7 +18,7 @@ import { setUserId } from 'src/app/store/shared/actions/shared.actions';
 	styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-	stories: Array<Story>;
+	stories: Array<StoryDrug>;
 	userDrugs: Array<UserDrug>;
 	userProfile: UserProfile;
 
@@ -31,8 +31,8 @@ export class ProfileComponent implements OnInit {
 		private datepipe: DatePipe,
 		private store: Store<AppState>
 	) {
-		this.stories = [];
-		this.userDrugs = [];
+		this.stories = Array<StoryDrug>();
+		this.userDrugs = Array<UserDrug>();
 		this.userProfile = <UserProfile>{};
 	}
 

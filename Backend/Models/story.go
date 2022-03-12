@@ -2,7 +2,7 @@ package models
 
 type Story struct {
 	StoryId int `json:"storyId"`
-	UserId int `json:"userid"`
+	UserId int `json:"userId"`
 	Title string `json:"title"`
 	Calmness int `json:"calmness"`
 	Focus int `json:"focus"`

@@ -231,8 +231,10 @@ func DeleteComment(context *gin.Context) {
 		log.Error(dbErr)
 	}
 
+	
 	sqlStatement := `
-		DELETE FROM story_comments
+		UPDATE story_comments
+		SET content = '[ redacted ]',userId = 1
 		WHERE commentId = $1
 		AND userId = $2;
 	`

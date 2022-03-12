@@ -30,6 +30,7 @@
 						*ngIf="comment.userId == this.userId"
 						mat-raised-button
 						color="danger"
+						(click)="deleteComment(comment.commentId)"
 					>
 						Delete
 					</button>

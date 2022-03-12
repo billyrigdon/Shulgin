@@ -1,18 +1,1 @@
-<div id="story-container">
-	<mat-card class="story" *ngFor="let story of stories">
-		<h2>{{ story.title }}</h2>
-		<h5>{{ story.date }}</h5>
-		<h5>Upvotes:{{ story.votes }}</h5>
-		<br />
-		<ul id="story-drugs">
-			<li *ngFor="let drug of story.drugs">
-				{{ drug.drugName }} - {{ drug.dosage }}
-			</li>
-		</ul>
-		<mat-card-actions>
-			<button mat-raised-button (click)="openStory(story.storyId)">
-				Read more...
-			</button>
-		</mat-card-actions>
-	</mat-card>
-</div>
+<app-stories [stories]="this.stories"></app-stories>
