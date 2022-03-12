@@ -279,20 +279,11 @@ func GetAllStories(context *gin.Context) {
 
 	sqlStatement := `
 		SELECT s.storyId, 
-		s.userId,
 		s.title, 
-		s.calmness,
-		s.focus,
-		s.creativity,
-		s.mood,
-		s.irritability,
-		s.wakefulness,
-		s.rating,
-		s.journal,
 		s.date,
 		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
 		FROM stories s
-		ORDER BY date DESC;
+		ORDER BY s.date DESC,votes DESC;
 		`
 
 	rows,err := db.Query(sqlStatement)
@@ -314,16 +305,7 @@ func GetAllStories(context *gin.Context) {
 		var storyDrug Models.StoryDrugs
 
 		err = rows.Scan(&storyDrug.StoryId, 
-			&storyDrug.UserId,
-			&storyDrug.Title, 
-			&storyDrug.Calmness, 
-			&storyDrug.Focus, 
-			&storyDrug.Creativity, 
-			&storyDrug.Mood,
-			&storyDrug.Irritability, 
-			&storyDrug.Wakefulness,
-			&storyDrug.Rating, 
-			&storyDrug.Journal, 
+			&storyDrug.Title,  
 			&storyDrug.Date,
 			&storyDrug.Votes)
 
