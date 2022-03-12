@@ -35,6 +35,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { CommentThreadComponent } from './components/comment-thread/comment-thread.component';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { StoriesComponent } from './components/stories/stories.component';
+import { MoodGraphComponent } from './components/mood-graph/mood-graph.component';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -54,6 +55,7 @@ import { StoriesComponent } from './components/stories/stories.component';
   CommentThreadComponent,
   AutofocusDirective,
   StoriesComponent,
+  MoodGraphComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
 	stories: Array<StoryDrug>;
 	userDrugs: Array<UserDrug>;
 	userProfile: UserProfile;
+	profilePic: string;
 
 	constructor(
 		private storyService: StoryService,
@@ -34,6 +35,7 @@ export class ProfileComponent implements OnInit {
 		this.stories = Array<StoryDrug>();
 		this.userDrugs = Array<UserDrug>();
 		this.userProfile = <UserProfile>{};
+		this.profilePic = '../../../assets/Icons/avatar-placeholder.png'
 	}
 
 	removeUserDrug(drugId: number) {
@@ -55,6 +57,9 @@ export class ProfileComponent implements OnInit {
 		if (this.storageService.getToken() && this.storageService.getUser()) {
 			//TODO: Move userprofile to shared state instead of handling it this way
 			if (localStorage.getItem('user')) {
+				this.profileService.getProfile().subscribe((res) => {
+					this.profileService.setProfile(res)
+				})
 				//Get user fields from user stored in local storage
 				this.userProfile = JSON.parse(
 					localStorage.getItem('user') || ''

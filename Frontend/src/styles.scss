@@ -3,9 +3,11 @@
 $primary-color: #fbeaff;
 $light-accent-color: #fbeaff;
 $dark-accent-color: #b39cd0;
-$contrast-color: #00c9a7;
+//$contrast-color: #00C2A9;
+$contrast-color:#B0A8B9;
 $light-grey: #fcf7ff;
 $dark-grey: #4b4453;
+$delete-red:#FF4d74;
 
 * {
 	margin: 0;
@@ -56,4 +58,8 @@ body {
 
 .mat-card {
 	background-color: $light-grey;
+}
+
+button {
+	color: $light-grey;
 }

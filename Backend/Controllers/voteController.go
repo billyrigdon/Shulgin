@@ -7,14 +7,13 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/gin-gonic/gin"
-	
 )
 
 func AddStoryVote(context *gin.Context) {
 	var vote Models.StoryVote
-	
+
 	err := context.ShouldBindJSON(&vote)
-	
+
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
@@ -23,9 +22,9 @@ func AddStoryVote(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -40,19 +39,19 @@ func AddStoryVote(context *gin.Context) {
 			($1,$2)
 		RETURNING storyId;
 	`
-	err = db.QueryRow(sqlStatement,vote.StoryId,vote.UserId).Scan(&vote.StoryId)
+	err = db.QueryRow(sqlStatement, vote.StoryId, vote.UserId).Scan(&vote.StoryId)
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
-			"msg": "Unable to upvote",
+			"msg":  "Unable to upvote",
 			"vote": vote,
 		})
 		context.Abort()
-		
+
 		return
 	}
 
-	context.JSON(200,vote)
+	context.JSON(200, vote)
 }
 
 func RemoveStoryVote(context *gin.Context) {
@@ -67,9 +66,9 @@ func RemoveStoryVote(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -83,18 +82,18 @@ func RemoveStoryVote(context *gin.Context) {
 		AND userId = $2;
 		`
 
-	_,err = db.Exec(sqlStatement,vote.StoryId,vote.UserId)
+	_, err = db.Exec(sqlStatement, vote.StoryId, vote.UserId)
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "Unable to remove vote",
 		})
 		context.Abort()
-		
+
 		return
 	}
 
-	context.JSON(200,vote)
+	context.JSON(200, vote)
 }
 
 func AddCommentVote(context *gin.Context) {
@@ -108,9 +107,9 @@ func AddCommentVote(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -124,18 +123,18 @@ func AddCommentVote(context *gin.Context) {
 		VALUES
 			($1,$2);
 	`
-	_,err = db.Exec(sqlStatement,vote.CommentId,vote.UserId)
+	_, err = db.Exec(sqlStatement, vote.CommentId, vote.UserId)
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "Unable to upvote",
 		})
 		context.Abort()
-		
+
 		return
 	}
 
-	context.JSON(200,vote)
+	context.JSON(200, vote)
 }
 
 func RemoveCommentVote(context *gin.Context) {
@@ -150,9 +149,9 @@ func RemoveCommentVote(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -166,16 +165,16 @@ func RemoveCommentVote(context *gin.Context) {
 		AND userId = $2;
 		`
 
-	_,err = db.Exec(sqlStatement,vote.CommentId,vote.UserId)
+	_, err = db.Exec(sqlStatement, vote.CommentId, vote.UserId)
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "Unable to remove vote",
 		})
 		context.Abort()
-		
+
 		return
 	}
 
-	context.JSON(200,vote)
+	context.JSON(200, vote)
 }

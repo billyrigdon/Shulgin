@@ -6,8 +6,8 @@ type StoryComment struct {
 	UserId          int    `json:"userId"`
 	ParentCommentId int    `json:"parentCommentId"`
 	Content         string `json:"content"`
-	DateCreated    string   `json:"dateCreated"`
-	UpdatedAt      string  `json:"updatedAt"`
+	DateCreated     string `json:"dateCreated"`
+	UpdatedAt       string `json:"updatedAt"`
 	Username        string `json:"username"`
 	Votes           int    `json:"votes"`
 }

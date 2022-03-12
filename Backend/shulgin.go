@@ -11,7 +11,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func setupRouter() (*gin.Engine) {
+func setupRouter() *gin.Engine {
 	//Configure logging
 	gin.DisableConsoleColor()
 	logFile := OpenLogFile("shulgin.log")
@@ -21,34 +21,32 @@ func setupRouter() (*gin.Engine) {
 	router := gin.Default()
 
 	//Serve frontend
-	router.Use(static.Serve("/", static.LocalFile("./dist",true)))
-	router.Use(static.Serve("/splash", static.LocalFile("./dist",true)))
-	router.Use(static.Serve("/login", static.LocalFile("./dist",true)))
-	router.Use(static.Serve("/signup", static.LocalFile("./dist",true)))
-	router.Use(static.Serve("/stories", static.LocalFile("./dist",true)))
-	router.Use(static.Serve("/createProfile", static.LocalFile("./dist",true)))
-	router.Use(static.Serve("/profile", static.LocalFile("./dist",true)))
-	router.Use(static.Serve("/addDrug", static.LocalFile("./dist",true)))
+	router.Use(static.Serve("/", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/splash", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/login", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/signup", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/stories", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/createProfile", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/profile", static.LocalFile("./dist", true)))
+	router.Use(static.Serve("/addDrug", static.LocalFile("./dist", true)))
 	router.Use(static.Serve("/addStory", static.LocalFile("./dist", true)))
 	router.Use(static.Serve("/explore", static.LocalFile("./dist", true)))
 	router.Use(static.Serve("/story", static.LocalFile("./dist", true)))
 
-	
-	api:= router.Group("/api")
-	
-	
+	api := router.Group("/api")
+
 	{
 		public := api.Group("/public")
 		//TODO:remove for prod
 		public.Use(corsInterceptor())
-		
+
 		{
 			//Serve public login/signup routes
 			public.POST("login", Controllers.UserLogin)
 			public.POST("signup", Controllers.UserSignup)
 
 			//Serve public explore page
-			public.GET("/story/get",Controllers.GetAllStories)
+			public.GET("/story/get", Controllers.GetAllStories)
 			public.GET("/story/comment", Controllers.GetComments)
 			public.GET("/story", Controllers.GetSingleStory)
 		}
@@ -57,43 +55,43 @@ func setupRouter() (*gin.Engine) {
 		protected := api.Group("/protected").Use(Auth.Auth())
 		//TODO:remove for prod
 		protected.Use(corsInterceptor())
-		{ 
-			//Serve CRUD user profile routes
-			protected.GET("/user",Controllers.GetUserProfile)
-			protected.POST("/user/create",Controllers.CreateUserProfile)
-			
-			// Serve CRUD story routes
-			protected.GET("/story/user", Controllers.GetUserStories)	
+		{
+			//Serve user profile routes
+			protected.GET("/user", Controllers.GetUserProfile)
+			protected.POST("/user/create", Controllers.CreateUserProfile)
+
+			// Serve story routes
+			protected.GET("/story/user", Controllers.GetUserStories)
 			protected.POST("/story/create", Controllers.CreateStory)
-			protected.DELETE("/story/delete",Controllers.DeleteStory)
+			protected.DELETE("/story/delete", Controllers.DeleteStory)
 			protected.POST("/story/vote/add", Controllers.AddStoryVote)
 			protected.POST("/story/vote/remove", Controllers.RemoveStoryVote)
-			
-						
-			//Serve CRUD comment routes
+
+			//Serve comment routes
 			protected.POST("/story/comment/create", Controllers.AddComment)
 			protected.DELETE("/story/comment/delete", Controllers.DeleteComment)
 			protected.POST("/story/comment/update", Controllers.UpdateComment)
 			protected.POST("/story/comment/vote/add", Controllers.AddCommentVote)
 			protected.POST("/story/comment/vote/remove", Controllers.RemoveCommentVote)
 
-			//Serve CRUD drug routes
-			protected.GET("/drug",Controllers.GetAllDrugs)
-			protected.POST("/drug/create",Controllers.AddDrug)
-			protected.GET("/drug/get",Controllers.GetDrug)	
+			//Serve drug routes
+			protected.GET("/drug", Controllers.GetAllDrugs)
+			protected.POST("/drug/create", Controllers.AddDrug)
+			protected.GET("/drug/get", Controllers.GetDrug)
 
-			//Serve CRUD user_drug routes
-			protected.GET("/user/drugs/get",Controllers.GetUserDrugs)
-			protected.POST("/user/drugs/add",Controllers.AddUserDrug)
-			protected.DELETE("/user/drugs/remove",Controllers.RemoveUserDrug)
+			//Serve user_drug routes
+			protected.GET("/user/drugs/get", Controllers.GetUserDrugs)
+			protected.POST("/user/drugs/add", Controllers.AddUserDrug)
+			protected.DELETE("/user/drugs/remove", Controllers.RemoveUserDrug)
+
+			//Serve mood routes
+			protected.GET("/user/mood/get", Controllers.GetAverageMood)
 		}
-		
-			
+
 	}
 
 	return router
 }
-
 
 //TODO:Remove for prod
 //Cors header and handler of preflight options
@@ -113,28 +111,27 @@ func corsInterceptor() gin.HandlerFunc {
 	}
 }
 
-//Create log file if it doesn't exist, append if it does. 
+//Create log file if it doesn't exist, append if it does.
 //The 666 is file permissions, not some hidden satanic message in my code.
 func OpenLogFile(file string) *os.File {
 	logFile, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-    if err != nil {
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.Fatal(err)
+	}
 	return logFile
 }
 
 func main() {
-	//Set logrus to use log file 
-	logFile := OpenLogFile("shulgin.log")	
+	//Set logrus to use log file
+	logFile := OpenLogFile("shulgin.log")
 	log.SetOutput(logFile)
 
 	//Create server
 	router := setupRouter()
 	//TODO: remove for prod
 	router.Use(corsInterceptor())
-	
+
 	//Start server
 	router.Run(":8080")
 
 }
-

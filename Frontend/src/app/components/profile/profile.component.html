@@ -1,33 +1,53 @@
 <div id="home-container">
-	<mat-card id="profile-short">
-		<div id="bio">
-			<h1>{{ userProfile.username }}</h1>
-			<ul>
-				<li>{{ userProfile.funFact }}</li>
-				<li>Reputation:{{ userProfile.reputation }}</li>
-				<li>Status:{{ userProfile.status || "Beta Testing" }}</li>
-			</ul>
-		</div>
-		<div id="user-drugs">
-			<ul>
-				<h3>Drugs I'm taking:</h3>
-				<li *ngFor="let drug of userDrugs">
-					{{ drug.drugName }}
-					<span
-						(click)="removeUserDrug(drug.drugId)"
-						class="material-icons"
-					>
-						delete
-					</span>
-				</li>
-			</ul>
-			<div id="addDrugs">
-				<span class="material-icons" (click)="goToDrugs()">
-					control_point
-				</span>
+	<mat-card id="profile-info-card">
+		<div id="profile-short">
+			<div id="profile-pic-and-username">
+				<img [src]="profilePic" />
+				<div id="profile-info">
+					<h1>{{ userProfile.username }}</h1>
+					<p>Reputation: {{ userProfile.reputation }}</p>
+				</div>
 			</div>
 		</div>
 	</mat-card>
+
+	<mat-card class="profile-card">
+		<h2>Average Mood</h2>
+		<app-mood-graph [userId]="userProfile.userId"></app-mood-graph>
+	</mat-card>
+
+	<div class="profile-buttons">
+		<div class="profile-button" (click)="goToAddStory()">
+			<h4>Check In</h4>
+			<span class="material-icons">mood</span>
+		</div>
+	</div>
+
+	
+
+	<mat-card class="profile-card">
+		<h2>Drugs I'm taking</h2>
+		<ul>
+			<li *ngFor="let drug of userDrugs">
+				{{ drug.drugName }} - {{ drug.dosage }} -
+				<span
+					(click)="removeUserDrug(drug.drugId)"
+					class="material-icons"
+				>
+					delete
+				</span>
+			</li>
+		</ul>
+	</mat-card>
+
+	<div class="profile-buttons">
+		<div class="profile-button" (click)="goToDrugs()">
+			<h4>Add Drug</h4>
+			<span class="material-icons">mood</span>
+		</div>
+	</div>
+
+	<h2>My Stories</h2>
 
 	<app-stories [stories]="this.stories"></app-stories>
 </div>
