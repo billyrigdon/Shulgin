@@ -12,16 +12,15 @@ type LoginPayload struct {
 // LoginResponse token response
 type LoginResponse struct {
 	Username string `json:"username"`
-	Token string `json:"token"`
+	Token    string `json:"token"`
 }
 
 type User struct {
-	UserId int `json:"userId"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Email string `json:"email"`
-	DateCreated string 	`json:"dateCreated"`
-
+	UserId      int    `json:"userId"`
+	Username    string `json:"username"`
+	Password    string `json:"password"`
+	Email       string `json:"email"`
+	DateCreated string `json:"dateCreated"`
 }
 
 func (user *User) HashPassword(password string) error {
@@ -44,4 +43,3 @@ func (user User) CheckPassword(providedPassword string) error {
 
 	return nil
 }
-

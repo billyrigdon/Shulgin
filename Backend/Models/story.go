@@ -1,19 +1,19 @@
 package models
 
 type Story struct {
-	StoryId int `json:"storyId"`
-	UserId int `json:"userid"`
-	Title string `json:"title"`
-	Calmness int `json:"calmness"`
-	Focus int `json:"focus"`
-	Creativity int `json:"creativity"`
-	Mood int `json:"mood"`
-	Irritability int `json:"irritability"`
-	Wakefulness int `json:"wakefulness"`
-	Rating int `json:"rating"`
-	Journal string `json:"journal"`
-	Date string `json:"date"`
-	Votes int `json:"votes"`
+	StoryId      int    `json:"storyId"`
+	UserId       int    `json:"userId"`
+	Title        string `json:"title"`
+	Calmness     int    `json:"calmness"`
+	Focus        int    `json:"focus"`
+	Creativity   int    `json:"creativity"`
+	Mood         int    `json:"mood"`
+	Irritability int    `json:"irritability"`
+	Wakefulness  int    `json:"wakefulness"`
+	Rating       int    `json:"rating"`
+	Journal      string `json:"journal"`
+	Date         string `json:"date"`
+	Votes        int    `json:"votes"`
 }
 
 type StoryDrugs struct {

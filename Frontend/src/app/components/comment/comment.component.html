@@ -30,6 +30,7 @@
 						*ngIf="comment.userId == this.userId"
 						mat-raised-button
 						color="danger"
+						(click)="deleteComment(comment.commentId)"
 					>
 						Delete
 					</button>
@@ -41,6 +42,7 @@
 				class="subthread"
 				[comments]="comments"
 				[parentCommentId]="comment.commentId"
+				[userId]="userId"
 			></app-comment-thread>
 		</div>
 	</div>

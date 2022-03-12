@@ -28,7 +28,7 @@ type JwtClaim struct {
 	jwt.StandardClaims
 }
 
-//Generate JWT 
+//Generate JWT
 func (j *JwtWrapper) GenerateToken(email string) (signedToken string, err error) {
 	claims := &JwtClaim{
 		Email: email,
@@ -78,7 +78,7 @@ func (j *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaim, err er
 }
 
 //Gets email address from token, returns email and err
-func GetTokenEmail(token string) (string,error) {
+func GetTokenEmail(token string) (string, error) {
 
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -89,8 +89,8 @@ func GetTokenEmail(token string) (string,error) {
 	clientToken := strings.TrimSpace(extractedToken[1])
 
 	jwtWrapper := JwtWrapper{
-			SecretKey: os.Getenv("secret_key"),
-			Issuer: os.Getenv("issuer"),
+		SecretKey: os.Getenv("secret_key"),
+		Issuer:    os.Getenv("issuer"),
 	}
 
 	claims, err := jwtWrapper.ValidateToken(clientToken)
@@ -98,7 +98,7 @@ func GetTokenEmail(token string) (string,error) {
 	return claims.Email, err
 }
 
-//Authorization middleware 
+//Authorization middleware
 func Auth() gin.HandlerFunc {
 
 	err := godotenv.Load(".env")
@@ -106,7 +106,7 @@ func Auth() gin.HandlerFunc {
 		fmt.Println(err)
 	}
 
-	return func (context *gin.Context){
+	return func(context *gin.Context) {
 
 		context.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		context.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -117,7 +117,7 @@ func Auth() gin.HandlerFunc {
 			context.AbortWithStatus(204)
 			return
 		}
-		
+
 		clientToken := context.Request.Header.Get("Authorization")
 		if clientToken == "" {
 			context.JSON(403, "No Authorization header provided")
@@ -137,7 +137,7 @@ func Auth() gin.HandlerFunc {
 
 		jwtWrapper := JwtWrapper{
 			SecretKey: os.Getenv("secret_key"),
-			Issuer: os.Getenv("issuer"),
+			Issuer:    os.Getenv("issuer"),
 		}
 
 		claims, err := jwtWrapper.ValidateToken(clientToken)
@@ -151,16 +151,15 @@ func Auth() gin.HandlerFunc {
 
 		context.Next()
 
-		
 	}
 }
 
 func GetToken(email string) Models.LoginResponse {
 	tokenResponse := Models.LoginResponse{
 		Username: "",
-		Token: "",
+		Token:    "",
 	}
-	
+
 	//load environment variables
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -170,8 +169,8 @@ func GetToken(email string) Models.LoginResponse {
 
 	//Generate token and respond with it
 	jwtWrapper := JwtWrapper{
-		SecretKey: os.Getenv("secret_key"),
-		Issuer: os.Getenv("issuer"),
+		SecretKey:       os.Getenv("secret_key"),
+		Issuer:          os.Getenv("issuer"),
 		ExpirationHours: 24,
 	}
 
@@ -185,4 +184,3 @@ func GetToken(email string) Models.LoginResponse {
 
 	return tokenResponse
 }
-

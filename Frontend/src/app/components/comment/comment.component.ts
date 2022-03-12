@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { CommentService } from 'src/app/services/comment.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { AppState } from 'src/app/store/app.state';
 import {
@@ -16,14 +17,13 @@ import { CommentVote } from 'src/app/types/vote';
 })
 export class CommentComponent implements OnInit {
 	@Input() comment!: StoryComment;
-  @Input() comments!: Array<StoryComment>
-	userId: number;
+	@Input() comments!: Array<StoryComment>;
+	@Input() userId!: number;
 	constructor(
 		private voteService: VoteService,
-		private store: Store<AppState>
-	) {
-		this.userId = JSON.parse((localStorage.getItem("user") || "")).userId
-	}
+		private store: Store<AppState>,
+		private commentService: CommentService
+	) {}
 
 	upvote(vote: CommentVote) {
 		this.voteService.addCommentVote(vote).subscribe((res) => {
@@ -34,6 +34,12 @@ export class CommentComponent implements OnInit {
 	removeVote(vote: CommentVote) {
 		this.voteService.removeCommentVote(vote).subscribe((res) => {
 			this.comment.votes = this.comment.votes - 1;
+		});
+	}
+
+	deleteComment(commentId: number) {
+		this.commentService.deleteComment(commentId).subscribe((res) => {
+			window.location.reload();
 		});
 	}
 

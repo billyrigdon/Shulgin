@@ -12,7 +12,7 @@ import (
 
 //Requires json object containing fields for user struct
 func CreateStory(context *gin.Context) {
-	
+
 	var story Models.Story
 	var storyId int
 
@@ -25,15 +25,14 @@ func CreateStory(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
 	//Timestamp in postgres format
 	story.Date = time.Now().Format("2006-01-02")
-	
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
@@ -83,21 +82,21 @@ func CreateStory(context *gin.Context) {
 	story.StoryId = storyId
 
 	//Return created story including id and timestamp
-	context.JSON(200,story)
-	
+	context.JSON(200, story)
+
 	return
-	
+
 }
 
 //Requires ?userId=, returns array of story Json objects
 func GetUserStories(context *gin.Context) {
-	
+
 	var stories []Models.Story
 	userId := context.Query("userId")
-	
-	db, dbErr := Utilities.ConnectPostgres();
+
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
@@ -105,23 +104,15 @@ func GetUserStories(context *gin.Context) {
 
 	sqlStatement := `
 		SELECT s.storyId,
-		s.userId,
-		s.title,  
-		s.calmness,
-		s.focus,
-		s.creativity,
-		s.mood,
-		s.irritability,
-		s.wakefulness,
-		s.rating,
-		s.journal,
+		s.title, 
 		s.date,
 		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
 		FROM stories s
-		WHERE userid = $1;
+		WHERE userid = $1
+		ORDER BY date DESC;
 		`
 
-	rows,err := db.Query(sqlStatement,userId)
+	rows, err := db.Query(sqlStatement, userId)
 
 	if err != nil {
 		log.Error(err)
@@ -138,17 +129,8 @@ func GetUserStories(context *gin.Context) {
 	for rows.Next() {
 		var story Models.Story
 
-		err = rows.Scan(&story.StoryId, 
-			&story.UserId,
-			&story.Title, 
-			&story.Calmness, 
-			&story.Focus, 
-			&story.Creativity, 
-			&story.Mood,
-			&story.Irritability, 
-			&story.Wakefulness,
-			&story.Rating, 
-			&story.Journal, 
+		err = rows.Scan(&story.StoryId,
+			&story.Title,
 			&story.Date,
 			&story.Votes)
 
@@ -162,10 +144,10 @@ func GetUserStories(context *gin.Context) {
 			return
 		}
 
-		stories = append(stories,story)
+		stories = append(stories, story)
 	}
 
-		context.JSON(200,stories)
+	context.JSON(200, stories)
 
 }
 
@@ -173,15 +155,15 @@ func GetUserStories(context *gin.Context) {
 func GetSingleStory(context *gin.Context) {
 	var story Models.StoryDrugs
 	storyId := context.Query("storyId")
-	
-	db, dbErr := Utilities.ConnectPostgres();
+
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
 	}
-			
+
 	sqlStatement := `
 		SELECT s.storyId, 
 		s.userid, 
@@ -200,22 +182,22 @@ func GetSingleStory(context *gin.Context) {
 		WHERE storyId = $1;
 		`
 
-	row := db.QueryRow(sqlStatement,storyId)
-			
-	err := row.Scan( &story.StoryId, 
+	row := db.QueryRow(sqlStatement, storyId)
+
+	err := row.Scan(&story.StoryId,
 		&story.UserId,
-		&story.Title, 
-		&story.Calmness, 
-		&story.Focus, 
-		&story.Creativity, 
+		&story.Title,
+		&story.Calmness,
+		&story.Focus,
+		&story.Creativity,
 		&story.Mood,
-		&story.Irritability, 
+		&story.Irritability,
 		&story.Wakefulness,
-		&story.Rating, 
-		&story.Journal, 
+		&story.Rating,
+		&story.Journal,
 		&story.Date,
 		&story.Votes)
-			
+
 	if err != nil {
 		log.Error(err)
 		context.JSON(500, gin.H{
@@ -228,7 +210,7 @@ func GetSingleStory(context *gin.Context) {
 
 	story.Drugs = GetStoryDrugs(story.StoryId)
 
-	context.JSON(200,story)		
+	context.JSON(200, story)
 }
 
 //Requires storyId?=, deletes storyId in Postgres, and returns success message
@@ -237,21 +219,22 @@ func DeleteStory(context *gin.Context) {
 	//Get userId from token to verify that user owns the story
 	token := context.Request.Header.Get("Authorization")
 	userId := GetUserId(token)
-	
-	db, dbErr := Utilities.ConnectPostgres();
+
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
 	}
-	
+
 	sqlStatement := `
-		DELETE FROM stories
+		UPDATE stories
+		SET userId = 1, journal = '[redacted]'
 		WHERE storyId = $1
-		AND userid = $2;
+		AND userId = $2;
 		`
-	_, deleteErr := db.Exec(sqlStatement,storyId,userId)
+	_, deleteErr := db.Exec(sqlStatement, storyId, userId)
 	if deleteErr != nil {
 		log.Error(deleteErr)
 		context.JSON(500, gin.H{
@@ -262,16 +245,16 @@ func DeleteStory(context *gin.Context) {
 		return
 	}
 
-	context.JSON(200, storyId + " deleted successfully")
-		
+	context.JSON(200, storyId+" deleted successfully")
+
 }
 
 func GetAllStories(context *gin.Context) {
 	var storyDrugs []Models.StoryDrugs
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
@@ -279,23 +262,14 @@ func GetAllStories(context *gin.Context) {
 
 	sqlStatement := `
 		SELECT s.storyId, 
-		s.userId,
 		s.title, 
-		s.calmness,
-		s.focus,
-		s.creativity,
-		s.mood,
-		s.irritability,
-		s.wakefulness,
-		s.rating,
-		s.journal,
 		s.date,
 		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
 		FROM stories s
-		ORDER BY date DESC;
+		ORDER BY s.date DESC,votes DESC;
 		`
 
-	rows,err := db.Query(sqlStatement)
+	rows, err := db.Query(sqlStatement)
 
 	if err != nil {
 		log.Error(err)
@@ -310,20 +284,11 @@ func GetAllStories(context *gin.Context) {
 	defer rows.Close()
 
 	for rows.Next() {
-		
+
 		var storyDrug Models.StoryDrugs
 
-		err = rows.Scan(&storyDrug.StoryId, 
-			&storyDrug.UserId,
-			&storyDrug.Title, 
-			&storyDrug.Calmness, 
-			&storyDrug.Focus, 
-			&storyDrug.Creativity, 
-			&storyDrug.Mood,
-			&storyDrug.Irritability, 
-			&storyDrug.Wakefulness,
-			&storyDrug.Rating, 
-			&storyDrug.Journal, 
+		err = rows.Scan(&storyDrug.StoryId,
+			&storyDrug.Title,
 			&storyDrug.Date,
 			&storyDrug.Votes)
 
@@ -339,9 +304,9 @@ func GetAllStories(context *gin.Context) {
 
 		storyDrug.Drugs = GetStoryDrugs(storyDrug.StoryId)
 
-		storyDrugs = append(storyDrugs,storyDrug)
+		storyDrugs = append(storyDrugs, storyDrug)
 	}
 
-		context.JSON(200,storyDrugs)
+	context.JSON(200, storyDrugs)
 
 }

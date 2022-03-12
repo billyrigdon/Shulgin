@@ -49,7 +49,7 @@ export class AddCommentComponent implements OnInit {
 	}
 
 	closeAddComment() {
-		this.store.dispatch(toggleAddComment({ open: false }));
+		this.store.dispatch(toggleAddComment({ open: false }));		
 	}
 
 	ngOnInit(): void {}

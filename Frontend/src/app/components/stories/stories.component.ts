@@ -1,5 +1,5 @@
+import { Component, Input, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { StorageService } from 'src/app/services/storage.service';
@@ -11,12 +11,12 @@ import { StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
 
 @Component({
-	selector: 'app-explore',
-	templateUrl: './explore.component.html',
-	styleUrls: ['./explore.component.scss'],
+	selector: 'app-stories',
+	templateUrl: './stories.component.html',
+	styleUrls: ['./stories.component.scss'],
 })
-export class ExploreComponent implements OnInit {
-	stories: Array<StoryDrug>;
+export class StoriesComponent implements OnInit {
+	@Input() stories!: Array<StoryDrug>;
 	constructor(
 		private storyService: StoryService,
 		private voteService: VoteService,
@@ -24,25 +24,15 @@ export class ExploreComponent implements OnInit {
 		private router: Router,
 		private storageService: StorageService
 	) {
-		this.stories = Array<StoryDrug>();
-	}
-
-	getAllStories() {
-		this.storyService.getAllStories().subscribe((res) => {
-			this.stories = JSON.parse(res);
-			for (let i = 0; i < this.stories.length; i++) {
-				this.stories[i].date = formatDate(
-					Date.parse(this.stories[i].date),
-					'MM/dd/yyyy',
-					'en-US'
-				);
-			}
-		});
+		
 	}
 
 
+	openStory(storyId: number) {
+		// this.store.dispatch(setStoryId({ storyId: storyId }));
+		this.router.navigateByUrl('/story?storyId=' + storyId.toString());
+	}
 
 	ngOnInit(): void {
-		this.getAllStories();
 	}
 }

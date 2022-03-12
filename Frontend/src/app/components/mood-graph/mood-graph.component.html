@@ -1,0 +1,12 @@
+<div id="graph-container">
+    <div class="content">
+        <div class="bars" *ngFor="let bar of moodBars">
+            <span>{{bar.value}}</span>
+            <div class="bar" [style.background-color]="bar.color" [style.height]='bar.size'></div>
+        </div>
+    </div>
+	<div class="line"></div>
+    <div class="legends">
+        <span *ngFor="let bar of moodBars">{{bar.legend}}</span>
+    </div>
+</div>

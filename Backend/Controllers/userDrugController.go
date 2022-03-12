@@ -16,10 +16,10 @@ func GetUserDrugs(context *gin.Context) {
 	var userDrugs []Models.UserDrug
 	token := context.Request.Header.Get("Authorization")
 	userId := GetUserId(token)
-	
-	db, dbErr := Utilities.ConnectPostgres();
+
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
@@ -40,7 +40,7 @@ func GetUserDrugs(context *gin.Context) {
 		AND dateEnded IS NULL;
 		`
 
-	rows,err := db.Query(sqlStatement,userId)
+	rows, err := db.Query(sqlStatement, userId)
 
 	if err != nil {
 		log.Error(err)
@@ -57,12 +57,12 @@ func GetUserDrugs(context *gin.Context) {
 	for rows.Next() {
 		var userDrug Models.UserDrug
 
-		err = rows.Scan(&userDrug.UserDrugId, 
+		err = rows.Scan(&userDrug.UserDrugId,
 			&userDrug.UserId,
 			&userDrug.DrugName,
 			&userDrug.Dosage,
-			&userDrug.DrugId, 
-			&userDrug.DateStarted, 
+			&userDrug.DrugId,
+			&userDrug.DateStarted,
 			&userDrug.DateEnded)
 
 		if err = rows.Err(); err != nil {
@@ -75,16 +75,16 @@ func GetUserDrugs(context *gin.Context) {
 			return
 		}
 
-		userDrugs = append(userDrugs,userDrug)
+		userDrugs = append(userDrugs, userDrug)
 	}
 
-		context.JSON(200,userDrugs)
+	context.JSON(200, userDrugs)
 
 }
 
 func AddUserDrug(context *gin.Context) {
 	var userDrug Models.UserDrug
-	
+
 	err := context.ShouldBindJSON(&userDrug)
 	if err != nil {
 		log.Error(err)
@@ -94,11 +94,11 @@ func AddUserDrug(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
 	userDrug.DateStarted = time.Now().Format("2006-01-02")
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -111,7 +111,7 @@ func AddUserDrug(context *gin.Context) {
 		VALUES ($1,$2,$3,$4)
 		RETURNING userDrugId;
 	`
-	row := db.QueryRow(sqlStatement,userDrug.UserId,userDrug.DrugId,userDrug.Dosage,userDrug.DateStarted)
+	row := db.QueryRow(sqlStatement, userDrug.UserId, userDrug.DrugId, userDrug.Dosage, userDrug.DateStarted)
 	err = row.Scan(&userDrug.UserDrugId)
 	if err != nil {
 		log.Error(err)
@@ -121,8 +121,8 @@ func AddUserDrug(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
-	context.JSON(200,userDrug)
+	}
+	context.JSON(200, userDrug)
 }
 
 func RemoveUserDrug(context *gin.Context) {
@@ -131,9 +131,9 @@ func RemoveUserDrug(context *gin.Context) {
 	dateEnded := time.Now().Format("2006-01-02")
 
 	token := context.Request.Header.Get("Authorization")
-	email,_ := Auth.GetTokenEmail(token)
+	email, _ := Auth.GetTokenEmail(token)
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -146,17 +146,16 @@ func RemoveUserDrug(context *gin.Context) {
 		FROM users
 		WHERE email = $1;
 	`
-	err := db.QueryRow(getUserSql,email).Scan(&userId)
+	err := db.QueryRow(getUserSql, email).Scan(&userId)
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
 			"msg": "User not found",
 		})
 		context.Abort()
-		
+
 		return
 	}
-
 
 	sqlStatement := `
 		UPDATE user_drugs
@@ -165,7 +164,7 @@ func RemoveUserDrug(context *gin.Context) {
 		AND drugId = $3;
 	`
 
-	_, updateErr := db.Exec(sqlStatement,dateEnded,userId,drugId)
+	_, updateErr := db.Exec(sqlStatement, dateEnded, userId, drugId)
 	if updateErr != nil {
 		log.Error(updateErr)
 		context.JSON(500, gin.H{
@@ -176,13 +175,13 @@ func RemoveUserDrug(context *gin.Context) {
 		return
 	}
 
-	context.JSON(200,"DrugId: " + drugId + " removed for userId: " + strconv.Itoa(userId))
+	context.JSON(200, "DrugId: "+drugId+" removed for userId: "+strconv.Itoa(userId))
 }
 
-func GetStoryDrugs(storyId int) ([]Models.UserDrug){
+func GetStoryDrugs(storyId int) []Models.UserDrug {
 	var drugs []Models.UserDrug
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -205,7 +204,7 @@ func GetStoryDrugs(storyId int) ([]Models.UserDrug){
 		and ud.dateStarted <= s.date;
 	`
 
-	rows,err := db.Query(sqlStatement, storyId)
+	rows, err := db.Query(sqlStatement, storyId)
 
 	if err != nil {
 		log.Error(err)
@@ -217,15 +216,15 @@ func GetStoryDrugs(storyId int) ([]Models.UserDrug){
 	for rows.Next() {
 		var drug Models.UserDrug
 
-		err = rows.Scan(&drug.DrugId,&drug.Dosage,&drug.DrugName)
+		err = rows.Scan(&drug.DrugId, &drug.Dosage, &drug.DrugName)
 
 		if err = rows.Err(); err != nil {
 			log.Error(err)
 			return drugs
 		}
 
-		drugs = append(drugs,drug)
+		drugs = append(drugs, drug)
 	}
 
-		return drugs
+	return drugs
 }

@@ -37,13 +37,18 @@ export class CommentsComponent implements OnInit {
 		this.addCommentOpen = this.store.select(getAddCommentsOpen);
 	}
 
-	
-
 	ngOnInit(): void {
-		this.commentService.getComments(this.storyId).subscribe((res) => {
-			this.comments = res;
-		});
-		this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
+		//Get comments and sort them by upvotes
+		this.commentService
+			.getComments(this.storyId)
+			.subscribe((res: Array<StoryComment>) => {
+				this.comments = res.sort((a, b) => b.votes - a.votes);
+			});
+		if (localStorage.getItem('user')) {
+			this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
+		}
+		//Get parentCommentId from store so that add-comment replies to the correct comment
+		//The state is updated by the reply button for comments and stories
 		this.store.select(getParentCommentId).subscribe((val) => {
 			this.parentCommentId = val;
 		});

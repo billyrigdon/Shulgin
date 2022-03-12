@@ -14,15 +14,15 @@ func GetUserProfile(context *gin.Context) {
 	token := context.Request.Header.Get("Authorization")
 	userId := GetUserId(token)
 	var user Models.UserProfile
-	
-	db, dbErr := Utilities.ConnectPostgres();
+
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
 	}
-			
+
 	sqlStatement := `
 		SELECT 
 			userId,
@@ -32,7 +32,19 @@ func GetUserProfile(context *gin.Context) {
 			country,
 			avatar,
 			status,
-			reputation,
+				(SELECT count(*) 
+				FROM story_votes 
+				WHERE storyId 
+				IN (SELECT storyId 
+					WHERE userId = $1)) 				
+			+
+				(SELECT count(*) 
+				FROM comment_votes 
+				WHERE commentId 
+				IN (SELECT commentId 
+					FROM story_comments 
+					WHERE userId = $1))	
+			as reputation,
 			funFact,
 			covidVaccine,
 			smoker,
@@ -52,8 +64,8 @@ func GetUserProfile(context *gin.Context) {
 		WHERE userId = $1;
 		`
 
-	row := db.QueryRow(sqlStatement,userId)
-			
+	row := db.QueryRow(sqlStatement, userId)
+
 	err := row.Scan(&user.UserId,
 		&user.Username,
 		&user.Age,
@@ -77,7 +89,7 @@ func GetUserProfile(context *gin.Context) {
 		&user.SlowInternet,
 		&user.TextSize,
 		&user.ScreenReader)
-			
+
 	if err != nil {
 		log.Error(err)
 		context.JSON(500, gin.H{
@@ -87,14 +99,14 @@ func GetUserProfile(context *gin.Context) {
 
 		return
 	}
-	context.JSON(200,user)
-	
+	context.JSON(200, user)
+
 }
 
 func CreateUserProfile(context *gin.Context) {
 	token := context.Request.Header.Get("Authorization")
 	var user Models.UserProfile
-	
+
 	err := context.ShouldBindJSON(&user)
 	if err != nil {
 		log.Error(err)
@@ -104,18 +116,18 @@ func CreateUserProfile(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
 	user.UserId = GetUserId(token)
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
-		
+
 	dbErr = db.Ping()
 	if dbErr != nil {
 		log.Error(dbErr)
 	}
-			
+
 	sqlStatement := `
 		INSERT INTO user_profile 
 		( 
@@ -171,8 +183,6 @@ func CreateUserProfile(context *gin.Context) {
 		);
 		`
 
-
-
 	db.Exec(sqlStatement,
 		user.UserId,
 		user.Username,
@@ -185,7 +195,6 @@ func CreateUserProfile(context *gin.Context) {
 		user.Smoker,
 		user.Drinker,
 		user.OptOutOfPublicStories)
-			
 
-	context.JSON(200,user)
+	context.JSON(200, user)
 }

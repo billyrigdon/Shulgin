@@ -14,9 +14,9 @@ import (
 //Uses token to get email, query the database, and return userId for accessing data
 func GetUserId(token string) int {
 	var userId int
-	email,_ := Auth.GetTokenEmail(token)
+	email, _ := Auth.GetTokenEmail(token)
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -29,9 +29,9 @@ func GetUserId(token string) int {
 		FROM users
 		WHERE email = $1;
 	`
-	err := db.QueryRow(getUserSql,email).Scan(&userId)
+	err := db.QueryRow(getUserSql, email).Scan(&userId)
 	if err != nil {
-		return 0	
+		return 0
 	}
 
 	return userId
@@ -39,10 +39,10 @@ func GetUserId(token string) int {
 
 //Requires JSON object containing username,email, and password
 func UserSignup(context *gin.Context) {
-	
+
 	var user Models.User
-	
-	err:= context.ShouldBindJSON(&user)
+
+	err := context.ShouldBindJSON(&user)
 	if err != nil {
 		log.Error(err)
 		context.JSON(400, gin.H{
@@ -64,11 +64,11 @@ func UserSignup(context *gin.Context) {
 
 		return
 	}
-	
+
 	//Timestamp in SQL format
 	user.DateCreated = time.Now().Format("2006-01-02")
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -106,7 +106,7 @@ func UserSignup(context *gin.Context) {
 	tokenResponse.Username = user.Username
 
 	//return login token on success
-	context.JSON(200,tokenResponse)
+	context.JSON(200, tokenResponse)
 
 }
 
@@ -124,9 +124,9 @@ func UserLogin(context *gin.Context) {
 		context.Abort()
 
 		return
-	} 
+	}
 
-	db, dbErr := Utilities.ConnectPostgres();
+	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
 
 	dbErr = db.Ping()
@@ -134,16 +134,16 @@ func UserLogin(context *gin.Context) {
 		log.Error(dbErr)
 	}
 
-	//Query db using email in payload	
+	//Query db using email in payload
 	sqlStatement := `
 		SELECT username,password
 		FROM users
 		WHERE email = $1;
 	`
-	row := db.QueryRow(sqlStatement,payload.Email)
+	row := db.QueryRow(sqlStatement, payload.Email)
 
 	//Check username
-	err = row.Scan(&user.Username,&user.Password)
+	err = row.Scan(&user.Username, &user.Password)
 
 	if err != nil {
 		log.Error(err)
@@ -164,15 +164,14 @@ func UserLogin(context *gin.Context) {
 			"msg": "invalid credentials",
 		})
 		context.Abort()
-		
+
 		return
 	}
 
 	tokenResponse := Auth.GetToken(payload.Email)
 	tokenResponse.Username = user.Username
 	//return login token on success
-	context.JSON(200,tokenResponse)
+	context.JSON(200, tokenResponse)
 
 	return
 }
-
