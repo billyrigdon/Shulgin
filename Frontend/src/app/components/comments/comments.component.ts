@@ -43,7 +43,11 @@ export class CommentsComponent implements OnInit {
 		this.commentService.getComments(this.storyId).subscribe((res) => {
 			this.comments = res;
 		});
-		this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
+		if (localStorage.getItem('user')) {
+			this.userId = JSON.parse(localStorage.getItem('user') || '').userId;
+		}
+		//Get parentCommentId from store so that add-comment replies to the correct comment
+		//The state is updated by the reply button for comments and stories
 		this.store.select(getParentCommentId).subscribe((val) => {
 			this.parentCommentId = val;
 		});

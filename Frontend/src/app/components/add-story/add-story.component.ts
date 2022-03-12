@@ -67,8 +67,7 @@ export class AddStoryComponent implements OnInit {
 	ngOnInit(): void {
 		if (localStorage.getItem('user')) {
 			//Get user fields from user stored in local storage
-			let user = JSON.parse(localStorage.getItem('user') || '');
-			this.story.userId = user.userId;
+			this.story.userId = JSON.parse(localStorage.getItem('user') || '').userId;
 		} else {
 			this.router.navigateByUrl('explore');
 		}
