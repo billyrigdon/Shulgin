@@ -38,6 +38,7 @@ export class CommentsComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		//Get comments and sort them by upvotes
 		this.commentService
 			.getComments(this.storyId)
 			.subscribe((res: Array<StoryComment>) => {
