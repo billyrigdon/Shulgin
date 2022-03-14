@@ -8,5 +8,5 @@ cd ../Backend
 go get
 go build .
 cd ..
-docker build -t billyrigdoniii/shulgin:1.1.1
-docker push billyrigdoniii/shulgin:1.1.1
+docker build -t billyrigdoniii/shulgin:1.1.2
+docker push billyrigdoniii/shulgin:1.1.2
