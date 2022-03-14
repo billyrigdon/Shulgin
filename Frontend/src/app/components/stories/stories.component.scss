@@ -8,17 +8,27 @@
 	align-items: center;
 	.story {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: flex-start;
 		width: 90%;
 		margin-top: 1rem;
 		padding: 1rem;
 
 		h2 {
-			font-size: 1rem;
-			font-weight: 500;
+			font-size: .75rem;
+			letter-spacing: 2px;
+			font-weight: 600;
 			margin: 0;
+		}
+
+		#date {
+			font-style: italic;
+		}
+
+		#upvotes {
+			font-size: .6rem;
+			letter-spacing: 1px;
 		}
 
 		ul {
@@ -26,7 +36,7 @@
 			flex-direction: row;
 			width: 100%;
 			flex-wrap: wrap;
-			justify-content: center;
+			justify-content: flex-start;
 			li {
 				list-style: none;
 				margin-left: 1rem;
@@ -35,7 +45,7 @@
 		#story-drugs {
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			align-items: flex-start;
 			justify-content: center;
 			li {
 				margin: 0;
@@ -44,11 +54,13 @@
 
 		mat-card-actions {
 			display: flex;
-			justify-content: center;
-			align-items: center;
+			width: 100%;
+			justify-content: flex-end;
+			align-items: flex-end;
 
-			button {
-				background-color: $contrast-color;
+			span {
+				cursor: pointer;
+				color: #8675A9;
 			}
 		}
 	}

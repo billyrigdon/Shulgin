@@ -1,5 +1,5 @@
 <div id="home-container">
-	<mat-card id="profile-info-card">
+	<mat-card id="profile-info-card" class="profile-card">
 		<div id="profile-short">
 			<div id="profile-pic-and-username">
 				<img [src]="profilePic" />
@@ -9,24 +9,9 @@
 				</div>
 			</div>
 		</div>
-	</mat-card>
-
-	<mat-card class="profile-card">
-		<h2>Average Mood</h2>
-		<app-mood-graph [userId]="userProfile.userId"></app-mood-graph>
-	</mat-card>
-
-	<div class="profile-buttons">
-		<div class="profile-button" (click)="goToAddStory()">
-			<h4>Check In</h4>
-			<span class="material-icons">mood</span>
-		</div>
-	</div>
-
-	
-
-	<mat-card class="profile-card">
+		<br>
 		<h2>Drugs I'm taking</h2>
+		<br />
 		<ul>
 			<li *ngFor="let drug of userDrugs">
 				{{ drug.drugName }} - {{ drug.dosage }} -
@@ -38,14 +23,21 @@
 				</span>
 			</li>
 		</ul>
+		<br />
+		<span id="add-drug" class="material-icons">medication</span>
 	</mat-card>
 
-	<div class="profile-buttons">
-		<div class="profile-button" (click)="goToDrugs()">
-			<h4>Add Drug</h4>
-			<span class="material-icons">mood</span>
+	<mat-card class="profile-card">
+		<h2>Average Mood</h2>
+		<app-mood-graph [userId]="userProfile.userId"></app-mood-graph>
+		<div class="profile-buttons">
+			<div class="profile-button" (click)="goToAddStory()">
+				<h4>Check In</h4>
+				<span class="material-icons">mood</span>
+			</div>
 		</div>
-	</div>
+	</mat-card>
+
 
 	<h2>My Stories</h2>
 

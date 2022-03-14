@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 /* You can add global styles to this file, and also import other style files */
 
 $primary-color: #fbeaff;
 $light-accent-color: #fbeaff;
 $dark-accent-color: #b39cd0;
 //$contrast-color: #00C2A9;
-$contrast-color:#B0A8B9;
+$contrast-color:#8675A9;
 $light-grey: #fcf7ff;
 $dark-grey: #4b4453;
 $delete-red:#FF4d74;
@@ -33,6 +34,7 @@ h6,
 	margin: 0px;
 	padding: 0px;
 	color: $dark-grey;
+	font-family: "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 input[type="text"],
@@ -51,15 +53,19 @@ body {
 	max-width: 100vw;
 }
 body {
-	background-color: $light-accent-color;
+	background-color: #FFFFFF;
 	margin: 0;
-	font-family: Roboto, "Helvetica Neue", sans-serif;
+	font-family: "Open Sans", "Helvetica Neue", sans-serif;
+	
 }
 
 .mat-card {
-	background-color: $light-grey;
+	background-color: #e0fbfc;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 button {
 	color: $light-grey;
+
+	
 }

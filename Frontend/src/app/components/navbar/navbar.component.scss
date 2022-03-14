@@ -1,26 +1,52 @@
 @import "../../../styles.scss";
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
 #navbar {
 	width: 100vw;
-	height: 8vh;
+	height: 6vh;
 	position: fixed;
 	top: 0;
 	left: 0;
 	display: flex;
-	background-color: mediumpurple;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #8675a9;
 	z-index: 99;
+	box-shadow: 0px 0px 5px 1px;
 
 	ul {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: space-around;
+		justify-content: flex-start;
 		list-style: none;
-		width: 100%;
+		width: 50%;
 		li {
 			text-decoration: none;
+			margin-left: 1rem;
 			cursor: pointer;
 			color: $light-accent-color;
+			font-family: "Open Sans", sans-serif;
+			letter-spacing: 2px;
+			text-align: left;
+			font-size: 9px;
+			font-weight: 600;
+		}
+	}
+
+	#icons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: 1rem;
+		
+		span {
+			color: #C3AED6;
+			margin-left: .8rem;
+		}
+
+		span::hover {
+			color: #d4bfe7;
 		}
 	}
 }
