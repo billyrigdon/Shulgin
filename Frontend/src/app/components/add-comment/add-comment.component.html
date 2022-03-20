@@ -1,6 +1,6 @@
 <mat-card id="add-comment-card">
 	<mat-card-content>
-		<form [formGroup]="form">
+		<form [formGroup]="form" (submit)="addComment()">
 			<mat-form-field class="full-width">
 				<textarea
 					appAutofocus
@@ -9,6 +9,7 @@
 					formControlName="content"
 				></textarea>
 			</mat-form-field>
+			<button type="submit" style="display:none">hidden submit</button>
 		</form>
 	</mat-card-content>
 	<mat-card-actions>

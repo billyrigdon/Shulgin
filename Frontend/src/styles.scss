@@ -1,10 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 /* You can add global styles to this file, and also import other style files */
 
+/*
+TODO: 
+Need to fix all of these variables and general sass
+throughout project. This is easily the worst part of
+this application because I've mostly just been 
+experimenting and leaving mass amounts of unused code 
+behind.
+*/ 
 $primary-color: #fbeaff;
 $light-accent-color: #fbeaff;
 $dark-accent-color: #b39cd0;
 //$contrast-color: #00C2A9;
+$main-color: #8675a9;
 $contrast-color: #8675a9;
 $light-grey: #fcf7ff;
 $dark-grey: #4b4453;

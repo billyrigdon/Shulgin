@@ -1,6 +1,6 @@
 <mat-card id="add-story-container">
 	<mat-card-content>
-		<form id="story-form" [formGroup]="form">
+		<form id="story-form" [formGroup]="form" (submit)="addStory()">
 			<mat-form-field class="full-width">
 				<mat-label>Calmness:</mat-label>
 				<mat-select name="calmness" formControlName="calmness">
@@ -118,6 +118,7 @@
 					formControlName="journal"
 				></textarea>
 			</mat-form-field>
+			<button type="submit" style="display:none">hidden submit</button>
 		</form>
 	</mat-card-content>
 	<mat-card-actions>
