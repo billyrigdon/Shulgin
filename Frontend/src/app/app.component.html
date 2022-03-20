@@ -1,6 +1,7 @@
-<app-navbar></app-navbar>
-<app-loading *ngIf="isLoading | async"></app-loading>
-<app-add-comment *ngIf="addCommentOpen | async"></app-add-comment>
+<div id="scrollTop"></div>
 <div id="app-container">
+	<app-navbar></app-navbar>
+	<app-loading *ngIf="isLoading | async"></app-loading>
+	<app-add-comment *ngIf="addCommentOpen | async"></app-add-comment>
 	<router-outlet></router-outlet>
 </div>
