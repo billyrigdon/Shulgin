@@ -1,10 +1,4 @@
 <div id="comments-container">
-	<app-add-comment
-		*ngIf="addCommentOpen | async"
-		[storyId]="storyId"
-		[parentCommentId]="parentCommentId"
-		[userId]="this.userId"
-	></app-add-comment>
 	<app-comment-thread
 		[comments]="comments"
 		[userId]="userId"

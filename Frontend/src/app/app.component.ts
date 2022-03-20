@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { StorageService } from './services/storage.service';
 import { AppState } from './store/app.state';
+import { getAddCommentsOpen } from './store/comments/comments.selector';
 import { setUserId, toggleAuth } from './store/shared/actions/shared.actions';
 import {
 	getAuthState,
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
 	title = 'shulgin';
 	isLoggedIn: Observable<boolean>;
 	isLoading: Observable<boolean>;
+	addCommentOpen: Observable<boolean>;
 
 	constructor(
 		private storageService: StorageService,
@@ -26,6 +28,7 @@ export class AppComponent implements OnInit {
 	) {
 		this.isLoading = this.store.select(getLoading);
 		this.isLoggedIn = this.store.select(getAuthState);
+		this.addCommentOpen = this.store.select(getAddCommentsOpen);
 	}
 
 	ngOnInit(): void {

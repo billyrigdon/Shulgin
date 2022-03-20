@@ -4,7 +4,9 @@ import { CommentService } from 'src/app/services/comment.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { AppState } from 'src/app/store/app.state';
 import {
+	setParentCommentContent,
 	setParentId,
+	setStoryContent,
 	toggleAddComment,
 } from 'src/app/store/comments/comments.actions';
 import { StoryComment } from 'src/app/types/comment';
@@ -44,8 +46,10 @@ export class CommentComponent implements OnInit {
 	}
 
 	openAddComment(parentCommentId: number) {
-		this.store.dispatch(setParentId({ parentId: parentCommentId }));
+		this.store.dispatch(setParentId({ parentId: parentCommentId }));		
 		this.store.dispatch(toggleAddComment({ open: true }));
+		this.store.dispatch(setParentCommentContent({content: this.comment.content}));
+		this.store.dispatch(setStoryContent({content: ""}));
 	}
 
 	ngOnInit(): void {}

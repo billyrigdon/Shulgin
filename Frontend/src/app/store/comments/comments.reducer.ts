@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { setParentId, toggleAddComment } from './comments.actions';
+import { setParentCommentContent, setParentId, setStoryContent, setStoryId, toggleAddComment } from './comments.actions';
 import { initialState, CommentsState } from './comments.state';
 
 export const _commentsReducer = createReducer(
@@ -15,5 +15,23 @@ export const _commentsReducer = createReducer(
 			...state,
 			parentCommentId: action.parentId,
 		};
+	}),
+	on(setStoryId, (state, action) => {
+		return {
+			...state,
+			storyId: action.storyId,
+		}
+	}),
+	on(setStoryContent, (state, action) => {
+		return {
+			...state,
+			storyContent: action.content
+		}
+	}),
+	on(setParentCommentContent, (state, action) => {
+		return {
+			...state,
+			parentCommentContent: action.content
+		}
 	})
 );

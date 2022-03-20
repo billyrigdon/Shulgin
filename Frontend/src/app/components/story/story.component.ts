@@ -8,7 +8,10 @@ import { StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+	setParentCommentContent,
 	setParentId,
+	setStoryContent,
+	setStoryId,
 	toggleAddComment,
 } from 'src/app/store/comments/comments.actions';
 
@@ -54,6 +57,8 @@ export class StoryComponent implements OnInit {
 	openAddComment() {
 		this.store.dispatch(setParentId({ parentId: 0 }));
 		this.store.dispatch(toggleAddComment({ open: true }));
+		this.store.dispatch(setStoryContent({content: this.story.journal}))
+		this.store.dispatch(setParentCommentContent({content: ""}))
 	}
 
 	deleteStory(storyId: number) {
@@ -72,5 +77,6 @@ export class StoryComponent implements OnInit {
 			this.storyId = parseInt(params['storyId']);
 			this.getStory();
 		});
+		this.store.dispatch(setStoryId({storyId: this.storyId}));
 	}
 }

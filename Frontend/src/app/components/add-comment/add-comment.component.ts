@@ -4,8 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CommentService } from 'src/app/services/comment.service';
 import { AppState } from 'src/app/store/app.state';
-import { toggleAddComment } from 'src/app/store/comments/comments.actions';
-import { getAddCommentsOpen } from 'src/app/store/comments/comments.selector';
+import { setParentCommentContent, toggleAddComment } from 'src/app/store/comments/comments.actions';
+import { getAddCommentsOpen, getAddCommentState } from 'src/app/store/comments/comments.selector';
+import { getUserId } from 'src/app/store/shared/selectors/shared.selector';
 
 @Component({
 	selector: 'app-add-comment',
@@ -13,9 +14,11 @@ import { getAddCommentsOpen } from 'src/app/store/comments/comments.selector';
 	styleUrls: ['./add-comment.component.scss'],
 })
 export class AddCommentComponent implements OnInit {
-	@Input() storyId!: number;
-	@Input() parentCommentId!: number;
-	@Input() userId!: number;
+	storyId: number;
+	parentCommentId: number;
+	storyContent: string;
+	parentCommentContent: string;
+	userId: number;
 	addCommentOpen: Observable<boolean>;
 	form: FormGroup;
 
@@ -28,6 +31,11 @@ export class AddCommentComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			content: ['', Validators.required],
 		});
+		this.storyId = 0;
+		this.parentCommentContent = "";
+		this.storyContent = "";
+		this.parentCommentId = 0;
+		this.userId = 0;
 	}
 
 	addComment() {
@@ -52,5 +60,15 @@ export class AddCommentComponent implements OnInit {
 		this.store.dispatch(toggleAddComment({ open: false }));		
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.store.select(getAddCommentState).subscribe((res) => {
+			this.parentCommentContent = res.parentCommentContent;
+			this.parentCommentId = res.parentCommentId;
+			this.storyId = res.storyId;
+			this.storyContent = res.storyContent;
+		})
+		this.store.select(getUserId).subscribe((res) => {
+			this.userId = res;
+		})
+	}
 }
