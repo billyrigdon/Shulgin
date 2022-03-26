@@ -37,6 +37,7 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { StoriesComponent } from './components/stories/stories.component';
 import { MoodGraphComponent } from './components/mood-graph/mood-graph.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {MatSliderModule} from "@angular/material/slider"
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -75,7 +76,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 		MatButtonModule,
 		MatCheckboxModule,
 		MatSelectModule,
-		InfiniteScrollModule
+		InfiniteScrollModule,
+		MatSliderModule,
 	],
 	providers: [AuthInterceptorProviders, DatePipe],
 	bootstrap: [AppComponent],

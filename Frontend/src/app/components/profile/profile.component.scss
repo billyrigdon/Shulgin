@@ -4,6 +4,7 @@
 	display: flex;
 	width: 100%;
 	height: 100%;
+	//min-height: 700rem;
 	position: relative;
 	top: 0;
 	left: 0;
@@ -157,6 +158,7 @@
 	}
 
 	#story-container {
+		margin-top:1rem;
 		display: flex;
 		flex-direction: column;
 		width: 100%;
@@ -325,6 +327,7 @@
 		#story-container {
 			display: flex;
 			flex-direction: column;
+			margin-top: 0;
 			width: 100%;
 			height: 100%;
 			align-items: center;
@@ -338,3 +341,20 @@
 		}
 	}
 }
+
+@media only screen and (max-height:740px) {
+	#profile-page-container {
+		#story-container {
+			margin-top:7rem;
+		}
+	}
+}
+
+@media only screen and (max-height:667px) {
+	#profile-page-container {
+		#story-container {
+			margin-top:10rem;
+		}
+	}
+}
+
