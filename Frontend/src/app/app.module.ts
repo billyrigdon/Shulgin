@@ -36,6 +36,7 @@ import { CommentThreadComponent } from './components/comment-thread/comment-thre
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { StoriesComponent } from './components/stories/stories.component';
 import { MoodGraphComponent } from './components/mood-graph/mood-graph.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -74,6 +75,7 @@ import { MoodGraphComponent } from './components/mood-graph/mood-graph.component
 		MatButtonModule,
 		MatCheckboxModule,
 		MatSelectModule,
+		InfiniteScrollModule
 	],
 	providers: [AuthInterceptorProviders, DatePipe],
 	bootstrap: [AppComponent],

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,6 +9,7 @@ import { AppState } from 'src/app/store/app.state';
 import { getUserId } from 'src/app/store/shared/selectors/shared.selector';
 import { StoryDrug } from 'src/app/types/story';
 import { StoryVote } from 'src/app/types/vote';
+import { EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'app-stories',
@@ -17,6 +18,9 @@ import { StoryVote } from 'src/app/types/vote';
 })
 export class StoriesComponent implements OnInit {
 	@Input() stories!: Array<StoryDrug>;
+	@Output() onScroll = new EventEmitter();
+	distance: number;
+	throttle: number;
 	constructor(
 		private storyService: StoryService,
 		private voteService: VoteService,
@@ -24,9 +28,14 @@ export class StoriesComponent implements OnInit {
 		private router: Router,
 		private storageService: StorageService
 	) {
-		
+		this.distance = 0.1;
+		this.throttle = 0;
 	}
 
+	onPageScroll() {
+		console.log("scrolled")
+		this.onScroll.emit()
+	}
 
 	openStory(storyId: number) {
 		// this.store.dispatch(setStoryId({ storyId: storyId }));

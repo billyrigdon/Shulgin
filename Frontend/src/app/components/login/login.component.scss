@@ -1,21 +1,29 @@
 @import "../../../styles.scss";
 
 #login-container {
-	display: flex;
-	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	justify-content: center;
 	align-items: center;
-	width: 75%;
-	left: 12.5%;
-	margin-top: 3rem;
-	height: auto;
-	min-height: 50%;
-	#login-form {
+	display: flex;
+	
+	
+	#login-card {
 		display: flex;
 		flex-direction: column;
-	}
-	mat-card-actions {
-		button {
-			background-color: $contrast-color;
+		align-items: center;
+		justify-content: center;
+		width: 75%;
+		height: auto;
+		min-height: 50%;
+		#login-form {
+			display: flex;
+			flex-direction: column;
+		}
+		mat-card-actions {
+			button {
+				background-color: $contrast-color;
+			}
 		}
 	}
 }

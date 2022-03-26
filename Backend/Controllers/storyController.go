@@ -251,6 +251,7 @@ func DeleteStory(context *gin.Context) {
 
 func GetAllStories(context *gin.Context) {
 	var storyDrugs []Models.StoryDrugs
+	pageNumber := context.Query("page")
 
 	db, dbErr := Utilities.ConnectPostgres()
 	defer db.Close()
@@ -266,10 +267,12 @@ func GetAllStories(context *gin.Context) {
 		s.date,
 		(select cast(count(*) as int) from story_votes sv where sv.storyId = s.storyId ) as votes
 		FROM stories s
-		ORDER BY s.date DESC,votes DESC;
+		ORDER BY s.date DESC,votes DESC
+		LIMIT 10
+		OFFSET $1;
 		`
 
-	rows, err := db.Query(sqlStatement)
+	rows, err := db.Query(sqlStatement, pageNumber)
 
 	if err != nil {
 		log.Error(err)
