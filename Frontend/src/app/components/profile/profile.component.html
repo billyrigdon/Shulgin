@@ -1,46 +1,45 @@
-<div id="profile-container">
-	<mat-card id="profile-info-card" class="profile-card">
-		<div id="profile-short">
-			<div id="profile-pic-and-username">
-				<img [src]="profilePic" />
-				<div id="profile-info">
-					<h1>{{ userProfile.username }}</h1>
-					<p>Reputation: {{ userProfile.reputation }}</p>
+<div id="profile-page-container">
+	<div id="profile-container">
+		<mat-card id="profile-info-card" class="profile-card">
+			<div id="profile-short">
+				<div id="profile-pic-and-username">
+					<img [src]="profilePic" />
+					<div id="profile-info">
+						<h1>{{ userProfile.username }}</h1>
+						<p>Reputation: {{ userProfile.reputation }}</p>
+					</div>
 				</div>
 			</div>
-		</div>
-		<br />
-		<h2>Drugs I'm taking</h2>
-		<br />
-		<ul>
-			<li *ngFor="let drug of userDrugs">
-				{{ drug.drugName }} - {{ drug.dosage }} -
-				<span
-					(click)="removeUserDrug(drug.drugId)"
-					class="material-icons"
-				>
-					delete
-				</span>
-			</li>
-		</ul>
-		<br />
-		<span (click)="goToDrugs()" id="add-drug" class="material-icons"
-			>medication</span
-		>
-	</mat-card>
+			<br />
+			<h2>Drugs I'm taking</h2>
+			<br />
+			<ul>
+				<li *ngFor="let drug of userDrugs">
+					{{ drug.drugName }} - {{ drug.dosage }} -
+					<span (click)="removeUserDrug(drug.drugId)" class="material-icons">
+						delete
+					</span>
+				</li>
+			</ul>
+			<br />
+			<span (click)="goToDrugs()" id="add-drug" class="material-icons">medication</span>
+		</mat-card>
 
-	<mat-card class="profile-card">
-		<h2>Average Mood</h2>
-		<app-mood-graph [userId]="userProfile.userId"></app-mood-graph>
-		<div class="profile-buttons">
-			<div class="profile-button" (click)="goToAddStory()">
-				<h4>Check In</h4>
-				<span class="material-icons">mood</span>
+	
+
+		<mat-card class="profile-card">
+			<h2>Average Mood</h2>
+			<app-mood-graph [userId]="userProfile.userId"></app-mood-graph>
+			<div class="profile-buttons">
+				<div class="profile-button" (click)="goToAddStory()">
+					<h4>Check In</h4>
+					<span class="material-icons">mood</span>
+				</div>
 			</div>
-		</div>
-	</mat-card>
-
+		</mat-card>
+	</div>
+	<div id="story-container">
 	<h2>My Stories</h2>
-
 	<app-stories [stories]="this.stories"></app-stories>
+	</div>
 </div>
