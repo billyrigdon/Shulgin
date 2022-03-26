@@ -33,8 +33,9 @@ export class ExploreComponent implements OnInit {
 
 	
 	onScroll() {
-		this.storyService.getAllStories(++this.pageNumber).subscribe((res) => {
-			this.stories = JSON.parse(res);
+		this.storyService.getAllStories(++this.pageNumber * 10).subscribe((res) => {
+			const newStories = JSON.parse(res);
+			this.stories.push(...newStories);
 			for (let i = 0; i < this.stories.length; i++) {
 				this.stories[i].date = formatDate(
 					Date.parse(this.stories[i].date),
