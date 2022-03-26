@@ -1,6 +1,6 @@
 <mat-card id="create-profile-card">
 	<mat-card-content>
-		<form id="create-profile-form" [formGroup]="form">
+		<form id="create-profile-form" [formGroup]="form" (submit)="submitProfile()">
 			<mat-form-field class="full-width">
 				<mat-label>Age</mat-label>
 				<input matInput name="age" formControlName="age" />
@@ -40,6 +40,7 @@
 					>Opt Out of Public Stories</mat-checkbox
 				>
 			</div>
+			<button type="submit" style="display:none">hidden submit</button>
 		</form>
 	</mat-card-content>
 	<mat-card-actions>

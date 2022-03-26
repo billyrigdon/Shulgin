@@ -1,6 +1,6 @@
 <mat-card id="add-drug-container">
 	<mat-card-content>
-		<form id="add-drug-form" [formGroup]="form">
+		<form id="add-drug-form" [formGroup]="form" (submit)="addDrug()">
 			<mat-form-field class="full-width">
 				<mat-label>Drug Name</mat-label>
 				<mat-select name="drugId" formControlName="drugId">
@@ -21,6 +21,7 @@
 					type="text"
 				/>
 			</mat-form-field>
+			<button type="submit" style="display:none">hidden submit</button>
 		</form>
 	</mat-card-content>
 	<mat-card-actions>

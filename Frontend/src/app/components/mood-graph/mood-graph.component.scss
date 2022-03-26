@@ -3,62 +3,70 @@ $bar-width: 20%;
 $bar-max-height: 10rem;
 
 #graph-container {
-	.content {
-		display: flex;
-		flex-direction: row;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	#graph {
 		width: 100%;
-		height: $bar-max-height;
-		justify-content: space-between;
-
-		span {
-			font-family: "Roboto";
-			font-size: 13px;
-			color: #707070;
-		}
-		.bars {
+		max-width: 25rem;
+		.content {
 			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: flex-end;
-			height: 100%;
-			width: $bar-width;
-			.bar {
-				width: 40%;
-				min-height: 2px;
-				margin: 0px;
-				border-top-left-radius: 5px;
-				border-top-right-radius: 5px;
-				border-bottom-left-radius: 5px;
-				border-bottom-right-radius: 5px;
+			flex-direction: row;
+			width: 100%;
+			height: $bar-max-height;
+			justify-content: space-between;
+
+			span {
+				font-family: "Roboto";
+				font-size: 13px;
+				color: #707070;
 			}
-			.bar:hover {
-				transform: translateY(-1px);
-				box-shadow: 0 4px 17px rgba(0, 0, 0, 0.2);
+			.bars {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: flex-end;
+				height: 100%;
+				width: $bar-width;
+				.bar {
+					width: 40%;
+					min-height: 2px;
+					margin: 0px;
+					border-top-left-radius: 5px;
+					border-top-right-radius: 5px;
+					border-bottom-left-radius: 5px;
+					border-bottom-right-radius: 5px;
+				}
+				.bar:hover {
+					transform: translateY(-1px);
+					box-shadow: 0 4px 17px rgba(0, 0, 0, 0.2);
+				}
 			}
 		}
-	}
 
-	.line {
-		background-color: #cccccc;
-		width: 95%;
-		height: .01rem;
-		margin-left: 2.5%;
-		margin-top: .4rem;
-		margin-bottom: .4rem;
-	}
+		.line {
+			background-color: #cccccc;
+			width: 95%;
+			height: 0.01rem;
+			margin-left: 2.5%;
+			margin-top: 0.4rem;
+			margin-bottom: 0.4rem;
+		}
 
-	.legends {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		color: #707070;
-		font-family: "Roboto";
-		font-size: .6rem;
-		text-align: center;
+		.legends {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			color: #707070;
+			font-family: "Roboto";
+			font-size: 0.6rem;
+			text-align: center;
 
-		span {
-			width: $bar-width;
-			margin: 0 0px;
+			span {
+				width: $bar-width;
+				margin: 0 0px;
+			}
 		}
 	}
 }

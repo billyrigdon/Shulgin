@@ -1,6 +1,6 @@
 <mat-card id="login-container">
 	<mat-card-content>
-		<form [formGroup]="form">
+		<form [formGroup]="form" (submit)="login()">
 			<fieldset id="login-form">
 				<mat-form-field class="full-width">
 					<mat-label>Email:</mat-label>
@@ -15,6 +15,7 @@
 						type="password"
 					/>
 				</mat-form-field>
+				<button type="submit" style="display:none">hidden submit</button>
 			</fieldset>
 		</form>
 	</mat-card-content>
