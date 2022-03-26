@@ -10,8 +10,9 @@
 			<mat-card-footer id="comment-footer">
 				<mat-card-actions>
 					<button
+						
 						*ngIf="this.userId"
-						mat-raised-button
+						
 						(click)="
 							upvote({
 								commentId: comment.commentId,
@@ -19,22 +20,22 @@
 							})
 						"
 					>
-						Upvote - {{ comment.votes }}
+						<span id="like-button" class="material-icons">thumb_up_off_alt</span> {{ comment.votes }}
 					</button>
 					<button
 						*ngIf="this.userId"
-						mat-raised-button
+						
 						(click)="openAddComment(comment.commentId)"
 					>
-						Reply to Comment
+						<span class="material-icons">comment</span>
 					</button>
 					<button
 						*ngIf="comment.userId == this.userId"
-						mat-raised-button
+						
 						color="danger"
 						(click)="deleteComment(comment.commentId)"
 					>
-						Delete
+						<span id="delete-button" class="material-icons">delete</span>
 					</button>
 				</mat-card-actions>
 			</mat-card-footer>
