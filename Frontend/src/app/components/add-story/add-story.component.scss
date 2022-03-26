@@ -6,12 +6,24 @@
 	align-items: center;
 	width: 100%;
 	min-height: 100%;
-	background-color: $light-accent-color;
 
 	#story-form {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
+
+		.mat-accent .mat-slider-track-fill {
+			background-color: blue !important;
+		}
+
+		.mat-slider-thumb-label {
+			background-color: blue !important;
+		}
+
+		.mat-slider {
+			color: white;
+			//background-color: blue !important;
+		}
 	}
 
 	mat-card-actions {
