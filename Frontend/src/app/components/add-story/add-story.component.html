@@ -1,52 +1,37 @@
 <mat-card id="add-story-container">
-	<mat-card-content>
-		<form id="story-form" [formGroup]="form" (submit)="addStory()">
-			
-				<mat-label>Calmness:</mat-label>
-				<mat-slider min="1" max="10" step="1" name="calmness" formControlName="calmness">
+		<form id="story-form" [formGroup]="form">
+				<mat-label>Calmness</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="calmness" formControlName="calmness">
 				</mat-slider>
-			
-			
-				<mat-label>Focus:</mat-label>
-				<mat-slider min="1" max="10" step="1" name="calmness" formControlName="calmness">
+				<mat-label>Focus</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="focus" formControlName="focus">
 				</mat-slider>
-			
-				<mat-label>Creativity:</mat-label>
-				<mat-slider min="1" max="10" step="1" name="calmness" formControlName="calmness">
+				<mat-label>Creativity</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="creativity" formControlName="creativity">
 				</mat-slider>
-			
-				<mat-label>Mood:</mat-label>
-				<mat-slider min="1" max="10" step="1" name="calmness" formControlName="calmness">
+				<mat-label>Mood</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="mood" formControlName="mood">
 				</mat-slider>
-			
-				<mat-label>Irritability:</mat-label>
-				<mat-slider min="1" max="10" step="1" name="calmness" formControlName="calmness">
+				<mat-label>Irritability</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="irritability" formControlName="irritability">
 				</mat-slider>
-			
-				<mat-label>Wakefulness:</mat-label>
-				<mat-slider min="1" max="10" step="1" name="calmness" formControlName="calmness">
+				<mat-label>Wakefulness</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="wakefulness" formControlName="wakefulness">
 				</mat-slider>
-			
-				<mat-label>Rating:</mat-label>
-				<mat-slider min="1" max="10" step="1" name="calmness" formControlName="calmness">
+				<mat-label>Rating</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="rating" formControlName="rating">
 				</mat-slider>
-			
-			<mat-form-field class="full-width">
-				<mat-label>Title</mat-label>
-				<input matInput name="title" formControlName="title" />
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Journal</mat-label>
-				<textarea
-					matInput
-					name="journal"
-					formControlName="journal"
-				></textarea>
-			</mat-form-field>
-			<button type="submit" style="display:none">hidden submit</button>
+				<mat-card *ngIf="journalOpen" id="journal-card">
+					<mat-card-content>
+						<input class="full-width" formControlName="title" placeholder="Title"/>
+						<textarea id="journal-content" appAutofocus matInput name="content" formControlName="journal" placeholder="Journal Entry"></textarea>
+					</mat-card-content>
+					<mat-card-actions>
+						<button mat-raised-button (click)="addStory()">Add Story</button>
+					</mat-card-actions>
+				</mat-card>
 		</form>
-	</mat-card-content>
 	<mat-card-actions>
-		<button mat-flat-button (click)="addStory()">Add Story</button>
+		<button mat-flat-button (click)="openJournal()">Add Story</button>
 	</mat-card-actions>
 </mat-card>

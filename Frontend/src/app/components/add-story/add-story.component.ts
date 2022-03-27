@@ -12,6 +12,7 @@ import { Story } from 'src/app/types/story';
 export class AddStoryComponent implements OnInit {
 	form: FormGroup;
 	story: Story;
+	journalOpen: boolean;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -44,7 +45,7 @@ export class AddStoryComponent implements OnInit {
 			storyId: 0,
 			votes: 0,
 		};
-		//Iterable numbers for mood values
+		this.journalOpen = false;
 	}
 
 	addStory() {
@@ -63,6 +64,11 @@ export class AddStoryComponent implements OnInit {
 			this.router.navigateByUrl('profile');
 		});
 	}
+
+	openJournal() {
+		this.journalOpen = true;
+	}
+
 
 	ngOnInit(): void {
 		if (localStorage.getItem('user')) {
