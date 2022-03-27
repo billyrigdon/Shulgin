@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { StoryService } from 'src/app/services/story.service';
@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
 		this.stories = Array<StoryDrug>();
 		this.userDrugs = Array<UserDrug>();
 		this.userProfile = <UserProfile>{};
-		this.profilePic = '../../../assets/Icons/avatar-placeholder.png'
+		this.profilePic = '../../../assets/Icons/avatar-placeholder.png';
 	}
 
 	removeUserDrug(drugId: number) {

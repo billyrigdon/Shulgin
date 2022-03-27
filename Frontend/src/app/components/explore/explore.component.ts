@@ -17,6 +17,8 @@ import { StoryVote } from 'src/app/types/vote';
 })
 export class ExploreComponent implements OnInit {
 	stories: Array<StoryDrug>;
+	pageNumber: number;
+
 	constructor(
 		private storyService: StoryService,
 		private voteService: VoteService,
@@ -25,10 +27,27 @@ export class ExploreComponent implements OnInit {
 		private storageService: StorageService
 	) {
 		this.stories = Array<StoryDrug>();
+		
+		this.pageNumber = 0;
 	}
 
-	getAllStories() {
-		this.storyService.getAllStories().subscribe((res) => {
+	
+	onScroll() {
+		this.storyService.getAllStories(++this.pageNumber * 10).subscribe((res) => {
+			const newStories = JSON.parse(res);
+			this.stories.push(...newStories);
+			for (let i = 0; i < this.stories.length; i++) {
+				this.stories[i].date = formatDate(
+					Date.parse(this.stories[i].date),
+					'MM/dd/yyyy',
+					'en-US'
+				);
+			}
+		})
+	}
+
+	ngOnInit(): void {
+		this.storyService.getAllStories(this.pageNumber).subscribe((res) => {
 			this.stories = JSON.parse(res);
 			for (let i = 0; i < this.stories.length; i++) {
 				this.stories[i].date = formatDate(
@@ -38,11 +57,5 @@ export class ExploreComponent implements OnInit {
 				);
 			}
 		});
-	}
-
-
-
-	ngOnInit(): void {
-		this.getAllStories();
 	}
 }

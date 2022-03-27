@@ -16,6 +16,7 @@
 		<app-mood-graph [storyId]="this.storyId"></app-mood-graph>
 		<mat-card-actions>
 			<button
+				*ngIf="this.userId"
 				mat-raised-button
 				(click)="
 					upvoteStory({
@@ -26,7 +27,7 @@
 			>
 				Upvote - {{story.votes}}
 			</button>
-			<button mat-raised-button (click)="openAddComment()">Reply to Story</button>
+			<button *ngIf="this.userId" mat-raised-button (click)="openAddComment()">Reply to Story</button>
 			<button *ngIf="story.userId == this.userId" mat-raised-button (click)="deleteStory(story.storyId)">Delete</button>
 		</mat-card-actions>
 	</mat-card>

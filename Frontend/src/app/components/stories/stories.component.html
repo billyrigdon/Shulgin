@@ -1,4 +1,10 @@
-<div id="story-container">
+<div
+	infinite-scroll
+	[infiniteScrollDistance]="distance"
+	[infiniteScrollThrottle]="throttle"
+	(scrolled)="onPageScroll()"
+	[scrollWindow]="false"
+	id="story-container">
 	<mat-card class="story" *ngFor="let story of stories">
 		<h2>{{ story.title.toUpperCase() }}</h2>
 		<h5 id="date">{{ story.date }}</h5>

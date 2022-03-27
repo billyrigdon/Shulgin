@@ -25,7 +25,14 @@ $delete-red: #ff4d74;
 	border: 0;
 }
 
+::-webkit-scrollbar {
+	display: none;
+	width: 0;
+	background: transparent;
+}
+
 p,
+mat-label,
 .mat-typography p,
 ul,
 h1,

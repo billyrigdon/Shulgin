@@ -13,13 +13,10 @@ export class MoodGraphComponent implements OnInit {
 	@Input() userId?: number;
 	@Input() storyId?: number;
 	moodBars: Array<GraphBar>;
-	maxHeight: number;
+	
 	constructor(private moodService: MoodService) {
 		this.mood = <StoryDrug>{};
 		this.moodBars = Array<GraphBar>();
-    this.maxHeight = 3;
-    this.userId = 0;
-    this.storyId = 0;
 	}
 
 	buildGraph(mood: StoryDrug) {
@@ -74,9 +71,7 @@ export class MoodGraphComponent implements OnInit {
 		});
 	}
 
-  ngOnInit(): void {
-    console.log(this.storyId);
-    console.log(this.userId);
+  	ngOnInit(): void {
 		if (this.userId) {
 			this.moodService
 				.getAverageUserMood(this.userId)

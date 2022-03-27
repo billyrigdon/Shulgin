@@ -31,8 +31,8 @@ export class StoryService {
 		);
 	}
 
-	getAllStories() {
-		return this.http.get(API_URL + '/public/story/get', {
+	getAllStories(pageNumber: number) {
+		return this.http.get(API_URL + '/public/story/get?page=' + pageNumber, {
 			responseType: 'text',
 		});
 	}

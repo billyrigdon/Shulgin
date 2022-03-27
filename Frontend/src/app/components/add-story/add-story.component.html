@@ -1,127 +1,37 @@
 <mat-card id="add-story-container">
-	<mat-card-content>
-		<form id="story-form" [formGroup]="form" (submit)="addStory()">
-			<mat-form-field class="full-width">
-				<mat-label>Calmness:</mat-label>
-				<mat-select name="calmness" formControlName="calmness">
-					<mat-option value="1">1</mat-option>
-					<mat-option value="2">2</mat-option>
-					<mat-option value="3">3</mat-option>
-					<mat-option value="4">4</mat-option>
-					<mat-option value="5">5</mat-option>
-					<mat-option value="6">6</mat-option>
-					<mat-option value="7">7</mat-option>
-					<mat-option value="8">8</mat-option>
-					<mat-option value="9">9</mat-option>
-					<mat-option value="10">10</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Focus:</mat-label>
-				<mat-select name="focus" formControlName="focus">
-					<mat-option value="1">1</mat-option>
-					<mat-option value="2">2</mat-option>
-					<mat-option value="3">3</mat-option>
-					<mat-option value="4">4</mat-option>
-					<mat-option value="5">5</mat-option>
-					<mat-option value="6">6</mat-option>
-					<mat-option value="7">7</mat-option>
-					<mat-option value="8">8</mat-option>
-					<mat-option value="9">9</mat-option>
-					<mat-option value="10">10</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Creativity:</mat-label>
-				<mat-select name="creativity" formControlName="creativity">
-					<mat-option value="1">1</mat-option>
-					<mat-option value="2">2</mat-option>
-					<mat-option value="3">3</mat-option>
-					<mat-option value="4">4</mat-option>
-					<mat-option value="5">5</mat-option>
-					<mat-option value="6">6</mat-option>
-					<mat-option value="7">7</mat-option>
-					<mat-option value="8">8</mat-option>
-					<mat-option value="9">9</mat-option>
-					<mat-option value="10">10</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Mood:</mat-label>
-				<mat-select name="mood" formControlName="mood">
-					<mat-option value="1">1</mat-option>
-					<mat-option value="2">2</mat-option>
-					<mat-option value="3">3</mat-option>
-					<mat-option value="4">4</mat-option>
-					<mat-option value="5">5</mat-option>
-					<mat-option value="6">6</mat-option>
-					<mat-option value="7">7</mat-option>
-					<mat-option value="8">8</mat-option>
-					<mat-option value="9">9</mat-option>
-					<mat-option value="10">10</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Irritability:</mat-label>
-				<mat-select name="irritability" formControlName="irritability">
-					<mat-option value="1">1</mat-option>
-					<mat-option value="2">2</mat-option>
-					<mat-option value="3">3</mat-option>
-					<mat-option value="4">4</mat-option>
-					<mat-option value="5">5</mat-option>
-					<mat-option value="6">6</mat-option>
-					<mat-option value="7">7</mat-option>
-					<mat-option value="8">8</mat-option>
-					<mat-option value="9">9</mat-option>
-					<mat-option value="10">10</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Wakefulness:</mat-label>
-				<mat-select name="wakefulness" formControlName="wakefulness">
-					<mat-option value="1">1</mat-option>
-					<mat-option value="2">2</mat-option>
-					<mat-option value="3">3</mat-option>
-					<mat-option value="4">4</mat-option>
-					<mat-option value="5">5</mat-option>
-					<mat-option value="6">6</mat-option>
-					<mat-option value="7">7</mat-option>
-					<mat-option value="8">8</mat-option>
-					<mat-option value="9">9</mat-option>
-					<mat-option value="10">10</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Rating:</mat-label>
-				<mat-select name="rating" formControlName="rating">
-					<mat-option value="1">1</mat-option>
-					<mat-option value="2">2</mat-option>
-					<mat-option value="3">3</mat-option>
-					<mat-option value="4">4</mat-option>
-					<mat-option value="5">5</mat-option>
-					<mat-option value="6">6</mat-option>
-					<mat-option value="7">7</mat-option>
-					<mat-option value="8">8</mat-option>
-					<mat-option value="9">9</mat-option>
-					<mat-option value="10">10</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Title</mat-label>
-				<input matInput name="title" formControlName="title" />
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<mat-label>Journal</mat-label>
-				<textarea
-					matInput
-					name="journal"
-					formControlName="journal"
-				></textarea>
-			</mat-form-field>
-			<button type="submit" style="display:none">hidden submit</button>
+		<form id="story-form" [formGroup]="form">
+				<mat-label>Calmness</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="calmness" formControlName="calmness">
+				</mat-slider>
+				<mat-label>Focus</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="focus" formControlName="focus">
+				</mat-slider>
+				<mat-label>Creativity</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="creativity" formControlName="creativity">
+				</mat-slider>
+				<mat-label>Mood</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="mood" formControlName="mood">
+				</mat-slider>
+				<mat-label>Irritability</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="irritability" formControlName="irritability">
+				</mat-slider>
+				<mat-label>Wakefulness</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="wakefulness" formControlName="wakefulness">
+				</mat-slider>
+				<mat-label>Rating</mat-label>
+				<mat-slider color="primary" min="1" max="10" step="1" name="rating" formControlName="rating">
+				</mat-slider>
+				<mat-card *ngIf="journalOpen" id="journal-card">
+					<mat-card-content>
+						<input class="full-width" formControlName="title" placeholder="Title"/>
+						<textarea id="journal-content" appAutofocus matInput name="content" formControlName="journal" placeholder="Journal Entry"></textarea>
+					</mat-card-content>
+					<mat-card-actions>
+						<button mat-raised-button (click)="addStory()">Add Story</button>
+					</mat-card-actions>
+				</mat-card>
 		</form>
-	</mat-card-content>
 	<mat-card-actions>
-		<button mat-flat-button (click)="addStory()">Add Story</button>
+		<button mat-flat-button (click)="openJournal()">Add Story</button>
 	</mat-card-actions>
 </mat-card>
